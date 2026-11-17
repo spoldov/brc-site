@@ -3,6 +3,12 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.3.0 (18 November 2026): centred key figures, picture dots, phone alignment
+
+- Key figures: number and label are centred inside each box, on all screen sizes.
+- Phones: one picture at a time at full width, with three dots underneath that show which picture is in view (tap a dot to jump).
+- Phones: short stand-alone blocks are centred (hero, section headings, key figures, "What is in it for you?" cards, price cards, footer headline and button). Lists and longer text stay left-aligned (example assignments, timeline, team, cost notes, testimonial, case box, footer small print).
+
 ## v2.2.0 (18 November 2026): phone and tablet versions, alignment fixes
 
 - **Phones and tablets are now designed.** Up to 1180 px wide the menu collapses into a button that opens a panel; up to 720 px everything is one column, the three pictures become a strip to swipe sideways, and the key figures are two by two.

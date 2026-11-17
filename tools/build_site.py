@@ -110,6 +110,15 @@ JS_INDEX='''
   all("#nav a").forEach(function (a) { a.addEventListener("click", function () { menu(false); }); });
   doc.addEventListener("keydown", function (e) { if (e.key === "Escape") menu(false); });
 
+  // dots under the picture strip (phones): show which picture is in view; a tap on a dot scrolls to it
+  var strip = $("photos"), dots = all("#dots button");
+  function slideWidth() { return strip.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(strip).columnGap || 0); }
+  strip.addEventListener("scroll", function () {
+    var n = Math.round(strip.scrollLeft / slideWidth());
+    dots.forEach(function (d, i) { if (i === n) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+  }, { passive: true });
+  dots.forEach(function (d, i) { d.addEventListener("click", function () { strip.scrollTo({ left: i * slideWidth(), behavior: reduce ? "auto" : "smooth" }); }); });
+
   // header state, menu highlight and the ten-weeks timeline: all driven by one scroll handler
   var hdr = $("hdr"), tl = $("tl"), items = all("li", tl), wk = $("wk-n");
   var links = all(".nav-link"), secs = links.map(function (a) { return $(a.getAttribute("href").slice(1)); });
