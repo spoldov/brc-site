@@ -3,6 +3,10 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.0.2 (17 November 2026): wording
+
+- Key figure: "10 weeks from intake to final advice" is now "10 weeks from assignment start to final advice" (Dutch: "weken van start opdracht tot eindadvies").
+
 ## v2.0.1 (17 November 2026): fixes
 
 - The page no longer grows on wide screens. One size for all desktop screens: the content column is at most 1280 px wide and centred; wider screens get more margin.
