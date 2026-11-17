@@ -1,6 +1,6 @@
 # tools: how the pages are generated
 
-The eight HTML pages (four English, four Dutch) are generated from the files in this folder. Change the sources here and regenerate; do not edit the generated HTML by hand, or the next run will overwrite it.
+The HTML pages (four Dutch at the site root, four English in `en/`, plus four temporary forwarding pages in `nl/`) are generated from the files in this folder. Change the sources here and regenerate; do not edit the generated HTML by hand, or the next run will overwrite it.
 
 ## Files
 
@@ -8,8 +8,9 @@ The eight HTML pages (four English, four Dutch) are generated from the files in 
 - `src/Submit.dc.html`: source of the assignment form (`submit.html`)
 - `src/Product.dc.html`, `src/Students.dc.html`: sources of the two placeholder pages
 - `nl.json`: the Dutch translation, as "English text": "Dutch text"
-- `build_site.py`: step 1, builds the English pages from `src/`
-- `i18n.py`: step 2, adds the language switch (EN / NL) and the "Built with Claude Fable 5.2" line, then writes the Dutch pages to `nl/`
+- `build_site.py`: step 1, builds the English pages from `src/` into `tools/.build/` (an intermediate folder, not kept in git)
+- `i18n.py`: step 2, adds the language switch (EN / NL) and the "Built with Claude Fable 5.2" line, then writes the Dutch pages to the site root and the English pages to `en/`
+- `make_illustrations.py`: draws the three temporary homepage illustrations into `assets/` (only needed when they change)
 
 The sources started as exports from the design canvas; the homepage source no longer matches the canvas. They contain a few template marks (`{{...}}`, `<sc-if>`, `<sc-for>`) that `build_site.py` turns into plain HTML and JavaScript.
 

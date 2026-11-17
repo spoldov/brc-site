@@ -1,11 +1,13 @@
-"""Step 1 of 2: build the English pages from the page sources in tools/src/.
+"""Step 1 of 2: build the English pages from the page sources in tools/src/ (into tools/.build/).
 
 Run from the repository root:  python3 tools/build_site.py
 Then run:                      python3 tools/i18n.py
 """
 import re,os
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC=os.path.join(ROOT,'tools','src');OUT=ROOT
+SRC=os.path.join(ROOT,'tools','src')
+OUT=os.path.join(ROOT,'tools','.build')  # intermediate English pages; i18n.py turns these into the real site
+os.makedirs(OUT,exist_ok=True)
 # The page sources refer to images by an id; this maps each id to its file in assets/.
 BLOBS={'7f6c0b293b5ca221ab8dca08d463cfec':'brc-crown-white.svg',
 '1897d917baed1cc5e56f1da94adf13a1':'brc-crown-red.svg',
@@ -17,7 +19,7 @@ BLOBS={'7f6c0b293b5ca221ab8dca08d463cfec':'brc-crown-white.svg',
 'b75cef0b87ef141ed31e252d08a8f70f':'client-fc-groningen.png',
 'f2de1d83775f5bcd829581e15dc62aaf':'linkedin-black.png',
 '6636523929c2148818e6bb9ef0cac18e':'linkedin-white.png'}
-for n in BLOBS.values(): assert os.path.exists(os.path.join(OUT,'assets',n)),n
+for n in BLOBS.values(): assert os.path.exists(os.path.join(ROOT,'assets',n)),n
 PAGES={'C-TenWeeks.dc.html':'index.html','Submit.dc.html':'submit.html','Product.dc.html':'product.html','Students.dc.html':'students.html'}
 def sub1(s,a,b,n=1):
     assert s.count(a)==n,(a[:60],s.count(a)); return s.replace(a,b)

@@ -16,6 +16,8 @@
 :root{
   --red:#dc002d; --red-deep:#a8001f; --red-ink:#7d0017;
   --ink:#17181c; --muted:#42464d; --line:#d9dce0; --tint:#f4f5f6; --white:#ffffff;
+  --page:#f7f8f9;   /* page background: a soft grey instead of pure white; cards on it are white */
+  --hair:#e6e8eb;   /* hairline around white cards */
   --ease:cubic-bezier(.2,.7,.2,1);
   --hdr:4rem;
 }
@@ -24,7 +26,7 @@
 html{font-size:16px; scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr) + 1.5rem)}
 body{margin:0}
 *,*::before,*::after{box-sizing:border-box}
-.page{font-family:Inter,'Segoe UI',Arial,sans-serif; color:var(--ink); background:var(--white); font-size:1.125rem; line-height:1.55; overflow-x:clip}
+.page{font-family:Inter,'Segoe UI',Arial,sans-serif; color:var(--ink); background:var(--page); font-size:1.125rem; line-height:1.55; overflow-x:clip}
 .page a{color:var(--ink)}
 /* content column: at most 1280px wide, centred */
 .wrap{width:min(100% - 4rem, 80rem); margin-inline:auto}
@@ -95,7 +97,7 @@ p{margin:0}
 .photo{aspect-ratio:3/2; border-radius:1.25rem; overflow:hidden; background:#eceef0; border:1px dashed #7d838c; display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem; font-size:0.9375rem; color:var(--muted); box-shadow:0 30px 60px -30px rgba(23,24,28,.55); transition:transform .5s var(--ease), box-shadow .5s var(--ease)}
 .photo:hover{transform:translateY(-6px); box-shadow:0 40px 70px -30px rgba(23,24,28,.6)}
 /* when real photos are added: <div class="photo has-img"><img src="assets/..." alt="..."></div> */
-.photo.has-img{border:0; padding:0}
+.photo.has-img{border:0; padding:0; background:var(--white)}
 .photo img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease)}
 .photo:hover img{transform:scale(1.05)}
 .after-hero{padding-top:9rem}
@@ -112,31 +114,29 @@ p{margin:0}
 .stat-l{margin-top:0.5rem; color:var(--muted); font-size:1rem; max-width:15em}
 
 /* ---------- clients ---------- */
-.clients{padding:4.5rem 0 0}
-.clients-label{display:flex; align-items:center; gap:1.25rem; font-size:0.8125rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin:0 0 1.5rem}
-.clients-label::after{content:""; flex:1; height:1px; background:var(--line)}
+.clients{padding:6rem 0 0}
 .brc-car{overflow:hidden; display:flex; flex-direction:column; gap:0.875rem;
   -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent)}
 .brc-marq{display:flex; gap:0.875rem; width:max-content; padding-right:0.875rem; animation:brc-marq 140s linear infinite}
 .brc-rev{animation-direction:reverse}
 .brc-car:hover .brc-marq{animation-play-state:paused}
 @keyframes brc-marq{to{transform:translateX(-50%)}}
-.client{flex:none; width:13rem; height:5.25rem; background:var(--tint); border-radius:1rem; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.875rem 1.25rem; font-size:0.9375rem; line-height:1.3; transition:background-color .3s, transform .3s var(--ease)}
-.client:hover{background:#e9ebee; transform:translateY(-2px)}
+.client{flex:none; width:13rem; height:5.25rem; margin:1px 0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1rem; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.875rem 1.25rem; font-size:0.9375rem; line-height:1.3; transition:background-color .3s, transform .3s var(--ease)}
+.client:hover{transform:translateY(-2px)}
 .client img{display:block; max-width:100%; max-height:100%; object-fit:contain}
 .client span{font-size:0.75rem; color:var(--muted)}
 
 /* ---------- for you ---------- */
-.switch{position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; background:#eceef0; border-radius:999px}
+.switch{position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; background:#e9ebee; border-radius:999px}
 .switch::before{content:""; position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); border-radius:999px; background:var(--ink); transition:transform .4s var(--ease)}
 .switch.is-student::before{transform:translateX(100%)}
 .switch button{position:relative; font:inherit; font-weight:600; min-height:3rem; padding:0 1.75rem; border:0; border-radius:999px; cursor:pointer; background:transparent; color:var(--ink); transition:color .3s}
 .switch button[aria-pressed="true"]{color:var(--white)}
 .cards4{display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem}
-.card{background:var(--tint); border-radius:1.25rem; padding:1.75rem; display:flex; flex-direction:column; gap:0.625rem; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s}
-.card:hover{transform:translateY(-4px); background:var(--white); box-shadow:0 0 0 1px var(--line), 0 24px 44px -26px rgba(23,24,28,.4)}
+.card{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.75rem; display:flex; flex-direction:column; gap:0.625rem; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s}
+.card:hover{transform:translateY(-4px); box-shadow:0 0 0 1px var(--line), 0 24px 44px -26px rgba(23,24,28,.4)}
 .card p{color:var(--muted); font-size:1.0625rem}
-.ico{width:3rem; height:3rem; border-radius:0.875rem; background:var(--white); color:var(--red); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, color .35s}
+.ico{width:3rem; height:3rem; border-radius:0.875rem; background:#fdecef; color:var(--red); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, color .35s}
 .ico svg{width:1.5rem; height:1.5rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
 .card:hover .ico{background:var(--red); color:var(--white)}
 @keyframes brc-swap{from{opacity:0; transform:translateY(.75rem)}to{opacity:1; transform:none}}
@@ -182,7 +182,7 @@ p{margin:0}
 .js .tl li:not(.on) .tl-body{opacity:.45}
 
 /* ---------- costs ---------- */
-.costs{background:var(--tint)}
+.costs{background:#eef0f2}
 .price{background:var(--white); border-radius:1.25rem; padding:2rem; display:flex; flex-direction:column; gap:0.5rem; box-shadow:0 1px 0 var(--line), 0 22px 40px -30px rgba(23,24,28,.35); transition:transform .35s var(--ease), box-shadow .35s var(--ease)}
 .price:hover{transform:translateY(-4px); box-shadow:0 1px 0 var(--line), 0 30px 50px -28px rgba(23,24,28,.45)}
 .price-for{font-weight:600}
@@ -194,8 +194,8 @@ p{margin:0}
 
 /* ---------- team ---------- */
 .team{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem}
-.person{background:var(--tint); border-radius:1.25rem; padding:1.125rem 1.25rem 1.125rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; font-size:1.0625rem; line-height:1.35; transition:background-color .3s}
-.person:hover{background:#eceef0}
+.person{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.125rem 1.25rem 1.125rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; font-size:1.0625rem; line-height:1.35; transition:background-color .3s}
+.person:hover{background:#fbfbfc}
 .person-links{display:flex; gap:0.375rem; flex:none}
 .page a.ibtn{width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center; border-radius:999px; border:1.5px solid #7d838c; color:var(--ink); transition:background-color .2s, border-color .2s, color .2s, transform .25s var(--ease)}
 .ibtn svg{width:1.125rem; height:1.125rem}
@@ -204,7 +204,7 @@ p{margin:0}
 .ibtn:hover .li-b,.ibtn:focus-visible .li-b{display:none}.ibtn:hover .li-w,.ibtn:focus-visible .li-w{display:block}
 .page a.ibtn:hover,.page a.ibtn:focus-visible{background:var(--red); border-color:var(--red); color:var(--white); transform:translateY(-2px)}
 .proof{display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:1.25rem}
-.quote{position:relative; margin:0; background:var(--tint); border-radius:1.25rem; padding:2.25rem 2.25rem 2rem 5.5rem; display:flex; flex-direction:column; gap:1rem}
+.quote{position:relative; margin:0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:2.25rem 2.25rem 2rem 5.5rem; display:flex; flex-direction:column; gap:1rem}
 .quote::before{content:"\201C"; position:absolute; left:1.75rem; top:1rem; font-family:Archivo,Arial,sans-serif; font-weight:800; font-size:6rem; line-height:1; color:var(--red)}
 .quote blockquote{margin:0; font-family:Archivo,Arial,sans-serif; font-weight:600; font-size:1.5rem; line-height:1.3}
 .quote figcaption{color:var(--muted); font-size:1rem}
@@ -284,9 +284,9 @@ p{margin:0}
 </div>
 </div>
 <div class="photos enter" style="--i:3">
-<div class="photo">[PHOTO: team at a client intake]</div>
-<div class="photo">[PHOTO: poster session]</div>
-<div class="photo">[PHOTO: final presentation]</div>
+<div class="photo has-img"><img src="assets/illustration-intake.svg" alt="Illustration: a student team at an intake with a client"></div>
+<div class="photo has-img"><img src="assets/illustration-posters.svg" alt="Illustration: students at a poster session"></div>
+<div class="photo has-img"><img src="assets/illustration-presentation.svg" alt="Illustration: final presentation to the client"></div>
 </div>
 </div>
 </div>
@@ -305,7 +305,7 @@ p{margin:0}
 
 <!-- clients -->
 <section id="clients" class="clients">
-<div class="wrap"><h2 class="clients-label rv">Clients include</h2></div>
+<div class="wrap"><div class="sec-head rv"><h2 class="disp">Clients include</h2></div></div>
 <div class="brc-car rv" role="img" aria-label="Clients include Gasunie, UMCG, Provincie Groningen, Rabobank, Resato Hydrogen Technology, FC Groningen in de Maatschappij, Zilveren Kruis / Achmea, VNO-NCW MKB Noord, Spanninga, IT Hub Hoogeveen">
 <div class="brc-marq">
 <!--REPEAT-->

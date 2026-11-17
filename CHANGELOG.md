@@ -3,6 +3,15 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.1.0 (18 November 2026): Dutch as default, softer background, illustrations
+
+- **Dutch is the default language.** The Dutch pages are at the site root, the English pages in `en/`.
+- **Temporary:** `nl/` now only holds four forwarding pages to the new Dutch addresses, so links shared earlier keep working. **Delete the `nl/` folder (and the `STUB` lines in `tools/i18n.py`) after approval.**
+- Page background is a soft grey (`#f7f8f9`) instead of pure white; cards on it are white with a hairline.
+- "Clients include" / "Onze klanten" has the same heading style as the other sections.
+- The three photo placeholders are replaced by temporary illustrations without faces (`assets/illustration-*.svg`, drawn by `tools/make_illustrations.py`). To be replaced by real photos before launch.
+- `tools/build_site.py` now writes its intermediate English pages to `tools/.build/` (not kept in git).
+
 ## v2.0.2 (17 November 2026): wording
 
 - Key figure: "10 weeks from intake to final advice" is now "10 weeks from assignment start to final advice" (Dutch: "weken van start opdracht tot eindadvies").

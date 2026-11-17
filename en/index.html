@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Business Research & Consulting · University of Groningen</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Inter:wght@400;500;600&display=swap">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+/* ---------- BRC homepage, design v2 ----------
+   Colours and sizes are set once here. To change the red, change --red and --red-deep. */
+:root{
+  --red:#dc002d; --red-deep:#a8001f; --red-ink:#7d0017;
+  --ink:#17181c; --muted:#42464d; --line:#d9dce0; --tint:#f4f5f6; --white:#ffffff;
+  --page:#f7f8f9;   /* page background: a soft grey instead of pure white; cards on it are white */
+  --hair:#e6e8eb;   /* hairline around white cards */
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --hdr:4rem;
+}
+/* One size for all desktop screens: text and layout do not grow on wide screens, the page just gets more margin.
+   All sizes below are in rem, so changing this one number scales the whole page. */
+html{font-size:16px; scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr) + 1.5rem)}
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+.page{font-family:Inter,'Segoe UI',Arial,sans-serif; color:var(--ink); background:var(--page); font-size:1.125rem; line-height:1.55; overflow-x:clip}
+.page a{color:var(--ink)}
+/* content column: at most 1280px wide, centred */
+.wrap{width:min(100% - 4rem, 80rem); margin-inline:auto}
+.disp{font-family:Archivo,Arial,sans-serif; font-stretch:110%; font-weight:700; letter-spacing:-0.02em; line-height:1.02; margin:0}
+h2.disp{font-size:clamp(2rem, 3.4vw, 3.25rem)}
+h3{font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.375rem; line-height:1.15; margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.sec{padding:6.5rem 0}
+.sec-head{display:flex; flex-wrap:wrap; gap:1.25rem 2.5rem; align-items:flex-end; justify-content:space-between; margin-bottom:2.25rem}
+.lead{max-width:44rem; margin-top:0.875rem}
+:focus-visible{outline:3px solid var(--ink); outline-offset:3px; border-radius:4px}
+.hero :focus-visible,.foot :focus-visible,.weeks :focus-visible{outline-color:var(--white)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex; align-items:center; gap:0.5rem; height:3.25rem; padding:0 1.625rem; border-radius:999px; font-weight:600; font-size:1.0625rem; text-decoration:none; border:2px solid transparent; transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .2s, color .2s, border-color .2s}
+.btn svg{width:1.1em; height:1.1em; transition:transform .25s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn:hover svg{transform:translateX(4px)}
+.page a.btn-white{background:var(--white); color:var(--ink); box-shadow:0 10px 30px -12px rgba(60,0,12,.55)}
+.page a.btn-white:hover{box-shadow:0 16px 34px -12px rgba(60,0,12,.7)}
+.page a.btn-ghost{color:var(--white); border-color:rgba(255,255,255,.75)}
+.page a.btn-ghost:hover{background:var(--white); color:var(--ink); border-color:var(--white)}
+
+/* ---------- header (option B: one line, stays at the top) ---------- */
+.hdr{position:fixed; inset:0 0 auto 0; z-index:50; height:var(--hdr); color:var(--white); transition:background-color .3s, box-shadow .3s, color .3s}
+.hdr-in{height:100%; display:flex; align-items:center; justify-content:space-between; gap:2rem}
+.page a.brand{display:flex; align-items:center; gap:0.875rem; text-decoration:none; color:inherit}
+.logo{display:flex; flex-direction:column; align-items:center; gap:3px}
+.logo img{display:block; width:3rem; height:auto}
+.logo .crown-red{display:none}
+.logo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:1.4375rem; line-height:.85; letter-spacing:-0.02em}
+.brand-name{font-size:0.9375rem; font-weight:600; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:1.875rem; font-weight:600; font-size:0.9375rem; white-space:nowrap}
+.page .nav a{color:inherit; text-decoration:none}
+.nav-link{position:relative; padding:0.5rem 0}
+.nav-link::after{content:""; position:absolute; left:0; right:0; bottom:0.125rem; height:2px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease)}
+.nav-link:hover::after,.nav-link[aria-current="true"]::after{transform:scaleX(1)}
+.page .nav a.nav-cta{display:inline-flex; align-items:center; height:2.5rem; padding:0 1.25rem; border-radius:999px; background:var(--white); color:var(--ink); transition:background-color .3s, color .3s, transform .25s var(--ease)}
+.nav-cta:hover{transform:translateY(-1px)}
+/* after scrolling past the hero: light, slightly see-through bar */
+.hdr.is-stuck{background:rgba(255,255,255,.86); -webkit-backdrop-filter:saturate(1.6) blur(14px); backdrop-filter:saturate(1.6) blur(14px); color:var(--ink); box-shadow:0 1px 0 var(--line), 0 12px 30px -22px rgba(23,24,28,.5)}
+.hdr.is-stuck .logo b{color:var(--red)}
+.hdr.is-stuck .crown-white{display:none}
+.hdr.is-stuck .crown-red{display:block}
+.page .hdr.is-stuck .nav a.nav-cta{background:var(--red); color:var(--white)}
+.hdr.is-stuck .nav-link[aria-current="true"]{color:var(--red)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; color:var(--white); padding:calc(var(--hdr) + 2.75rem) 0 0;
+  background:
+    radial-gradient(70rem 36rem at 105% 115%, rgba(60,0,14,.55), transparent 62%),
+    radial-gradient(50rem 30rem at -10% -30%, rgba(125,0,23,.5), transparent 60%),
+    linear-gradient(120deg, var(--red) 0%, #cf002a 45%, var(--red-deep) 100%)}
+.hero::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(rgba(255,255,255,.2) 1.1px, transparent 1.6px) 0 0/1.75rem 1.75rem;
+  -webkit-mask-image:linear-gradient(100deg, transparent 38%, #000 100%); mask-image:linear-gradient(100deg, transparent 38%, #000 100%)}
+.hero-in{position:relative; display:flex; flex-direction:column; gap:1.25rem}
+.eyebrow{font-size:0.8125rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase}
+.hero h1{margin:0; font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(3rem, 5.6vw, 6rem); line-height:.98; letter-spacing:-0.03em}
+.hero h1 > span{display:block; white-space:nowrap; min-height:1em}
+.brc-cursor{display:inline-block; width:.07em; height:.8em; margin-left:.08em; background:var(--white); vertical-align:baseline; animation:brc-blink 1s steps(1) infinite}
+@keyframes brc-blink{50%{opacity:0}}
+.hero-row{display:flex; flex-wrap:wrap; gap:1.25rem 4rem; align-items:center; justify-content:space-between; margin-top:0.5rem}
+.hero-row p{font-size:1.3125rem; max-width:36em}
+.hero-cta{display:flex; flex-wrap:wrap; gap:0.75rem}
+.photos{position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:2.25rem; margin-bottom:-9rem}
+.photo{aspect-ratio:3/2; border-radius:1.25rem; overflow:hidden; background:#eceef0; border:1px dashed #7d838c; display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem; font-size:0.9375rem; color:var(--muted); box-shadow:0 30px 60px -30px rgba(23,24,28,.55); transition:transform .5s var(--ease), box-shadow .5s var(--ease)}
+.photo:hover{transform:translateY(-6px); box-shadow:0 40px 70px -30px rgba(23,24,28,.6)}
+/* when real photos are added: <div class="photo has-img"><img src="../assets/..." alt="..."></div> */
+.photo.has-img{border:0; padding:0; background:var(--white)}
+.photo img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease)}
+.photo:hover img{transform:scale(1.05)}
+.after-hero{padding-top:9rem}
+/* entrance, once, on page load */
+@keyframes brc-up{from{opacity:0; transform:translateY(1.25rem)}to{opacity:1; transform:none}}
+.js .enter{animation:brc-up .8s var(--ease) both; animation-delay:calc(var(--i,0) * 90ms + 80ms)}
+
+/* ---------- key figures ---------- */
+.stats{display:grid; grid-template-columns:1fr 1fr 1fr 1.5fr; margin-top:3.25rem}
+.stat{padding:0.25rem 2rem; border-left:1px solid var(--line)}
+.stat:first-child{padding-left:0; border-left:0}
+.stat-n{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(2.75rem, 4.2vw, 4.25rem); line-height:1; letter-spacing:-0.03em; display:flex; align-items:baseline; gap:.2em; white-space:nowrap}
+.stat-n small{font-family:Inter,Arial,sans-serif; font-stretch:100%; font-size:1rem; font-weight:600; letter-spacing:0; color:var(--red)}
+.stat-l{margin-top:0.5rem; color:var(--muted); font-size:1rem; max-width:15em}
+
+/* ---------- clients ---------- */
+.clients{padding:6rem 0 0}
+.brc-car{overflow:hidden; display:flex; flex-direction:column; gap:0.875rem;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent)}
+.brc-marq{display:flex; gap:0.875rem; width:max-content; padding-right:0.875rem; animation:brc-marq 140s linear infinite}
+.brc-rev{animation-direction:reverse}
+.brc-car:hover .brc-marq{animation-play-state:paused}
+@keyframes brc-marq{to{transform:translateX(-50%)}}
+.client{flex:none; width:13rem; height:5.25rem; margin:1px 0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1rem; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.875rem 1.25rem; font-size:0.9375rem; line-height:1.3; transition:background-color .3s, transform .3s var(--ease)}
+.client:hover{transform:translateY(-2px)}
+.client img{display:block; max-width:100%; max-height:100%; object-fit:contain}
+.client span{font-size:0.75rem; color:var(--muted)}
+
+/* ---------- for you ---------- */
+.switch{position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; background:#e9ebee; border-radius:999px}
+.switch::before{content:""; position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); border-radius:999px; background:var(--ink); transition:transform .4s var(--ease)}
+.switch.is-student::before{transform:translateX(100%)}
+.switch button{position:relative; font:inherit; font-weight:600; min-height:3rem; padding:0 1.75rem; border:0; border-radius:999px; cursor:pointer; background:transparent; color:var(--ink); transition:color .3s}
+.switch button[aria-pressed="true"]{color:var(--white)}
+.cards4{display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem}
+.card{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.75rem; display:flex; flex-direction:column; gap:0.625rem; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s}
+.card:hover{transform:translateY(-4px); box-shadow:0 0 0 1px var(--line), 0 24px 44px -26px rgba(23,24,28,.4)}
+.card p{color:var(--muted); font-size:1.0625rem}
+.ico{width:3rem; height:3rem; border-radius:0.875rem; background:#fdecef; color:var(--red); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, color .35s}
+.ico svg{width:1.5rem; height:1.5rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.card:hover .ico{background:var(--red); color:var(--white)}
+@keyframes brc-swap{from{opacity:0; transform:translateY(.75rem)}to{opacity:1; transform:none}}
+.js .is-swapping .card{animation:brc-swap .5s var(--ease) both; animation-delay:calc(var(--i,0) * 60ms)}
+
+/* ---------- example assignments (clickable cards) ---------- */
+.cards3{display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem}
+.page a.pcard{position:relative; text-decoration:none; color:var(--ink); background:var(--white); border-radius:1.25rem; padding:1.75rem 1.75rem 2rem; display:flex; flex-direction:column; gap:0.625rem; box-shadow:inset 0 0 0 1.5px var(--ink); transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .25s, color .25s}
+.pcard h3{padding-right:3rem}
+.pcard p{color:var(--muted); font-size:1.0625rem; transition:color .25s}
+.pcard .meta{font-size:0.9375rem; color:var(--muted); transition:color .25s}
+.pcard .go{position:absolute; top:1.375rem; right:1.375rem; width:2.25rem; height:2.25rem; border-radius:999px; background:var(--tint); display:flex; align-items:center; justify-content:center; transition:background-color .25s, color .25s, transform .35s var(--ease)}
+.pcard .go svg{width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.page a.pcard:hover,.page a.pcard:focus-visible{background:var(--red); color:var(--white); box-shadow:inset 0 0 0 1.5px var(--red), 0 26px 44px -24px rgba(168,0,31,.7); transform:translateY(-4px)}
+.pcard:hover p,.pcard:focus-visible p,.pcard:hover .meta,.pcard:focus-visible .meta{color:var(--white)}
+.pcard:hover .go,.pcard:focus-visible .go{background:var(--white); color:var(--red); transform:translate(3px,-3px)}
+.page a.pcard-dark{background:var(--ink); color:var(--white)}
+.pcard-dark p{color:#d9dce0}
+.pcard-dark .go{background:#2d2f35}
+.pcard u{font-weight:600; text-underline-offset:3px}
+
+/* ---------- the ten weeks ---------- */
+.weeks{background:var(--ink); color:var(--white); position:relative; overflow:hidden}
+.weeks::before{content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(46rem 30rem at 12% 100%, rgba(220,0,45,.28), transparent 65%)}
+.weeks-in{position:relative; display:grid; grid-template-columns:5fr 6fr; gap:5rem; align-items:start}
+.weeks-side{position:sticky; top:calc(var(--hdr) + 3rem); display:flex; flex-direction:column; gap:1.25rem}
+.weeks-side p{color:#d9dce0; max-width:30em}
+.wk{display:flex; flex-direction:column; gap:0.75rem; margin-top:2.25rem; font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; letter-spacing:-0.04em; line-height:.9}
+.wk-l{font-size:1.125rem; letter-spacing:.09em; text-transform:uppercase; font-stretch:100%; font-weight:600; font-family:Inter,Arial,sans-serif; color:#ff5c7a}
+.wk-n{font-size:clamp(5rem, 8vw, 8.5rem); white-space:nowrap; font-variant-numeric:tabular-nums}
+.tl{position:relative; margin:0; padding:0; list-style:none}
+.tl::before,.tl::after{content:""; position:absolute; left:0.5rem; top:0.75rem; height:var(--rail, calc(100% - 1.5rem)); width:2px; border-radius:2px; background:#3a3d44}
+.tl::after{background:var(--red); transform-origin:top; transform:scaleY(var(--p,1)); box-shadow:0 0 18px rgba(220,0,45,.9)}
+.tl li{position:relative; padding:0 0 2.75rem 3.25rem; display:grid; grid-template-columns:8.25rem 1fr; gap:1.75rem; align-items:start}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:""; position:absolute; z-index:1; left:0; top:0.5rem; width:1.125rem; height:1.125rem; border-radius:999px; background:var(--ink); border:2px solid #7d838c; transition:background-color .4s, border-color .4s, box-shadow .4s}
+/* all week labels are the same width (the grid column), text aligned left */
+.tl-tag{justify-self:stretch; text-align:left; font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.125rem; white-space:nowrap; padding:0.25rem 0.75rem; border-radius:0.5rem; background:var(--red); transition:background-color .4s, color .4s}
+.tl-body{color:#d9dce0; transition:opacity .4s}
+.tl-body strong{color:var(--white)}
+.tl li.on::before{background:var(--red); border-color:var(--red); box-shadow:0 0 0 6px rgba(220,0,45,.25)}
+.js .tl li:not(.on) .tl-tag{background:#2d2f35; color:#a9aeb6}
+.js .tl li:not(.on) .tl-body{opacity:.45}
+
+/* ---------- costs ---------- */
+.costs{background:#eef0f2}
+.price{background:var(--white); border-radius:1.25rem; padding:2rem; display:flex; flex-direction:column; gap:0.5rem; box-shadow:0 1px 0 var(--line), 0 22px 40px -30px rgba(23,24,28,.35); transition:transform .35s var(--ease), box-shadow .35s var(--ease)}
+.price:hover{transform:translateY(-4px); box-shadow:0 1px 0 var(--line), 0 30px 50px -28px rgba(23,24,28,.45)}
+.price-for{font-weight:600}
+.price-n{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:3.75rem; letter-spacing:-0.03em; line-height:1.05}
+.price-n::after{content:""; display:block; width:2.5rem; height:4px; border-radius:4px; background:var(--red); margin:0.75rem 0 0.375rem}
+.price-d{color:var(--muted); font-size:1rem}
+.covers{display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--line)}
+.covers span{color:var(--muted)}
+
+/* ---------- team ---------- */
+.team{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem}
+.person{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.125rem 1.25rem 1.125rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; font-size:1.0625rem; line-height:1.35; transition:background-color .3s}
+.person:hover{background:#fbfbfc}
+.person-links{display:flex; gap:0.375rem; flex:none}
+.page a.ibtn{width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center; border-radius:999px; border:1.5px solid #7d838c; color:var(--ink); transition:background-color .2s, border-color .2s, color .2s, transform .25s var(--ease)}
+.ibtn svg{width:1.125rem; height:1.125rem}
+.ibtn img{width:1.0625rem; height:auto}
+.ibtn .li-b{display:block}.ibtn .li-w{display:none}
+.ibtn:hover .li-b,.ibtn:focus-visible .li-b{display:none}.ibtn:hover .li-w,.ibtn:focus-visible .li-w{display:block}
+.page a.ibtn:hover,.page a.ibtn:focus-visible{background:var(--red); border-color:var(--red); color:var(--white); transform:translateY(-2px)}
+.proof{display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:1.25rem}
+.quote{position:relative; margin:0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:2.25rem 2.25rem 2rem 5.5rem; display:flex; flex-direction:column; gap:1rem}
+.quote::before{content:"\201C"; position:absolute; left:1.75rem; top:1rem; font-family:Archivo,Arial,sans-serif; font-weight:800; font-size:6rem; line-height:1; color:var(--red)}
+.quote blockquote{margin:0; font-family:Archivo,Arial,sans-serif; font-weight:600; font-size:1.5rem; line-height:1.3}
+.quote figcaption{color:var(--muted); font-size:1rem}
+
+/* ---------- footer ---------- */
+.foot{padding:0 1rem 1rem}
+.foot-box{position:relative; overflow:hidden; color:var(--white); border-radius:1.75rem; padding:5rem 0 2.25rem;
+  background:
+    radial-gradient(60rem 30rem at 100% 120%, rgba(60,0,14,.55), transparent 62%),
+    linear-gradient(120deg, var(--red) 0%, #cf002a 45%, var(--red-deep) 100%)}
+.foot-box::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(rgba(255,255,255,.2) 1.1px, transparent 1.6px) 0 0/1.75rem 1.75rem;
+  -webkit-mask-image:linear-gradient(100deg, transparent 45%, #000 100%); mask-image:linear-gradient(100deg, transparent 45%, #000 100%)}
+.foot-in{position:relative; display:flex; flex-direction:column; gap:3.5rem}
+.foot-top{display:flex; flex-wrap:wrap; gap:2rem 4rem; align-items:flex-end; justify-content:space-between}
+.foot h2{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(2.5rem, 5vw, 5.25rem); letter-spacing:-0.03em; line-height:.98; margin:0}
+.foot-cta{display:flex; flex-direction:column; gap:1rem; align-items:flex-start}
+.page .foot a{color:var(--white)}
+.foot-base{border-top:1px solid rgba(255,255,255,.5); padding-top:1.5rem; display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:center; justify-content:space-between; font-size:0.9375rem}
+.rug{flex:none; background:var(--white); border-radius:0.625rem; padding:0.875rem 1.125rem; display:block}
+.rug img{display:block; width:13.75rem; height:auto}
+
+/* ---------- reveal on scroll (only when JavaScript runs) ---------- */
+.js .rv{opacity:0; transform:translateY(1.5rem); transition:opacity .8s var(--ease), transform .8s var(--ease); transition-delay:calc(var(--i,0) * 70ms)}
+.js .rv.in{opacity:1; transform:none}
+
+/* ---------- narrower windows: keep things usable until the phone/tablet version is designed ---------- */
+@media (max-width:1180px){
+  .hdr{position:absolute; height:auto; padding:0.625rem 0}
+  .hdr-in,.nav{flex-wrap:wrap; gap:0.5rem 1.5rem}
+  .hero{padding-top:9rem}
+  .hero h1 > span{white-space:normal}
+  .cards4,.stats,.covers{grid-template-columns:repeat(2,1fr); gap:1.25rem}
+  .stat{border-left:0; padding-left:0}
+  .cards3,.team,.photos,.proof{grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr))}
+  .weeks-in{grid-template-columns:1fr; gap:3rem}
+  .weeks-side{position:static}
+  .tl li{grid-template-columns:1fr; gap:0.5rem}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .brc-cursor,.brc-marq,.js .enter,.js .is-swapping .card{animation:none}
+  .js .rv{opacity:1; transform:none; transition:none}
+  .btn,.card,.pcard,.price,.photo,.photo img,.ibtn,.client{transition:none}
+}
+</style>
+<link rel="alternate" hreflang="nl" href="../index.html">
+<link rel="alternate" hreflang="en" href="index.html">
+<link rel="alternate" hreflang="x-default" href="../index.html">
+</head>
+<body>
+<div class="page">
+
+<!-- header -->
+<header class="hdr" id="hdr">
+<div class="wrap hdr-in">
+<a class="brand" href="#top" aria-label="BRC, Business Research &amp; Consulting, home">
+<span class="logo"><img class="crown-white" src="../assets/brc-crown-white.svg" alt=""><img class="crown-red" src="../assets/brc-crown-red.svg" alt=""><b>BRC</b></span>
+<span class="brand-name">Business Research &amp; Consulting</span>
+</a>
+<nav class="nav" aria-label="Main">
+<a class="nav-link" href="#for-you">For you</a>
+<a class="nav-link" href="#weeks">The ten weeks</a>
+<a class="nav-link" href="#costs">Costs</a>
+<a class="nav-link" href="#people">People</a>
+<a class="nav-cta" href="#contact">Get in touch</a>
+<span style="display: inline-flex; align-items: center; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>EN</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="../index.html" lang="nl" hreflang="nl" aria-label="Nederlands" title="Nederlands" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">NL</a></span>
+</nav>
+</div>
+</header>
+
+<!-- hero -->
+<div class="hero" id="top">
+<div class="wrap hero-in">
+<div class="eyebrow enter" style="--i:0">Faculty of Economics and Business · University of Groningen</div>
+<h1 class="enter" style="--i:1" aria-label="Real Clients, Real Consultants."><span aria-hidden="true">Real Clients,</span> <span aria-hidden="true"><span id="typed">Real Consultants.</span><span class="brc-cursor"></span></span></h1>
+<div class="hero-row enter" style="--i:2">
+<p>Hire our student consultants for business advice within ten weeks.</p>
+<div class="hero-cta">
+<a class="btn btn-white" href="submit.html">Submit an assignment<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="btn btn-ghost" href="students.html">Information for students</a>
+</div>
+</div>
+<div class="photos enter" style="--i:3">
+<div class="photo has-img"><img src="../assets/illustration-intake.svg" alt="Illustration: a student team at an intake with a client"></div>
+<div class="photo has-img"><img src="../assets/illustration-posters.svg" alt="Illustration: students at a poster session"></div>
+<div class="photo has-img"><img src="../assets/illustration-presentation.svg" alt="Illustration: final presentation to the client"></div>
+</div>
+</div>
+</div>
+
+<!-- key figures -->
+<div class="after-hero">
+<div class="wrap">
+<div class="stats rv-group">
+<div class="stat rv"><div class="stat-n"><span data-count="4">4</span></div><div class="stat-l">students per team</div></div>
+<div class="stat rv"><div class="stat-n"><span data-count="10">10</span></div><div class="stat-l">weeks from assignment start to final advice</div></div>
+<div class="stat rv"><div class="stat-n"><span data-count="4">4</span></div><div class="stat-l">starts per year</div></div>
+<div class="stat rv"><div class="stat-n"><small>from</small><span>€2,000</span></div><div class="stat-l">depending on the size of your organisation</div></div>
+</div>
+</div>
+</div>
+
+<!-- clients -->
+<section id="clients" class="clients">
+<div class="wrap"><div class="sec-head rv"><h2 class="disp">Clients include</h2></div></div>
+<div class="brc-car rv" role="img" aria-label="Clients include Gasunie, UMCG, Provincie Groningen, Rabobank, Resato Hydrogen Technology, FC Groningen in de Maatschappij, Zilveren Kruis / Achmea, VNO-NCW MKB Noord, Spanninga, IT Hub Hoogeveen">
+<div class="brc-marq">
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+</div>
+<div class="brc-marq brc-rev">
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+</div>
+</div>
+</section>
+
+<!-- for you: audience switch -->
+<section id="for-you" class="sec">
+<div class="wrap">
+<div class="sec-head rv" style="align-items:center">
+<h2 class="disp">What is in it for you?</h2>
+<div class="switch" id="switch" role="group" aria-label="Choose your audience">
+<button type="button" id="btn-org" aria-pressed="true">Organisations</button>
+<button type="button" id="btn-student" aria-pressed="false">Students</button>
+</div>
+</div>
+<div id="panel-org">
+<div class="cards4 rv-group">
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="3.5"></circle><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"></path></svg></div><h3>Advice for your specific question</h3><p>Practical recommendations with implementation steps, in one report.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></div><h3>A fresh outside view</h3><p>Four students trained in current theory and research methods.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg></div><h3>Professional supervision</h3><p>Every team is guided by a lecturer with consulting experience.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"></circle><path d="M2.5 12h19M12 2.5c3.2 3.4 3.2 15.6 0 19M12 2.5c-3.2 3.4-3.2 15.6 0 19"></path></svg></div><h3>International reach</h3><p>Dutch and international students, useful for questions across borders.</p></div>
+</div>
+</div>
+<div id="panel-student" hidden>
+<div class="cards4">
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"></rect><path d="M8.5 7V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V7M2.5 13h19"></path></svg></div><h3>A real client, not a case</h3><p>You lead the intake, the research and the final presentation yourself.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.5"></circle><circle cx="19" cy="6" r="2.5"></circle><circle cx="12" cy="18" r="2.5"></circle><path d="M7.5 6h9M6.3 8.2l4.4 7.6M17.7 8.2l-4.4 7.6"></path></svg></div><h3>Skills and a network</h3><p>Workshops train practical consulting skills, and you get to know companies, consultants and fellow students.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5"></rect><path d="M3 10h18M8 2.5v4M16 2.5v4M8.5 15.5l2.5 2.5 4.5-5"></path></svg></div><h3>Weekly supervision</h3><p>An experienced supervisor meets your team every week.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M1.5 9L12 4l10.5 5L12 14z"></path><path d="M6 11.5V16c2 2.2 10 2.2 12 0v-4.5M22.5 9v5.5"></path></svg></div><h3>5 EC elective</h3><p>EBM151A05, an elective in many FEB master programmes. <a href="https://ocasys.rug.nl/current/catalog/course/EBM151A05">Ocasys ↗</a></p></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- example assignments -->
+<section id="products" class="sec" style="padding-top:0">
+<div class="wrap">
+<div class="rv" style="margin-bottom:2.25rem">
+<h2 class="disp">Illustrative assignments</h2>
+<p class="muted lead">Our assignments end with an advice report, a presentation, and more. Click the example assignments for more information.</p>
+</div>
+<div class="cards3 rv-group">
+<a class="pcard rv" href="product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Support study</h3><p>Is there enough support among customers, employees or residents for a planned action, product or service? In Dutch: draagvlakonderzoek.</p></a>
+<a class="pcard rv" href="product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Market exploration</h3><p>How large is a new market, region or country, who is already there, and how could you enter it?</p></a>
+<a class="pcard rv" href="product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Customer and employee insight</h3><p>A survey or interview study into satisfaction, needs or behaviour, with conclusions you can act on.</p></a>
+<a class="pcard rv" href="product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Growth and positioning advice</h3><p>Where can your organisation grow, and how should it present itself against competitors?</p></a>
+<a class="pcard rv" href="product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Process and digitisation scan</h3><p>A process or supply chain mapped out, with the places where it can be made simpler or digital.</p></a>
+<a class="pcard pcard-dark rv" href="submit.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Something else?</h3><p>Describe your question in the form. We will tell you whether it fits a ten-week project. <u>Submit an assignment</u></p></a>
+</div>
+</div>
+</section>
+
+<!-- the ten weeks -->
+<section id="weeks" class="weeks sec">
+<div class="wrap weeks-in">
+<div class="weeks-side rv">
+<h2 class="disp">The ten weeks</h2>
+<p>Before the block starts we discuss your question and agree on a start date. Projects start four times a year. During the project the team is in touch with you every week.</p>
+<div class="wk" aria-hidden="true"><span class="wk-l">Week</span><span class="wk-n" id="wk-n">1–10</span></div>
+</div>
+<ol class="tl rv" id="tl">
+<li class="on" data-wk="1"><span class="tl-tag">Week 1</span><div class="tl-body"><strong>Intake at your organisation.</strong> <span>The team and their supervisor visit to understand the problem.</span></div></li>
+<li class="on" data-wk="3"><span class="tl-tag">Week 3</span><div class="tl-body"><strong>Action plan.</strong> <span>Research question, approach and planning, for your approval.</span></div></li>
+<li class="on" data-wk="4–7"><span class="tl-tag">Weeks 4–7</span><div class="tl-body">Desk research, data collection and analysis.</div></li>
+<li class="on" data-wk="8"><span class="tl-tag">Week 8</span><div class="tl-body"><strong>Preliminary advice.</strong> <span>First results, and your feedback before the team finalises.</span></div></li>
+<li class="on" data-wk="9–10"><span class="tl-tag">Weeks 9–10</span><div class="tl-body"><strong>Report and presentation.</strong> <span>The final advice report, presented to your decision-makers.</span></div></li>
+</ol>
+</div>
+</section>
+
+<!-- costs -->
+<section id="costs" class="costs sec">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">What it costs, and why</h2></div>
+<div class="cards3 rv-group">
+<div class="price rv"><div class="price-for">Start-ups and very small businesses</div><div class="price-n">€2,000</div><div class="price-d">Start-ups, sole proprietors and businesses with fewer than 10 employees</div></div>
+<div class="price rv"><div class="price-for">Partner rate</div><div class="price-n">€3,000</div><div class="price-d">For returning clients and organisations in our network</div></div>
+<div class="price rv"><div class="price-for">Standard and large organisations</div><div class="price-n">€4,000</div><div class="price-d">Companies with 10 or more employees, public bodies and institutions</div></div>
+</div>
+<div class="covers rv-group">
+<div class="rv"><strong>Supervision.</strong> <span>Our experienced consultants guide every team.</span></div>
+<div class="rv"><strong>Workshops.</strong> <span>Lecturers train the students each week in consulting and research.</span></div>
+<div class="rv"><strong>Travel.</strong> <span>Students can declare travel costs for client visits and field research.</span></div>
+<div class="rv"><strong>Subsidies.</strong> <span>You may be eligible for one, such as the SME subsidy. Ask us.</span></div>
+</div>
+</div>
+</section>
+
+<!-- people -->
+<section id="people" class="sec">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">Our team</h2></div>
+<div class="team rv-group">
+<div class="person rv">
+<div><strong>Drs. Gert Haanstra</strong><br><span class="muted">Course coordinator</span></div>
+<div class="person-links">
+<a class="ibtn" href="https://www.rug.nl/staff/g.f.haanstra/" title="Homepage" aria-label="Homepage of Drs. Gert Haanstra"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="https://nl.linkedin.com/in/gerthaanstra" title="LinkedIn" aria-label="LinkedIn profile of Drs. Gert Haanstra"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Dr. Daniël Speldekamp</strong><br><span class="muted">External relations</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage of Dr. Daniël Speldekamp"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Dr. Daniël Speldekamp"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+<a class="ibtn" href="#" title="Google Scholar" aria-label="Google Scholar profile of Dr. Daniël Speldekamp"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11.5V16c2 2 10 2 12 0v-4.5"></path><path d="M22 9v5"></path></svg></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Alieda Reijinga</strong><br><span class="muted">Back office</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage of Alieda Reijinga"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Alieda Reijinga"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Drs. Bas Baalmans</strong><br><span class="muted">Lecturer, supervisor</span></div>
+<div class="person-links">
+<a class="ibtn" href="https://www.rug.nl/staff/b.s.baalmans/" title="Homepage" aria-label="Homepage of Drs. Bas Baalmans"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Drs. Bas Baalmans"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Drs. Mariette Zweers</strong><br><span class="muted">Lecturer, supervisor</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage of Drs. Mariette Zweers"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Drs. Mariette Zweers"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Ivan Palko, MSc</strong><br><span class="muted">Lecturer, supervisor</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage of Ivan Palko, MSc"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Ivan Palko, MSc"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Dr. Teye Marra</strong><br><span class="muted">Lecturer, supervisor</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage of Dr. Teye Marra"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Dr. Teye Marra"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+<a class="ibtn" href="#" title="Google Scholar" aria-label="Google Scholar profile of Dr. Teye Marra"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11.5V16c2 2 10 2 12 0v-4.5"></path><path d="M22 9v5"></path></svg></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Evelien Wolthuis, MSc</strong><br><span class="muted">Guest lecturer</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage of Evelien Wolthuis, MSc"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Evelien Wolthuis, MSc"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Drs. Roel Stolvoort</strong><br><span class="muted">Guest lecturer</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage of Drs. Roel Stolvoort"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn profile of Drs. Roel Stolvoort"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+</div>
+<div class="proof rv-group">
+<figure class="quote rv">
+<blockquote>“It didn’t take the students long to get the feel of our company, the management and our activities.”</blockquote>
+<figcaption>[CLIENT NAME, ROLE, ORGANISATION]</figcaption>
+</figure>
+<a class="pcard rv" href="#"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
+<div class="meta" style="font-weight:600">Case description</div>
+<h3 style="font-size:1.5rem; line-height:1.2">[CASE TITLE: the client's question in one line]</h3>
+<p>[TWO SENTENCES: what the team researched and what the client did with the advice]</p>
+<div class="meta">[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]</div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- contact -->
+<footer id="contact" class="foot">
+<div class="foot-box">
+<div class="wrap foot-in">
+<div class="foot-top rv">
+<h2>Bring us your question.</h2>
+<div class="foot-cta">
+<a class="btn btn-white" href="submit.html" style="color:#17181c">Submit an assignment<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<div>Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
+</div>
+</div>
+<div class="foot-base">
+<a class="rug" href="https://www.rug.nl"><img src="../assets/rug-logo-en.svg" alt="University of Groningen"></a>
+<span style="flex: 1 1 20rem">BRC is a course of the Faculty of Economics and Business, <a href="https://www.rug.nl">University of Groningen</a>. This website is maintained by the BRC team and is not part of rug.nl.<span style="display: block; margin-top: 6px">Built with Claude Fable 5.2</span></span>
+<span>Nettelbosje 2, 9747 AE Groningen</span>
+</div>
+</div>
+</div>
+</footer>
+
+</div>
+<script>
+(function () {
+  var doc = document;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function $(id) { return doc.getElementById(id); }
+  function all(sel, el) { return Array.prototype.slice.call((el || doc).querySelectorAll(sel)); }
+
+  // audience switch (Organisations / Students)
+  var sw = $("switch"), bo = $("btn-org"), bs = $("btn-student"), po = $("panel-org"), ps = $("panel-student");
+  function pick(org) {
+    po.hidden = !org; ps.hidden = org;
+    bo.setAttribute("aria-pressed", String(org)); bs.setAttribute("aria-pressed", String(!org));
+    sw.classList.toggle("is-student", !org);
+    var panel = org ? po : ps;
+    all(".card", panel).forEach(function (c, i) { c.style.setProperty("--i", i); c.classList.add("in"); });
+    panel.classList.remove("is-swapping"); void panel.offsetWidth; panel.classList.add("is-swapping");
+  }
+  bo.addEventListener("click", function () { pick(true); });
+  bs.addEventListener("click", function () { pick(false); });
+
+  // reveal on scroll: elements with class "rv" fade in once; inside an "rv-group" they follow each other
+  all(".rv-group").forEach(function (g) {
+    all(".rv", g).forEach(function (el, i) { el.style.setProperty("--i", i); });
+  });
+  function countUp(el) {
+    var end = parseInt(el.getAttribute("data-count"), 10), t0 = null;
+    if (reduce || !end) return;
+    function tick(t) {
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / 900);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(tick);
+    }
+    el.textContent = "0"; requestAnimationFrame(tick);
+  }
+  function show(el) {
+    if (el.classList.contains("in")) return;
+    el.classList.add("in");
+    all("[data-count]", el).forEach(countUp);
+  }
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    all(".rv").forEach(function (el) { io.observe(el); });
+  } else { all(".rv").forEach(function (el) { el.classList.add("in"); }); }
+
+  // header state, menu highlight and the ten-weeks timeline: all driven by one scroll handler
+  var hdr = $("hdr"), tl = $("tl"), items = all("li", tl), wk = $("wk-n");
+  var links = all(".nav-link"), secs = links.map(function (a) { return $(a.getAttribute("href").slice(1)); });
+  if (!reduce) items.forEach(function (li) { li.classList.remove("on"); });
+  function frame() {
+    ticking = false;
+    var vh = window.innerHeight;
+    hdr.classList.toggle("is-stuck", window.scrollY > 8);
+    var cur = -1;
+    secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < vh * 0.4) cur = i; });
+    if (cur >= 0 && secs[cur].getBoundingClientRect().bottom < vh * 0.25 && cur === secs.length - 1) cur = -1;
+    links.forEach(function (a, i) { if (i === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    if (reduce) return;
+    var r = tl.getBoundingClientRect(), inset = 12;
+    var len = items[items.length - 1].getBoundingClientRect().top + 17 - r.top - inset;  // the line ends at the last dot
+    tl.style.setProperty("--rail", len + "px");
+    var p = Math.max(0, Math.min(1, (vh * 0.62 - r.top - inset) / len));
+    tl.style.setProperty("--p", p.toFixed(4));
+    var fillY = r.top + inset + p * len, label = items[0].getAttribute("data-wk");
+    items.forEach(function (li) {
+      var on = li.getBoundingClientRect().top + 17 <= fillY + 1;
+      li.classList.toggle("on", on);
+      if (on) label = li.getAttribute("data-wk");
+    });
+    if (wk.textContent !== label) wk.textContent = label;
+  }
+  var ticking = false;
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  frame();
+
+  // typewriter headline
+  if (reduce) return;
+  var phrases = ['Real Consultants.', 'Real Answers.', 'Real Progress.', 'Fresh Perspectives.', 'Ten Weeks.'];
+  var el = $("typed"), i = 0, deleting = true;
+  function step() {
+    var full = phrases[i], cur = el.textContent, wait = 45;
+    if (deleting) {
+      if (cur.length > 0) { el.textContent = cur.slice(0, -1); wait = 28; }
+      else { deleting = false; i = (i + 1) % phrases.length; wait = 250; }
+    } else if (cur.length < full.length) { el.textContent = full.slice(0, cur.length + 1); wait = 60; }
+    else { deleting = true; wait = 2200; }
+    setTimeout(step, wait);
+  }
+  setTimeout(step, 2200);
+})();
+</script>
+</body>
+</html>

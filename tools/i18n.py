@@ -1,4 +1,5 @@
-"""Step 2 of 2: add the language switch and AI-disclosure line, and write the Dutch pages to nl/.
+"""Step 2 of 2: add the language switch and AI-disclosure line; write the Dutch pages to the site root
+(Dutch is the default language) and the English pages to en/.
 
 Run from the repository root, after tools/build_site.py:  python3 tools/i18n.py
 Dutch wording lives in tools/nl.json (English text -> Dutch text).
@@ -52,24 +53,30 @@ def tr_js(js):
         v=m.group(1)
         return "'"+D[v].replace("'","\\'")+"'" if v in D else m.group(0)
     return re.sub(r"'([^'\n]*)'",f,js)
-os.makedirs(OUT+'/nl',exist_ok=True)
+BUILD=os.path.join(ROOT,'tools','.build')   # English pages written by build_site.py
+os.makedirs(OUT+'/en',exist_ok=True); os.makedirs(OUT+'/nl',exist_ok=True)
+# TEMPORARY forwarding pages: Dutch used to live in nl/. Delete the nl/ folder (and STUB below) once the site is approved.
+STUB='<!doctype html>\n<!-- TEMPORARY forwarding page. Delete the whole nl/ folder after approval. -->\n<html lang="nl">\n<head>\n<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">\n<title>BRC</title>\n<link rel="canonical" href="../%s">\n<meta http-equiv="refresh" content="0; url=../%s">\n</head>\n<body>\n<p><a href="../%s">Deze pagina is verhuisd. Klik hier als u niet automatisch wordt doorgestuurd.</a></p>\n</body>\n</html>\n'
 miss=set()
 for name in ['index.html','submit.html','product.html','students.html']:
-    t=prep(name,open(OUT+'/'+name).read())
-    alt='<link rel="alternate" hreflang="en" href="%s">\n<link rel="alternate" hreflang="nl" href="%s">\n</head>'
-    en=t.replace(FLAGMARK,flag('nl/'+name,'nl','Nederlands',NLFLAG))
-    en=sub1(en,'</head>',alt%(name,'nl/'+name))
-    # Dutch
+    t=prep(name,open(BUILD+'/'+name).read())
+    alt='<link rel="alternate" hreflang="nl" href="%s">\n<link rel="alternate" hreflang="en" href="%s">\n<link rel="alternate" hreflang="x-default" href="%s">\n</head>'
+    # English: in en/
+    en=t.replace(FLAGMARK,flag('../'+name,'nl','Nederlands',NLFLAG))
+    en=en.replace('"assets/','"../assets/')
+    en=sub1(en,'</head>',alt%('../'+name,name,'../'+name))
+    # Dutch: the default, at the site root
     parts=re.split(r'(<script>.*?</script>|<style>.*?</style>)',t,flags=re.S)
     for i,p in enumerate(parts):
         if p.startswith('<script>'): parts[i]=tr_js(p)
         elif p.startswith('<style>'): pass
         else: parts[i]=tr_attr(tr_text(p,miss),miss)
     nl=''.join(parts)
-    nl=nl.replace(FLAGMARK,flag('../'+name,'en','English',UKFLAG))
+    nl=nl.replace(FLAGMARK,flag('en/'+name,'en','English',UKFLAG))
     nl=sub1(nl,'<html lang="en">','<html lang="nl">')
-    nl=nl.replace('"assets/','"../assets/').replace('rug-logo-en.svg','rug-logo-nl.svg')
+    nl=nl.replace('rug-logo-en.svg','rug-logo-nl.svg')
     nl=re.sub(r'€(\d),(\d{3})',r'€ \1.\2',nl)
-    nl=sub1(nl,'</head>',alt%('../'+name,name))
-    open(OUT+'/'+name,'w').write(en); open(OUT+'/nl/'+name,'w').write(nl)
+    nl=sub1(nl,'</head>',alt%(name,'en/'+name,name))
+    open(OUT+'/'+name,'w').write(nl); open(OUT+'/en/'+name,'w').write(en)
+    open(OUT+'/nl/'+name,'w').write(STUB%(name,name,name))
 print('untranslated:');[print('  ',m) for m in sorted(miss)]

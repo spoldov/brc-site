@@ -6,11 +6,12 @@ Mock-up of the website for Business Research & Consulting (BRC), a course of the
 
 ## Pages
 
-- `index.html`: homepage
+- `index.html`: homepage (Dutch, the default language)
 - `submit.html`: three-step assignment form (mock-up only; nothing is sent)
 - `product.html`: placeholder for the example-assignment pages
 - `students.html`: placeholder for the information-for-students page
-- `nl/`: the same four pages in Dutch. "EN / NL" in the header switches language.
+- `en/`: the same four pages in English. "NL / EN" in the header switches language.
+- `nl/`: TEMPORARY forwarding pages to the Dutch pages at the root (Dutch used to live here). Delete this folder after approval.
 
 ## Versions
 
@@ -33,6 +34,6 @@ The pages are generated from the sources in `tools/`. To change the site, edit t
 - The Dutch text is a first translation and needs proofreading.
 - Six client logos are still missing (the carousel shows the name instead).
 - Team links are placeholders except two homepages and one LinkedIn profile.
-- The three homepage photos are placeholders.
+- The three homepage pictures are temporary illustrations (`assets/illustration-*.svg`); replace with real photos.
 - Fonts load from Google Fonts; consider hosting them locally.
 - Pages carry a `noindex` tag so search engines skip the mock-up. Remove it at launch.
