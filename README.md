@@ -10,7 +10,11 @@ Mock-up of the website for Business Research & Consulting (BRC), a course of the
 - `submit.html`: three-step assignment form (mock-up only; nothing is sent)
 - `product.html`: placeholder for the example-assignment pages
 - `students.html`: placeholder for the information-for-students page
-- `nl/`: the same four pages in Dutch. The flag in the header switches language.
+- `nl/`: the same four pages in Dutch. "EN / NL" in the header switches language.
+
+## Versions
+
+See `CHANGELOG.md`. Each finished version is kept as a branch named `archive/vX.Y.Z` that is never changed afterwards.
 
 Plain HTML with inline styles and a little JavaScript. Open `index.html` in a browser to view.
 

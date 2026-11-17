@@ -2,239 +2,461 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>BRC website, variant C: Ten weeks</title>
-<script src="./support.js"></script>
+<title>BRC website, homepage (design v2)</title>
 </head>
 <body>
 <x-dc>
 <helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Inter:wght@400;500;600&display=swap">
+<script>document.documentElement.classList.add("js")</script>
 <style>
+/* ---------- BRC homepage, design v2 ----------
+   Colours and sizes are set once here. To change the red, change --red and --red-deep. */
+:root{
+  --red:#dc002d; --red-deep:#a8001f; --red-ink:#7d0017;
+  --ink:#17181c; --muted:#42464d; --line:#d9dce0; --tint:#f4f5f6; --white:#ffffff;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --hdr:4rem;
+}
+/* The whole page scales gently with the window: 16px base up to 1920px wide, growing to 22px on ultrawide and 4K screens.
+   All sizes below are in rem, so everything grows together. */
+html{font-size:clamp(16px, 0.42vw + 8px, 22px); scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr) + 1.5rem)}
 body{margin:0}
-a{color:#17181c}a:hover{color:#a80022}
+*,*::before,*::after{box-sizing:border-box}
+.page{font-family:Inter,'Segoe UI',Arial,sans-serif; color:var(--ink); background:var(--white); font-size:1.125rem; line-height:1.55; overflow-x:clip}
+.page a{color:var(--ink)}
+/* content column: 1280px at 1920 wide, and about 62% of the window on wider screens */
+.wrap{width:min(100% - 4rem, max(80rem, 62vw)); margin-inline:auto}
+.disp{font-family:Archivo,Arial,sans-serif; font-stretch:110%; font-weight:700; letter-spacing:-0.02em; line-height:1.02; margin:0}
+h2.disp{font-size:clamp(2rem, 3.4vw, 3.25rem)}
+h3{font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.375rem; line-height:1.15; margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.sec{padding:6.5rem 0}
+.sec-head{display:flex; flex-wrap:wrap; gap:1.25rem 2.5rem; align-items:flex-end; justify-content:space-between; margin-bottom:2.25rem}
+.lead{max-width:44rem; margin-top:0.875rem}
+:focus-visible{outline:3px solid var(--ink); outline-offset:3px; border-radius:4px}
+.hero :focus-visible,.foot :focus-visible,.weeks :focus-visible{outline-color:var(--white)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex; align-items:center; gap:0.5rem; height:3.25rem; padding:0 1.625rem; border-radius:999px; font-weight:600; font-size:1.0625rem; text-decoration:none; border:2px solid transparent; transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .2s, color .2s, border-color .2s}
+.btn svg{width:1.1em; height:1.1em; transition:transform .25s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn:hover svg{transform:translateX(4px)}
+.page a.btn-white{background:var(--white); color:var(--ink); box-shadow:0 10px 30px -12px rgba(60,0,12,.55)}
+.page a.btn-white:hover{box-shadow:0 16px 34px -12px rgba(60,0,12,.7)}
+.page a.btn-ghost{color:var(--white); border-color:rgba(255,255,255,.75)}
+.page a.btn-ghost:hover{background:var(--white); color:var(--ink); border-color:var(--white)}
+
+/* ---------- header (option B: one line, stays at the top) ---------- */
+.hdr{position:fixed; inset:0 0 auto 0; z-index:50; height:var(--hdr); color:var(--white); transition:background-color .3s, box-shadow .3s, color .3s}
+.hdr-in{height:100%; display:flex; align-items:center; justify-content:space-between; gap:2rem}
+.page a.brand{display:flex; align-items:center; gap:0.875rem; text-decoration:none; color:inherit}
+.logo{display:flex; flex-direction:column; align-items:center; gap:3px}
+.logo img{display:block; width:3rem; height:auto}
+.logo .crown-red{display:none}
+.logo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:1.4375rem; line-height:.85; letter-spacing:-0.02em}
+.brand-name{font-size:0.9375rem; font-weight:600; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:1.875rem; font-weight:600; font-size:0.9375rem; white-space:nowrap}
+.page .nav a{color:inherit; text-decoration:none}
+.nav-link{position:relative; padding:0.5rem 0}
+.nav-link::after{content:""; position:absolute; left:0; right:0; bottom:0.125rem; height:2px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease)}
+.nav-link:hover::after,.nav-link[aria-current="true"]::after{transform:scaleX(1)}
+.page .nav a.nav-cta{display:inline-flex; align-items:center; height:2.5rem; padding:0 1.25rem; border-radius:999px; background:var(--white); color:var(--ink); transition:background-color .3s, color .3s, transform .25s var(--ease)}
+.nav-cta:hover{transform:translateY(-1px)}
+/* after scrolling past the hero: light, slightly see-through bar */
+.hdr.is-stuck{background:rgba(255,255,255,.86); -webkit-backdrop-filter:saturate(1.6) blur(14px); backdrop-filter:saturate(1.6) blur(14px); color:var(--ink); box-shadow:0 1px 0 var(--line), 0 12px 30px -22px rgba(23,24,28,.5)}
+.hdr.is-stuck .logo b{color:var(--red)}
+.hdr.is-stuck .crown-white{display:none}
+.hdr.is-stuck .crown-red{display:block}
+.page .hdr.is-stuck .nav a.nav-cta{background:var(--red); color:var(--white)}
+.hdr.is-stuck .nav-link[aria-current="true"]{color:var(--red)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; color:var(--white); padding:calc(var(--hdr) + 2.75rem) 0 0;
+  background:
+    radial-gradient(70rem 36rem at 105% 115%, rgba(60,0,14,.55), transparent 62%),
+    radial-gradient(50rem 30rem at -10% -30%, rgba(125,0,23,.5), transparent 60%),
+    linear-gradient(120deg, var(--red) 0%, #cf002a 45%, var(--red-deep) 100%)}
+.hero::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(rgba(255,255,255,.2) 1.1px, transparent 1.6px) 0 0/1.75rem 1.75rem;
+  -webkit-mask-image:linear-gradient(100deg, transparent 38%, #000 100%); mask-image:linear-gradient(100deg, transparent 38%, #000 100%)}
+.hero-in{position:relative; display:flex; flex-direction:column; gap:1.25rem}
+.eyebrow{font-size:0.8125rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase}
+.hero h1{margin:0; font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(3rem, 5.6vw, 6rem); line-height:.98; letter-spacing:-0.03em}
+.hero h1 > span{display:block; white-space:nowrap; min-height:1em}
+.brc-cursor{display:inline-block; width:.07em; height:.8em; margin-left:.08em; background:var(--white); vertical-align:baseline; animation:brc-blink 1s steps(1) infinite}
 @keyframes brc-blink{50%{opacity:0}}
-.brc-cursor{animation:brc-blink 1s steps(1) infinite}
-@media (prefers-reduced-motion: reduce){.brc-cursor{animation:none}}
-.pcard:hover,.pcard:focus-visible{outline-color:#dc002d !important;background:#dc002d !important;color:#ffffff !important}
-.ibtn .li-b{display:block}.ibtn .li-w{display:none}.ibtn:hover .li-b,.ibtn:focus-visible .li-b{display:none}.ibtn:hover .li-w,.ibtn:focus-visible .li-w{display:block}
-@keyframes brc-marq{to{transform:translateX(-50%)}}
-.brc-marq{animation:brc-marq 45s linear infinite}.brc-rev{animation-direction:reverse}
+.hero-row{display:flex; flex-wrap:wrap; gap:1.25rem 4rem; align-items:center; justify-content:space-between; margin-top:0.5rem}
+.hero-row p{font-size:1.3125rem; max-width:36em}
+.hero-cta{display:flex; flex-wrap:wrap; gap:0.75rem}
+.photos{position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:2.25rem; margin-bottom:-9rem}
+.photo{aspect-ratio:3/2; border-radius:1.25rem; overflow:hidden; background:#eceef0; border:1px dashed #7d838c; display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem; font-size:0.9375rem; color:var(--muted); box-shadow:0 30px 60px -30px rgba(23,24,28,.55); transition:transform .5s var(--ease), box-shadow .5s var(--ease)}
+.photo:hover{transform:translateY(-6px); box-shadow:0 40px 70px -30px rgba(23,24,28,.6)}
+/* when real photos are added: <div class="photo has-img"><img src="assets/..." alt="..."></div> */
+.photo.has-img{border:0; padding:0}
+.photo img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease)}
+.photo:hover img{transform:scale(1.05)}
+.after-hero{padding-top:9rem}
+/* entrance, once, on page load */
+@keyframes brc-up{from{opacity:0; transform:translateY(1.25rem)}to{opacity:1; transform:none}}
+.js .enter{animation:brc-up .8s var(--ease) both; animation-delay:calc(var(--i,0) * 90ms + 80ms)}
+
+/* ---------- key figures ---------- */
+.stats{display:grid; grid-template-columns:1fr 1fr 1fr 1.5fr; margin-top:3.25rem}
+.stat{padding:0.25rem 2rem; border-left:1px solid var(--line)}
+.stat:first-child{padding-left:0; border-left:0}
+.stat-n{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(2.75rem, 4.2vw, 4.25rem); line-height:1; letter-spacing:-0.03em; display:flex; align-items:baseline; gap:.2em; white-space:nowrap}
+.stat-n small{font-family:Inter,Arial,sans-serif; font-stretch:100%; font-size:1rem; font-weight:600; letter-spacing:0; color:var(--red)}
+.stat-l{margin-top:0.5rem; color:var(--muted); font-size:1rem; max-width:15em}
+
+/* ---------- clients ---------- */
+.clients{padding:4.5rem 0 0}
+.clients-label{display:flex; align-items:center; gap:1.25rem; font-size:0.8125rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin:0 0 1.5rem}
+.clients-label::after{content:""; flex:1; height:1px; background:var(--line)}
+.brc-car{overflow:hidden; display:flex; flex-direction:column; gap:0.875rem;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent)}
+.brc-marq{display:flex; gap:0.875rem; width:max-content; padding-right:0.875rem; animation:brc-marq 140s linear infinite}
+.brc-rev{animation-direction:reverse}
 .brc-car:hover .brc-marq{animation-play-state:paused}
-@media (prefers-reduced-motion: reduce){.brc-marq{animation:none}}
-.ibtn:hover,.ibtn:focus-visible{background:#dc002d;border-color:#dc002d !important;color:#ffffff !important}
-.pcard:hover h3,.pcard:focus-visible h3,.pcard:hover p,.pcard:focus-visible p,.pcard:hover div,.pcard:focus-visible div{color:#ffffff !important}
+@keyframes brc-marq{to{transform:translateX(-50%)}}
+.client{flex:none; width:13rem; height:5.25rem; background:var(--tint); border-radius:1rem; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.875rem 1.25rem; font-size:0.9375rem; line-height:1.3; transition:background-color .3s, transform .3s var(--ease)}
+.client:hover{background:#e9ebee; transform:translateY(-2px)}
+.client img{display:block; max-width:100%; max-height:100%; object-fit:contain}
+.client span{font-size:0.75rem; color:var(--muted)}
+
+/* ---------- for you ---------- */
+.switch{position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; background:#eceef0; border-radius:999px}
+.switch::before{content:""; position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); border-radius:999px; background:var(--ink); transition:transform .4s var(--ease)}
+.switch.is-student::before{transform:translateX(100%)}
+.switch button{position:relative; font:inherit; font-weight:600; min-height:3rem; padding:0 1.75rem; border:0; border-radius:999px; cursor:pointer; background:transparent; color:var(--ink); transition:color .3s}
+.switch button[aria-pressed="true"]{color:var(--white)}
+.cards4{display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem}
+.card{background:var(--tint); border-radius:1.25rem; padding:1.75rem; display:flex; flex-direction:column; gap:0.625rem; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s}
+.card:hover{transform:translateY(-4px); background:var(--white); box-shadow:0 0 0 1px var(--line), 0 24px 44px -26px rgba(23,24,28,.4)}
+.card p{color:var(--muted); font-size:1.0625rem}
+.ico{width:3rem; height:3rem; border-radius:0.875rem; background:var(--white); color:var(--red); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, color .35s}
+.ico svg{width:1.5rem; height:1.5rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.card:hover .ico{background:var(--red); color:var(--white)}
+@keyframes brc-swap{from{opacity:0; transform:translateY(.75rem)}to{opacity:1; transform:none}}
+.js .is-swapping .card{animation:brc-swap .5s var(--ease) both; animation-delay:calc(var(--i,0) * 60ms)}
+
+/* ---------- example assignments (clickable cards) ---------- */
+.cards3{display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem}
+.page a.pcard{position:relative; text-decoration:none; color:var(--ink); background:var(--white); border-radius:1.25rem; padding:1.75rem 1.75rem 2rem; display:flex; flex-direction:column; gap:0.625rem; box-shadow:inset 0 0 0 1.5px var(--ink); transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .25s, color .25s}
+.pcard h3{padding-right:3rem}
+.pcard p{color:var(--muted); font-size:1.0625rem; transition:color .25s}
+.pcard .meta{font-size:0.9375rem; color:var(--muted); transition:color .25s}
+.pcard .go{position:absolute; top:1.375rem; right:1.375rem; width:2.25rem; height:2.25rem; border-radius:999px; background:var(--tint); display:flex; align-items:center; justify-content:center; transition:background-color .25s, color .25s, transform .35s var(--ease)}
+.pcard .go svg{width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.page a.pcard:hover,.page a.pcard:focus-visible{background:var(--red); color:var(--white); box-shadow:inset 0 0 0 1.5px var(--red), 0 26px 44px -24px rgba(168,0,31,.7); transform:translateY(-4px)}
+.pcard:hover p,.pcard:focus-visible p,.pcard:hover .meta,.pcard:focus-visible .meta{color:var(--white)}
+.pcard:hover .go,.pcard:focus-visible .go{background:var(--white); color:var(--red); transform:translate(3px,-3px)}
+.page a.pcard-dark{background:var(--ink); color:var(--white)}
+.pcard-dark p{color:#d9dce0}
+.pcard-dark .go{background:#2d2f35}
+.pcard u{font-weight:600; text-underline-offset:3px}
+
+/* ---------- the ten weeks ---------- */
+.weeks{background:var(--ink); color:var(--white); position:relative; overflow:hidden}
+.weeks::before{content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(46rem 30rem at 12% 100%, rgba(220,0,45,.28), transparent 65%)}
+.weeks-in{position:relative; display:grid; grid-template-columns:5fr 6fr; gap:5rem; align-items:start}
+.weeks-side{position:sticky; top:calc(var(--hdr) + 3rem); display:flex; flex-direction:column; gap:1.25rem}
+.weeks-side p{color:#d9dce0; max-width:30em}
+.wk{display:flex; flex-direction:column; gap:0.75rem; margin-top:2.25rem; font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; letter-spacing:-0.04em; line-height:.9}
+.wk-l{font-size:1.125rem; letter-spacing:.09em; text-transform:uppercase; font-stretch:100%; font-weight:600; font-family:Inter,Arial,sans-serif; color:#ff5c7a}
+.wk-n{font-size:clamp(5rem, 8vw, 8.5rem); white-space:nowrap; font-variant-numeric:tabular-nums}
+.tl{position:relative; margin:0; padding:0; list-style:none}
+.tl::before,.tl::after{content:""; position:absolute; left:0.5rem; top:0.75rem; height:var(--rail, calc(100% - 1.5rem)); width:2px; border-radius:2px; background:#3a3d44}
+.tl::after{background:var(--red); transform-origin:top; transform:scaleY(var(--p,1)); box-shadow:0 0 18px rgba(220,0,45,.9)}
+.tl li{position:relative; padding:0 0 2.75rem 3.25rem; display:grid; grid-template-columns:9.5rem 1fr; gap:1.5rem; align-items:start}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:""; position:absolute; z-index:1; left:0; top:0.5rem; width:1.125rem; height:1.125rem; border-radius:999px; background:var(--ink); border:2px solid #7d838c; transition:background-color .4s, border-color .4s, box-shadow .4s}
+.tl-tag{justify-self:start; font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.125rem; white-space:nowrap; padding:0.25rem 0.75rem; border-radius:0.5rem; background:var(--red); transition:background-color .4s, color .4s}
+.tl-body{color:#d9dce0; transition:opacity .4s}
+.tl-body strong{color:var(--white)}
+.tl li.on::before{background:var(--red); border-color:var(--red); box-shadow:0 0 0 6px rgba(220,0,45,.25)}
+.js .tl li:not(.on) .tl-tag{background:#2d2f35; color:#a9aeb6}
+.js .tl li:not(.on) .tl-body{opacity:.45}
+
+/* ---------- costs ---------- */
+.costs{background:var(--tint)}
+.price{background:var(--white); border-radius:1.25rem; padding:2rem; display:flex; flex-direction:column; gap:0.5rem; box-shadow:0 1px 0 var(--line), 0 22px 40px -30px rgba(23,24,28,.35); transition:transform .35s var(--ease), box-shadow .35s var(--ease)}
+.price:hover{transform:translateY(-4px); box-shadow:0 1px 0 var(--line), 0 30px 50px -28px rgba(23,24,28,.45)}
+.price-for{font-weight:600}
+.price-n{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:3.75rem; letter-spacing:-0.03em; line-height:1.05}
+.price-n::after{content:""; display:block; width:2.5rem; height:4px; border-radius:4px; background:var(--red); margin:0.75rem 0 0.375rem}
+.price-d{color:var(--muted); font-size:1rem}
+.covers{display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--line)}
+.covers span{color:var(--muted)}
+
+/* ---------- team ---------- */
+.team{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem}
+.person{background:var(--tint); border-radius:1.25rem; padding:1.125rem 1.25rem 1.125rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; font-size:1.0625rem; line-height:1.35; transition:background-color .3s}
+.person:hover{background:#eceef0}
+.person-links{display:flex; gap:0.375rem; flex:none}
+.page a.ibtn{width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center; border-radius:999px; border:1.5px solid #7d838c; color:var(--ink); transition:background-color .2s, border-color .2s, color .2s, transform .25s var(--ease)}
+.ibtn svg{width:1.125rem; height:1.125rem}
+.ibtn img{width:1.0625rem; height:auto}
+.ibtn .li-b{display:block}.ibtn .li-w{display:none}
+.ibtn:hover .li-b,.ibtn:focus-visible .li-b{display:none}.ibtn:hover .li-w,.ibtn:focus-visible .li-w{display:block}
+.page a.ibtn:hover,.page a.ibtn:focus-visible{background:var(--red); border-color:var(--red); color:var(--white); transform:translateY(-2px)}
+.proof{display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:1.25rem}
+.quote{position:relative; margin:0; background:var(--tint); border-radius:1.25rem; padding:2.25rem 2.25rem 2rem 5.5rem; display:flex; flex-direction:column; gap:1rem}
+.quote::before{content:"\201C"; position:absolute; left:1.75rem; top:1rem; font-family:Archivo,Arial,sans-serif; font-weight:800; font-size:6rem; line-height:1; color:var(--red)}
+.quote blockquote{margin:0; font-family:Archivo,Arial,sans-serif; font-weight:600; font-size:1.5rem; line-height:1.3}
+.quote figcaption{color:var(--muted); font-size:1rem}
+
+/* ---------- footer ---------- */
+.foot{padding:0 1rem 1rem}
+.foot-box{position:relative; overflow:hidden; color:var(--white); border-radius:1.75rem; padding:5rem 0 2.25rem;
+  background:
+    radial-gradient(60rem 30rem at 100% 120%, rgba(60,0,14,.55), transparent 62%),
+    linear-gradient(120deg, var(--red) 0%, #cf002a 45%, var(--red-deep) 100%)}
+.foot-box::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(rgba(255,255,255,.2) 1.1px, transparent 1.6px) 0 0/1.75rem 1.75rem;
+  -webkit-mask-image:linear-gradient(100deg, transparent 45%, #000 100%); mask-image:linear-gradient(100deg, transparent 45%, #000 100%)}
+.foot-in{position:relative; display:flex; flex-direction:column; gap:3.5rem}
+.foot-top{display:flex; flex-wrap:wrap; gap:2rem 4rem; align-items:flex-end; justify-content:space-between}
+.foot h2{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(2.5rem, 5vw, 5.25rem); letter-spacing:-0.03em; line-height:.98; margin:0}
+.foot-cta{display:flex; flex-direction:column; gap:1rem; align-items:flex-start}
+.page .foot a{color:var(--white)}
+.foot-base{border-top:1px solid rgba(255,255,255,.5); padding-top:1.5rem; display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:center; justify-content:space-between; font-size:0.9375rem}
+.rug{flex:none; background:var(--white); border-radius:0.625rem; padding:0.875rem 1.125rem; display:block}
+.rug img{display:block; width:13.75rem; height:auto}
+
+/* ---------- reveal on scroll (only when JavaScript runs) ---------- */
+.js .rv{opacity:0; transform:translateY(1.5rem); transition:opacity .8s var(--ease), transform .8s var(--ease); transition-delay:calc(var(--i,0) * 70ms)}
+.js .rv.in{opacity:1; transform:none}
+
+/* ---------- narrower windows: keep things usable until the phone/tablet version is designed ---------- */
+@media (max-width:1180px){
+  .hdr{position:absolute; height:auto; padding:0.625rem 0}
+  .hdr-in,.nav{flex-wrap:wrap; gap:0.5rem 1.5rem}
+  .hero{padding-top:9rem}
+  .hero h1 > span{white-space:normal}
+  .cards4,.stats,.covers{grid-template-columns:repeat(2,1fr); gap:1.25rem}
+  .stat{border-left:0; padding-left:0}
+  .cards3,.team,.photos,.proof{grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr))}
+  .weeks-in{grid-template-columns:1fr; gap:3rem}
+  .weeks-side{position:static}
+  .tl li{grid-template-columns:1fr; gap:0.5rem}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .brc-cursor,.brc-marq,.js .enter,.js .is-swapping .card{animation:none}
+  .js .rv{opacity:1; transform:none; transition:none}
+  .btn,.card,.pcard,.price,.photo,.photo img,.ibtn,.client{transition:none}
+}
 </style>
 </helmet>
-<div style="font-family: Inter, 'Segoe UI', Arial, sans-serif; color: #17181c; background: #ffffff; font-size: 18px; line-height: 1.55">
+<div class="page">
 
-<!-- header + hero, one red block -->
-<div style="background: {{accent}}; color: #ffffff">
-<header style="max-width: 1200px; margin: 0 auto; padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center; justify-content: space-between">
-<a href="#top" aria-label="BRC, Business Research &amp; Consulting, home" style="text-decoration: none; color: #ffffff; display: flex; align-items: center; gap: 14px">
-<span style="display: flex; flex-direction: column; align-items: center; gap: 3px"><img src="/_blob/7f6c0b293b5ca221ab8dca08d463cfec" alt="" style="display: block; width: 58px; height: auto"><span style="font-family: Archivo, Arial, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 28px; line-height: 0.85; letter-spacing: -0.02em">BRC</span></span>
-<span style="font-size: 14px; line-height: 1.25; font-weight: 500">Business Research &amp; Consulting<br>Faculty of Economics and Business · University of Groningen</span>
+<!-- header -->
+<header class="hdr" id="hdr">
+<div class="wrap hdr-in">
+<a class="brand" href="#top" aria-label="BRC, Business Research &amp; Consulting, home">
+<span class="logo"><img class="crown-white" src="/_blob/7f6c0b293b5ca221ab8dca08d463cfec" alt=""><img class="crown-red" src="/_blob/1897d917baed1cc5e56f1da94adf13a1" alt=""><b>BRC</b></span>
+<span class="brand-name">Business Research &amp; Consulting</span>
 </a>
-<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 4px 28px; align-items: center; font-weight: 600; font-size: 16px">
-<a href="#for-you" style="color: #ffffff; text-decoration: none; padding: 12px 0">For you</a>
-<a href="#weeks" style="color: #ffffff; text-decoration: none; padding: 12px 0">The ten weeks</a>
-<a href="#costs" style="color: #ffffff; text-decoration: none; padding: 12px 0">Costs</a>
-<a href="#people" style="color: #ffffff; text-decoration: none; padding: 12px 0">People</a>
-<a href="#contact" style="text-decoration: none; background: #ffffff; color: #17181c; padding: 12px 22px; border-radius: 999px">Get in touch</a>
+<nav class="nav" aria-label="Main">
+<a class="nav-link" href="#for-you">For you</a>
+<a class="nav-link" href="#weeks">The ten weeks</a>
+<a class="nav-link" href="#costs">Costs</a>
+<a class="nav-link" href="#people">People</a>
+<a class="nav-cta" href="#contact">Get in touch</a>
 </nav>
+</div>
 </header>
-<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 28px 32px 80px; display: flex; flex-direction: column; gap: 16px">
-<h1 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 112%; font-weight: 800; font-size: clamp(32px, 4.4vw, 60px); line-height: 1; letter-spacing: -0.025em" aria-label="Real Clients, Real Consultants."><span aria-hidden="true">Real Clients,</span> <span aria-hidden="true" style="display: inline-block; white-space: nowrap; min-height: 1em">{{typed}}<span class="brc-cursor" style="display: inline-block; width: 0.07em; height: 0.82em; margin-left: 0.08em; background: #ffffff; vertical-align: baseline"></span></span></h1>
-<div style="display: flex; flex-wrap: wrap; gap: 20px 64px; align-items: flex-end; justify-content: space-between">
-<p style="margin: 0; font-size: 19px; max-width: 32em">Hire our student consultants for business advice within ten weeks.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 12px">
-<a href="Submit.dc.html" style="text-decoration: none; background: #ffffff; color: #17181c; font-weight: 600; padding: 13px 24px; border-radius: 999px">Submit an assignment</a>
-<a href="Students.dc.html" style="text-decoration: none; color: #ffffff; border: 2px solid #ffffff; font-weight: 600; padding: 11px 22px; border-radius: 999px">Information for students</a>
+
+<!-- hero -->
+<div class="hero" id="top">
+<div class="wrap hero-in">
+<div class="eyebrow enter" style="--i:0">Faculty of Economics and Business · University of Groningen</div>
+<h1 class="enter" style="--i:1" aria-label="Real Clients, Real Consultants."><span aria-hidden="true">Real Clients,</span> <span aria-hidden="true">{{typed}}<span class="brc-cursor"></span></span></h1>
+<div class="hero-row enter" style="--i:2">
+<p>Hire our student consultants for business advice within ten weeks.</p>
+<div class="hero-cta">
+<a class="btn btn-white" href="Submit.dc.html">Submit an assignment<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="btn btn-ghost" href="Students.dc.html">Information for students</a>
+</div>
+</div>
+<div class="photos enter" style="--i:3">
+<div class="photo">[PHOTO: team at a client intake]</div>
+<div class="photo">[PHOTO: poster session]</div>
+<div class="photo">[PHOTO: final presentation]</div>
+</div>
+</div>
+</div>
+
+<!-- key figures -->
+<div class="after-hero">
+<div class="wrap">
+<div class="stats rv-group">
+<div class="stat rv"><div class="stat-n"><span data-count="4">4</span></div><div class="stat-l">students per team</div></div>
+<div class="stat rv"><div class="stat-n"><span data-count="10">10</span></div><div class="stat-l">weeks from intake to final advice</div></div>
+<div class="stat rv"><div class="stat-n"><span data-count="4">4</span></div><div class="stat-l">starts per year</div></div>
+<div class="stat rv"><div class="stat-n"><small>from</small><span>€2,000</span></div><div class="stat-l">depending on the size of your organisation</div></div>
+</div>
+</div>
+</div>
+
+<!-- clients -->
+<section id="clients" class="clients">
+<div class="wrap"><h2 class="clients-label rv">Clients include</h2></div>
+<div class="brc-car rv" role="img" aria-label="Clients include Gasunie, UMCG, Provincie Groningen, Rabobank, Resato Hydrogen Technology, FC Groningen in de Maatschappij, Zilveren Kruis / Achmea, VNO-NCW MKB Noord, Spanninga, IT Hub Hoogeveen">
+<div class="brc-marq">
+<!--REPEAT-->
+<div class="client"><img src="/_blob/ec716513fb7bc26d25947a6621baf027" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="/_blob/48fdcd637d872b7afcf65b179f206c40" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="/_blob/274f50ed696218f6ca9812fdb565054e" alt="Resato Hydrogen Technology"></div>
+<!--/REPEAT-->
+</div>
+<div class="brc-marq brc-rev">
+<!--REPEAT-->
+<div class="client"><img src="/_blob/b75cef0b87ef141ed31e252d08a8f70f" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<!--/REPEAT-->
 </div>
 </div>
 </section>
-</div>
-
-<!-- photo strip -->
-<div style="max-width: 1200px; margin: -48px auto 0; padding: 0 32px">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px">
-<div style="height: 240px; border-radius: 20px; background: #eceef0; border: 1px dashed #7d838c; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; font-size: 15px; color: #42464d">[PHOTO: team at a client intake]</div>
-<div style="height: 240px; border-radius: 20px; background: #eceef0; border: 1px dashed #7d838c; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; font-size: 15px; color: #42464d">[PHOTO: poster session]</div>
-<div style="height: 240px; border-radius: 20px; background: #eceef0; border: 1px dashed #7d838c; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; font-size: 15px; color: #42464d">[PHOTO: final presentation]</div>
-</div>
-</div>
 
 <!-- for you: audience switch -->
-<section id="for-you" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 72px; display: flex; flex-direction: column; gap: 32px">
-<div style="display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; justify-content: space-between">
-<h2 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 110%; font-weight: 700; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1.02">What is in it for you?</h2>
-<div role="group" aria-label="Choose your audience" style="display: flex; gap: 4px; padding: 4px; background: #eceef0; border-radius: 999px">
-<button type="button" aria-pressed="{{isOrg}}" onClick="{{pickOrg}}" style="font: inherit; font-weight: 600; min-height: 48px; padding: 0 24px; border: 0; border-radius: 999px; cursor: pointer; background: {{orgBg}}; color: {{orgFg}}">Organisations</button>
-<button type="button" aria-pressed="{{isStudent}}" onClick="{{pickStudent}}" style="font: inherit; font-weight: 600; min-height: 48px; padding: 0 24px; border: 0; border-radius: 999px; cursor: pointer; background: {{stuBg}}; color: {{stuFg}}">Students</button>
+<section id="for-you" class="sec">
+<div class="wrap">
+<div class="sec-head rv" style="align-items:center">
+<h2 class="disp">What is in it for you?</h2>
+<div class="switch" id="switch" role="group" aria-label="Choose your audience">
+<button type="button" aria-pressed="{{isOrg}}" onClick="{{pickOrg}}">Organisations</button>
+<button type="button" aria-pressed="{{isStudent}}" onClick="{{pickStudent}}">Students</button>
 </div>
 </div>
 <sc-if value="{{isOrg}}" hint-placeholder-val="{{true}}">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 16px">
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Advice for your specific question</h3><p style="margin: 0; color: #42464d; font-size: 17px">Practical recommendations with implementation steps, in one report.</p></div>
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">A fresh outside view</h3><p style="margin: 0; color: #42464d; font-size: 17px">Four students trained in current theory and research methods.</p></div>
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Professional supervision</h3><p style="margin: 0; color: #42464d; font-size: 17px">Every team is guided by a lecturer with consulting experience.</p></div>
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">International reach</h3><p style="margin: 0; color: #42464d; font-size: 17px">Dutch and international students, useful for questions across borders.</p></div>
+<div class="cards4 rv-group">
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="3.5"></circle><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"></path></svg></div><h3>Advice for your specific question</h3><p>Practical recommendations with implementation steps, in one report.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></div><h3>A fresh outside view</h3><p>Four students trained in current theory and research methods.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg></div><h3>Professional supervision</h3><p>Every team is guided by a lecturer with consulting experience.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"></circle><path d="M2.5 12h19M12 2.5c3.2 3.4 3.2 15.6 0 19M12 2.5c-3.2 3.4-3.2 15.6 0 19"></path></svg></div><h3>International reach</h3><p>Dutch and international students, useful for questions across borders.</p></div>
 </div>
 </sc-if>
 <sc-if value="{{isStudent}}" hint-placeholder-val="{{false}}">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 16px">
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">A real client, not a case</h3><p style="margin: 0; color: #42464d; font-size: 17px">You lead the intake, the research and the final presentation yourself.</p></div>
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Skills and a network</h3><p style="margin: 0; color: #42464d; font-size: 17px">Workshops train practical consulting skills, and you get to know companies, consultants and fellow students.</p></div>
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Weekly supervision</h3><p style="margin: 0; color: #42464d; font-size: 17px">An experienced supervisor meets your team every week.</p></div>
-<div style="background: #f4f5f6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">5 EC elective</h3><p style="margin: 0; color: #42464d; font-size: 17px">EBM151A05, an elective in many FEB master programmes. <a href="https://ocasys.rug.nl/current/catalog/course/EBM151A05">Ocasys ↗</a></p></div>
+<div class="cards4">
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"></rect><path d="M8.5 7V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V7M2.5 13h19"></path></svg></div><h3>A real client, not a case</h3><p>You lead the intake, the research and the final presentation yourself.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.5"></circle><circle cx="19" cy="6" r="2.5"></circle><circle cx="12" cy="18" r="2.5"></circle><path d="M7.5 6h9M6.3 8.2l4.4 7.6M17.7 8.2l-4.4 7.6"></path></svg></div><h3>Skills and a network</h3><p>Workshops train practical consulting skills, and you get to know companies, consultants and fellow students.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5"></rect><path d="M3 10h18M8 2.5v4M16 2.5v4M8.5 15.5l2.5 2.5 4.5-5"></path></svg></div><h3>Weekly supervision</h3><p>An experienced supervisor meets your team every week.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M1.5 9L12 4l10.5 5L12 14z"></path><path d="M6 11.5V16c2 2.2 10 2.2 12 0v-4.5M22.5 9v5.5"></path></svg></div><h3>5 EC elective</h3><p>EBM151A05, an elective in many FEB master programmes. <a href="https://ocasys.rug.nl/current/catalog/course/EBM151A05">Ocasys ↗</a></p></div>
 </div>
 </sc-if>
+</div>
 </section>
 
-<!-- standard products -->
-<section id="products" style="max-width: 1200px; margin: 0 auto; padding: 0 32px 96px; display: flex; flex-direction: column; gap: 32px">
-<div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
-<h2 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 110%; font-weight: 700; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1.02">Illustrative assignments</h2>
-<p style="margin: 0; color: #42464d">Our assignments end with an advice report, a presentation, and more. Click the example assignments for more information.</p>
+<!-- example assignments -->
+<section id="products" class="sec" style="padding-top:0">
+<div class="wrap">
+<div class="rv" style="margin-bottom:2.25rem">
+<h2 class="disp">Illustrative assignments</h2>
+<p class="muted lead">Our assignments end with an advice report, a presentation, and more. Click the example assignments for more information.</p>
 </div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px">
-<a class="pcard" href="Product.dc.html" style="text-decoration: none; color: #17181c; border: 10px solid transparent; outline: 2px solid #17181c; outline-offset: -2px; background: #ffffff; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Support study</h3><p style="margin: 0; color: #42464d; font-size: 17px">Is there enough support among customers, employees or residents for a planned action, product or service? In Dutch: draagvlakonderzoek.</p></a>
-<a class="pcard" href="Product.dc.html" style="text-decoration: none; color: #17181c; border: 10px solid transparent; outline: 2px solid #17181c; outline-offset: -2px; background: #ffffff; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Market exploration</h3><p style="margin: 0; color: #42464d; font-size: 17px">How large is a new market, region or country, who is already there, and how could you enter it?</p></a>
-<a class="pcard" href="Product.dc.html" style="text-decoration: none; color: #17181c; border: 10px solid transparent; outline: 2px solid #17181c; outline-offset: -2px; background: #ffffff; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Customer and employee insight</h3><p style="margin: 0; color: #42464d; font-size: 17px">A survey or interview study into satisfaction, needs or behaviour, with conclusions you can act on.</p></a>
-<a class="pcard" href="Product.dc.html" style="text-decoration: none; color: #17181c; border: 10px solid transparent; outline: 2px solid #17181c; outline-offset: -2px; background: #ffffff; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Growth and positioning advice</h3><p style="margin: 0; color: #42464d; font-size: 17px">Where can your organisation grow, and how should it present itself against competitors?</p></a>
-<a class="pcard" href="Product.dc.html" style="text-decoration: none; color: #17181c; border: 10px solid transparent; outline: 2px solid #17181c; outline-offset: -2px; background: #ffffff; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Process and digitisation scan</h3><p style="margin: 0; color: #42464d; font-size: 17px">A process or supply chain mapped out, with the places where it can be made simpler or digital.</p></a>
-<a class="pcard" href="Submit.dc.html" style="text-decoration: none; color: #17181c; border: 10px solid transparent; outline: 2px solid #17181c; outline-offset: -2px; background: #ffffff; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; min-height: 2.3em; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.15">Something else?</h3><p style="margin: 0; color: #42464d; font-size: 17px">Describe your question in the form. We will tell you whether it fits a ten-week project. <span style="text-decoration: underline; font-weight: 600">Submit an assignment</span></p></a>
+<div class="cards3 rv-group">
+<a class="pcard rv" href="Product.dc.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Support study</h3><p>Is there enough support among customers, employees or residents for a planned action, product or service? In Dutch: draagvlakonderzoek.</p></a>
+<a class="pcard rv" href="Product.dc.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Market exploration</h3><p>How large is a new market, region or country, who is already there, and how could you enter it?</p></a>
+<a class="pcard rv" href="Product.dc.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Customer and employee insight</h3><p>A survey or interview study into satisfaction, needs or behaviour, with conclusions you can act on.</p></a>
+<a class="pcard rv" href="Product.dc.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Growth and positioning advice</h3><p>Where can your organisation grow, and how should it present itself against competitors?</p></a>
+<a class="pcard rv" href="Product.dc.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Process and digitisation scan</h3><p>A process or supply chain mapped out, with the places where it can be made simpler or digital.</p></a>
+<a class="pcard pcard-dark rv" href="Submit.dc.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Something else?</h3><p>Describe your question in the form. We will tell you whether it fits a ten-week project. <u>Submit an assignment</u></p></a>
+</div>
 </div>
 </section>
 
 <!-- the ten weeks -->
-<section id="weeks" style="background: #17181c; color: #ffffff">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr)); gap: 48px 72px">
-<div style="display: flex; flex-direction: column; gap: 20px">
-<h2 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 110%; font-weight: 700; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1.02">The ten weeks</h2>
-<p style="margin: 0; color: #d9dce0">Before the block starts we discuss your question and agree on a start date. Projects start four times a year. During the project the team is in touch with you every week.</p>
+<section id="weeks" class="weeks sec">
+<div class="wrap weeks-in">
+<div class="weeks-side rv">
+<h2 class="disp">The ten weeks</h2>
+<p>Before the block starts we discuss your question and agree on a start date. Projects start four times a year. During the project the team is in touch with you every week.</p>
+<div class="wk" aria-hidden="true"><span class="wk-l">Week</span><span class="wk-n" id="wk-n">1–10</span></div>
 </div>
-<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
-<li style="display: flex; gap: 24px; padding: 22px 0; border-top: 1px solid #4a4e56"><div style="flex: none; width: 148px; white-space: nowrap; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 19px"><span style="display: inline-block; width: 100%; box-sizing: border-box; background: {{accent}}; padding: 4px 10px; border-radius: 8px">Week 1</span></div><div><strong>Intake at your organisation.</strong> <span style="color: #d9dce0">The team and their supervisor visit to understand the problem.</span></div></li>
-<li style="display: flex; gap: 24px; padding: 22px 0; border-top: 1px solid #4a4e56"><div style="flex: none; width: 148px; white-space: nowrap; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 19px"><span style="display: inline-block; width: 100%; box-sizing: border-box; background: {{accent}}; padding: 4px 10px; border-radius: 8px">Week 3</span></div><div><strong>Action plan.</strong> <span style="color: #d9dce0">Research question, approach and planning, for your approval.</span></div></li>
-<li style="display: flex; gap: 24px; padding: 22px 0; border-top: 1px solid #4a4e56"><div style="flex: none; width: 148px; white-space: nowrap; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 19px"><span style="display: inline-block; width: 100%; box-sizing: border-box; background: {{accent}}; padding: 4px 10px; border-radius: 8px">Weeks 4–7</span></div><div style="color: #d9dce0">Desk research, data collection and analysis.</div></li>
-<li style="display: flex; gap: 24px; padding: 22px 0; border-top: 1px solid #4a4e56"><div style="flex: none; width: 148px; white-space: nowrap; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 19px"><span style="display: inline-block; width: 100%; box-sizing: border-box; background: {{accent}}; padding: 4px 10px; border-radius: 8px">Week 8</span></div><div><strong>Preliminary advice.</strong> <span style="color: #d9dce0">First results, and your feedback before the team finalises.</span></div></li>
-<li style="display: flex; gap: 24px; padding: 22px 0; border-top: 1px solid #4a4e56; border-bottom: 1px solid #4a4e56"><div style="flex: none; width: 148px; white-space: nowrap; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 19px"><span style="display: inline-block; width: 100%; box-sizing: border-box; background: {{accent}}; padding: 4px 10px; border-radius: 8px">Weeks 9–10</span></div><div><strong>Report and presentation.</strong> <span style="color: #d9dce0">The final advice report, presented to your decision-makers.</span></div></li>
+<ol class="tl rv" id="tl">
+<li class="on" data-wk="1"><span class="tl-tag">Week 1</span><div class="tl-body"><strong>Intake at your organisation.</strong> <span>The team and their supervisor visit to understand the problem.</span></div></li>
+<li class="on" data-wk="3"><span class="tl-tag">Week 3</span><div class="tl-body"><strong>Action plan.</strong> <span>Research question, approach and planning, for your approval.</span></div></li>
+<li class="on" data-wk="4–7"><span class="tl-tag">Weeks 4–7</span><div class="tl-body">Desk research, data collection and analysis.</div></li>
+<li class="on" data-wk="8"><span class="tl-tag">Week 8</span><div class="tl-body"><strong>Preliminary advice.</strong> <span>First results, and your feedback before the team finalises.</span></div></li>
+<li class="on" data-wk="9–10"><span class="tl-tag">Weeks 9–10</span><div class="tl-body"><strong>Report and presentation.</strong> <span>The final advice report, presented to your decision-makers.</span></div></li>
 </ol>
 </div>
 </section>
 
 <!-- costs -->
-<section id="costs" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 72px; display: flex; flex-direction: column; gap: 32px">
-<h2 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 110%; font-weight: 700; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1.02">What it costs, and why</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px">
-<div style="border: 2px solid #17181c; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 6px"><div style="font-weight: 600">Start-ups and very small businesses</div><div style="font-family: Archivo, Arial, sans-serif; font-weight: 800; font-size: 52px; letter-spacing: -0.02em; line-height: 1.05">€2,000</div><div style="color: #42464d; font-size: 16px">Start-ups, sole proprietors and businesses with fewer than 10 employees</div></div>
-<div style="border: 2px solid #17181c; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 6px"><div style="font-weight: 600">Partner rate</div><div style="font-family: Archivo, Arial, sans-serif; font-weight: 800; font-size: 52px; letter-spacing: -0.02em; line-height: 1.05">€3,000</div><div style="color: #42464d; font-size: 16px">For returning clients and organisations in our network</div></div>
-<div style="border: 2px solid #17181c; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 6px"><div style="font-weight: 600">Standard and large organisations</div><div style="font-family: Archivo, Arial, sans-serif; font-weight: 800; font-size: 52px; letter-spacing: -0.02em; line-height: 1.05">€4,000</div><div style="color: #42464d; font-size: 16px">Companies with 10 or more employees, public bodies and institutions</div></div>
+<section id="costs" class="costs sec">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">What it costs, and why</h2></div>
+<div class="cards3 rv-group">
+<div class="price rv"><div class="price-for">Start-ups and very small businesses</div><div class="price-n">€2,000</div><div class="price-d">Start-ups, sole proprietors and businesses with fewer than 10 employees</div></div>
+<div class="price rv"><div class="price-for">Partner rate</div><div class="price-n">€3,000</div><div class="price-d">For returning clients and organisations in our network</div></div>
+<div class="price rv"><div class="price-for">Standard and large organisations</div><div class="price-n">€4,000</div><div class="price-d">Companies with 10 or more employees, public bodies and institutions</div></div>
 </div>
-<div style="background: #f4f5f6; border-radius: 20px; padding: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 24px 40px">
-<div><strong>Supervision.</strong> <span style="color: #42464d">Our experienced consultants guide every team.</span></div>
-<div><strong>Workshops.</strong> <span style="color: #42464d">Lecturers train the students each week in consulting and research.</span></div>
-<div><strong>Travel.</strong> <span style="color: #42464d">Students can declare travel costs for client visits and field research.</span></div>
-<div><strong>Subsidies.</strong> <span style="color: #42464d">You may be eligible for one, such as the SME subsidy. Ask us.</span></div>
+<div class="covers rv-group">
+<div class="rv"><strong>Supervision.</strong> <span>Our experienced consultants guide every team.</span></div>
+<div class="rv"><strong>Workshops.</strong> <span>Lecturers train the students each week in consulting and research.</span></div>
+<div class="rv"><strong>Travel.</strong> <span>Students can declare travel costs for client visits and field research.</span></div>
+<div class="rv"><strong>Subsidies.</strong> <span>You may be eligible for one, such as the SME subsidy. Ask us.</span></div>
+</div>
 </div>
 </section>
 
-<!-- people + clients -->
-<section id="people" style="max-width: 1200px; margin: 0 auto; padding: 24px 32px 64px; display: flex; flex-direction: column; gap: 32px">
-<h2 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 110%; font-weight: 700; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1.02">Our team</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 16px">
+<!-- people -->
+<section id="people" class="sec">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">Our team</h2></div>
+<div class="team rv-group">
 <sc-for list="{{people}}" as="p" hint-placeholder-count="9">
-<div style="background: #f4f5f6; border-radius: 20px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start">
-<div style="font-size: 17px"><strong>{{p.name}}</strong><br><span style="color: #42464d">{{p.role}}</span></div>
-<div style="display: flex; gap: 6px">
-<a class="ibtn" href="{{p.home}}" title="Homepage" aria-label="Homepage of {{p.name}}" style="width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1.5px solid #7d838c; color: #17181c"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
-<a class="ibtn" href="{{p.li}}" title="LinkedIn" aria-label="LinkedIn profile of {{p.name}}" style="width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1.5px solid #7d838c; color: #17181c"><img class="li-b" src="/_blob/f2de1d83775f5bcd829581e15dc62aaf" alt="" style="width: 19px; height: auto"><img class="li-w" src="/_blob/6636523929c2148818e6bb9ef0cac18e" alt="" style="width: 19px; height: auto"></a>
+<div class="person rv">
+<div><strong>{{p.name}}</strong><br><span class="muted">{{p.role}}</span></div>
+<div class="person-links">
+<a class="ibtn" href="{{p.home}}" title="Homepage" aria-label="Homepage of {{p.name}}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="{{p.li}}" title="LinkedIn" aria-label="LinkedIn profile of {{p.name}}"><img class="li-b" src="/_blob/f2de1d83775f5bcd829581e15dc62aaf" alt=""><img class="li-w" src="/_blob/6636523929c2148818e6bb9ef0cac18e" alt=""></a>
 <sc-if value="{{p.scholar}}" hint-placeholder-val="{{false}}">
-<a class="ibtn" href="#scholar-link" title="Google Scholar" aria-label="Google Scholar profile of {{p.name}}" style="width: 44px; height: 44px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 999px; border: 1.5px solid #7d838c; color: #17181c"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11.5V16c2 2 10 2 12 0v-4.5"></path><path d="M22 9v5"></path></svg></a>
+<a class="ibtn" href="#scholar-link" title="Google Scholar" aria-label="Google Scholar profile of {{p.name}}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11.5V16c2 2 10 2 12 0v-4.5"></path><path d="M22 9v5"></path></svg></a>
 </sc-if>
 </div>
 </div>
 </sc-for>
 </div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr)); gap: 16px; align-items: stretch">
-<figure style="margin: 0; background: #f4f5f6; border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
-<blockquote style="margin: 0; font-family: Archivo, Arial, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.3">“It didn’t take the students long to get the feel of our company, the management and our activities.”</blockquote>
-<figcaption style="color: #42464d; font-size: 16px">[CLIENT NAME, ROLE, ORGANISATION]</figcaption>
+<div class="proof rv-group">
+<figure class="quote rv">
+<blockquote>“It didn’t take the students long to get the feel of our company, the management and our activities.”</blockquote>
+<figcaption>[CLIENT NAME, ROLE, ORGANISATION]</figcaption>
 </figure>
-<a class="pcard" href="#case-placeholder" style="text-decoration: none; color: #17181c; border: 10px solid transparent; outline: 2px solid #17181c; outline-offset: -2px; background: #ffffff; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
-<div style="font-weight: 600; font-size: 15px; color: #42464d">Case description</div>
-<h3 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.2">[CASE TITLE: the client's question in one line]</h3>
-<p style="margin: 0; color: #42464d; font-size: 17px">[TWO SENTENCES: what the team researched and what the client did with the advice]</p>
-<div style="font-size: 15px; color: #42464d">[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]</div>
+<a class="pcard rv" href="#case-placeholder"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
+<div class="meta" style="font-weight:600">Case description</div>
+<h3 style="font-size:1.5rem; line-height:1.2">[CASE TITLE: the client's question in one line]</h3>
+<p>[TWO SENTENCES: what the team researched and what the client did with the advice]</p>
+<div class="meta">[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]</div>
 </a>
-</div>
-</section>
-
-<!-- clients -->
-<section id="clients" style="padding: 0 0 96px; display: flex; flex-direction: column; gap: 32px">
-<div style="max-width: 1200px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 0 32px"><h2 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 110%; font-weight: 700; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1.02">Clients include</h2></div>
-<div class="brc-car" role="img" aria-label="Clients include Gasunie, UMCG, Provincie Groningen, Rabobank, Resato Hydrogen Technology, FC Groningen in de Maatschappij, Zilveren Kruis / Achmea, VNO-NCW MKB Noord, Spanninga, IT Hub Hoogeveen" style="overflow: hidden; display: flex; flex-direction: column; gap: 16px">
-<div class="brc-marq" style="display: flex; gap: 16px; width: max-content; padding-right: 16px">
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/ec716513fb7bc26d25947a6621baf027" alt="Gasunie" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>UMCG</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/48fdcd637d872b7afcf65b179f206c40" alt="Provincie Groningen" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Rabobank</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/274f50ed696218f6ca9812fdb565054e" alt="Resato Hydrogen Technology" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/ec716513fb7bc26d25947a6621baf027" alt="Gasunie" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>UMCG</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/48fdcd637d872b7afcf65b179f206c40" alt="Provincie Groningen" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Rabobank</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/274f50ed696218f6ca9812fdb565054e" alt="Resato Hydrogen Technology" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/ec716513fb7bc26d25947a6621baf027" alt="Gasunie" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>UMCG</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/48fdcd637d872b7afcf65b179f206c40" alt="Provincie Groningen" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Rabobank</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/274f50ed696218f6ca9812fdb565054e" alt="Resato Hydrogen Technology" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/ec716513fb7bc26d25947a6621baf027" alt="Gasunie" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>UMCG</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/48fdcd637d872b7afcf65b179f206c40" alt="Provincie Groningen" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Rabobank</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/274f50ed696218f6ca9812fdb565054e" alt="Resato Hydrogen Technology" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-</div>
-<div class="brc-marq brc-rev" style="display: flex; gap: 16px; width: max-content; padding-right: 16px">
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/b75cef0b87ef141ed31e252d08a8f70f" alt="FC Groningen in de Maatschappij" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Spanninga</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/b75cef0b87ef141ed31e252d08a8f70f" alt="FC Groningen in de Maatschappij" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Spanninga</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/b75cef0b87ef141ed31e252d08a8f70f" alt="FC Groningen in de Maatschappij" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Spanninga</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><img src="/_blob/b75cef0b87ef141ed31e252d08a8f70f" alt="FC Groningen in de Maatschappij" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain"></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>Spanninga</strong></div>
-<div style="flex: none; width: 210px; height: 96px; box-sizing: border-box; background: #f4f5f6; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px 22px; font-size: 15px; line-height: 1.3"><span style="font-size: 12px; color: #42464d">[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
 </div>
 </div>
 </section>
 
 <!-- contact -->
-<footer id="contact" style="padding: 0 16px 16px">
-<div style="background: {{accent}}; color: #ffffff; border-radius: 28px">
-<div style="max-width: 1168px; margin: 0 auto; padding: 72px 32px 36px; display: flex; flex-direction: column; gap: 48px">
-<div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end; justify-content: space-between">
-<h2 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 112%; font-weight: 800; font-size: clamp(36px, 5.4vw, 76px); letter-spacing: -0.03em; line-height: 0.98">Bring us your question.</h2>
-<div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
-<a href="Submit.dc.html" style="text-decoration: none; background: #ffffff; color: #17181c; font-weight: 600; padding: 16px 28px; border-radius: 999px">Submit an assignment</a>
-<div>Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl" style="color: #ffffff">febforbusiness@rug.nl</a> · 050 363 5529</div>
+<footer id="contact" class="foot">
+<div class="foot-box">
+<div class="wrap foot-in">
+<div class="foot-top rv">
+<h2>Bring us your question.</h2>
+<div class="foot-cta">
+<a class="btn btn-white" href="Submit.dc.html" style="color:#17181c">Submit an assignment<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<div>Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
 </div>
 </div>
-<div style="border-top: 1px solid rgba(255,255,255,0.5); padding-top: 24px; display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; font-size: 15px">
-<a href="https://www.rug.nl" style="flex: none; background: #ffffff; border-radius: 10px; padding: 14px 18px; display: block"><img src="/_blob/fce67d760db1110f8b0e5fa8aeb48b87" alt="University of Groningen" style="display: block; width: 220px; height: auto"></a>
-<span style="flex: 1 1 320px">BRC is a course of the Faculty of Economics and Business, <a href="https://www.rug.nl" style="color: #ffffff">University of Groningen</a>. This website is maintained by the BRC team and is not part of rug.nl.</span>
+<div class="foot-base">
+<a class="rug" href="https://www.rug.nl"><img src="/_blob/fce67d760db1110f8b0e5fa8aeb48b87" alt="University of Groningen"></a>
+<span style="flex: 1 1 20rem">BRC is a course of the Faculty of Economics and Business, <a href="https://www.rug.nl">University of Groningen</a>. This website is maintained by the BRC team and is not part of rug.nl.</span>
 <span>Nettelbosje 2, 9747 AE Groningen</span>
 </div>
 </div>
@@ -243,60 +465,5 @@ a{color:#17181c}a:hover{color:#a80022}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#dc002d","options":["#dc002d","#b5121b","#8f1d2c"]},"$preview":{"width":1440,"height":4700}}'>
-class Component extends DCLogic {
-constructor(props) {
-super(props);
-this.phrases = ['Real Consultants.', 'Real Answers.', 'Real Progress.', 'Fresh Perspectives.', 'Ten Weeks.'];
-this.state = { audience: 'org', typed: this.phrases[0] };
-}
-componentDidMount() {
-if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-let i = 0;
-let deleting = true;
-const step = () => {
-const full = this.phrases[i];
-const cur = this.state.typed;
-let wait = 45;
-if (deleting) {
-if (cur.length > 0) { this.setState({ typed: cur.slice(0, -1) }); wait = 28; }
-else { deleting = false; i = (i + 1) % this.phrases.length; wait = 250; }
-} else if (cur.length < full.length) { this.setState({ typed: full.slice(0, cur.length + 1) }); wait = 60; }
-else { deleting = true; wait = 2200; }
-this.timer = setTimeout(step, wait);
-};
-this.timer = setTimeout(step, 2200);
-}
-componentWillUnmount() {
-clearTimeout(this.timer);
-}
-renderVals() {
-const org = this.state.audience === 'org';
-return {
-accent: this.props.accent ?? '#dc002d',
-typed: this.state.typed,
-people: [
-{ name: 'Drs. Gert Haanstra', role: 'Course coordinator', scholar: false, home: 'https://www.rug.nl/staff/g.f.haanstra/', li: 'https://nl.linkedin.com/in/gerthaanstra' },
-{ name: 'Dr. Daniël Speldekamp', role: 'External relations', scholar: true },
-{ name: 'Alieda Reijinga', role: 'Back office', scholar: false },
-{ name: 'Drs. Bas Baalmans', role: 'Lecturer, supervisor', scholar: false, home: 'https://www.rug.nl/staff/b.s.baalmans/' },
-{ name: 'Drs. Mariette Zweers', role: 'Lecturer, supervisor', scholar: false },
-{ name: 'Ivan Palko, MSc', role: 'Lecturer, supervisor', scholar: false },
-{ name: 'Dr. Teye Marra', role: 'Lecturer, supervisor', scholar: true },
-{ name: 'Evelien Wolthuis, MSc', role: 'Guest lecturer', scholar: false },
-{ name: 'Drs. Roel Stolvoort', role: 'Guest lecturer', scholar: false }
-].map((p) => ({ ...p, home: p.home || '#homepage-link', li: p.li || '#linkedin-link' })),
-isOrg: org,
-isStudent: !org,
-orgBg: org ? '#17181c' : 'transparent',
-orgFg: org ? '#ffffff' : '#17181c',
-stuBg: org ? 'transparent' : '#17181c',
-stuFg: org ? '#17181c' : '#ffffff',
-pickOrg: () => this.setState({ audience: 'org' }),
-pickStudent: () => this.setState({ audience: 'student' })
-};
-}
-}
-</script>
 </body>
 </html>

@@ -4,14 +4,14 @@ The eight HTML pages (four English, four Dutch) are generated from the files in 
 
 ## Files
 
-- `src/C-TenWeeks.dc.html`: source of the homepage (`index.html`)
+- `src/C-TenWeeks.dc.html`: source of the homepage (`index.html`). Since design v2 this file is maintained by hand: all homepage styling is in the `<style>` block at its top, with the colours and sizes as variables in the first lines.
 - `src/Submit.dc.html`: source of the assignment form (`submit.html`)
 - `src/Product.dc.html`, `src/Students.dc.html`: sources of the two placeholder pages
 - `nl.json`: the Dutch translation, as "English text": "Dutch text"
 - `build_site.py`: step 1, builds the English pages from `src/`
-- `i18n.py`: step 2, adds the language flag and the "Built with Claude Fable 5.2" line, then writes the Dutch pages to `nl/`
+- `i18n.py`: step 2, adds the language switch (EN / NL) and the "Built with Claude Fable 5.2" line, then writes the Dutch pages to `nl/`
 
-The sources are the pages as exported from the design canvas. They contain a few template marks (`{{...}}`, `<sc-if>`, `<sc-for>`) that `build_site.py` turns into plain HTML and JavaScript.
+The sources started as exports from the design canvas; the homepage source no longer matches the canvas. They contain a few template marks (`{{...}}`, `<sc-if>`, `<sc-for>`) that `build_site.py` turns into plain HTML and JavaScript.
 
 ## Regenerating
 
@@ -33,7 +33,11 @@ Needs Python 3 only; no packages.
 | Rotating headline phrases | `build_site.py` (search for `phrases`), and `nl.json` for Dutch |
 | Team members and their links | `build_site.py` (search for `people=`) |
 | Price notes and button labels in the form | `build_site.py` (search for `JS_SUBMIT`), and `nl.json` for Dutch |
-| Language flag, AI-disclosure line | `i18n.py` |
+| Language switch, AI-disclosure line | `i18n.py` |
+| The red, other colours, page width, text size | the `:root`, `html` and `.wrap` lines at the top of the `<style>` block in `src/C-TenWeeks.dc.html` |
+| Homepage motion (scroll reveal, timeline, counters, sticky header) | `build_site.py` (search for `JS_INDEX`) |
+| Client logos in the carousel | `src/C-TenWeeks.dc.html`: each row is written once between `<!--REPEAT-->` marks and repeated by `build_site.py` |
+| Homepage photos | replace a `<div class="photo">[PHOTO: ...]</div>` in `src/C-TenWeeks.dc.html` with `<div class="photo has-img"><img src="assets/your-file.jpg" alt="description"></div>` |
 | Images | add the file to `assets/`; images referenced by id in `src/` are mapped in `build_site.py` (`BLOBS`) |
 
 ## Checks after regenerating

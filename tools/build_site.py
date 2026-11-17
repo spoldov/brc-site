@@ -38,8 +38,6 @@ title,helm,b=base('C-TenWeeks.dc.html')
 b=sub1(b,'{{typed}}','<span id="typed">Real Consultants.</span>')
 b=sub1(b,'aria-pressed="{{isOrg}}" onClick="{{pickOrg}}"','id="btn-org" aria-pressed="true"')
 b=sub1(b,'aria-pressed="{{isStudent}}" onClick="{{pickStudent}}"','id="btn-student" aria-pressed="false"')
-b=sub1(b,'background: {{orgBg}}; color: {{orgFg}}','background: #17181c; color: #ffffff')
-b=sub1(b,'background: {{stuBg}}; color: {{stuFg}}','background: transparent; color: #17181c')
 m=re.search(r'<sc-if value="\{\{isOrg\}\}"[^>]*>\n(.*?)\n</sc-if>',b,re.S); b=b.replace(m.group(0),'<div id="panel-org">\n'+m.group(1)+'\n</div>')
 m=re.search(r'<sc-if value="\{\{isStudent\}\}"[^>]*>\n(.*?)\n</sc-if>',b,re.S); b=b.replace(m.group(0),'<div id="panel-student" hidden>\n'+m.group(1)+'\n</div>')
 people=[('Drs. Gert Haanstra','Course coordinator',0,'https://www.rug.nl/staff/g.f.haanstra/','https://nl.linkedin.com/in/gerthaanstra'),('Dr. Daniël Speldekamp','External relations',1,'',''),('Alieda Reijinga','Back office',0,'',''),('Drs. Bas Baalmans','Lecturer, supervisor',0,'https://www.rug.nl/staff/b.s.baalmans/',''),('Drs. Mariette Zweers','Lecturer, supervisor',0,'',''),('Ivan Palko, MSc','Lecturer, supervisor',0,'',''),('Dr. Teye Marra','Lecturer, supervisor',1,'',''),('Evelien Wolthuis, MSc','Guest lecturer',0,'',''),('Drs. Roel Stolvoort','Guest lecturer',0,'','')]
@@ -53,24 +51,92 @@ for n,r,sch,home,li in people:
     out.append(c)
 b=b.replace(m.group(0),'\n'.join(out))
 b=b.replace('href="#case-placeholder"','href="#"')
+# client carousel: each row is written once in the source (between REPEAT marks) and repeated 8x here so the loop is seamless, also on very wide screens
+assert b.count('<!--REPEAT-->')==2
+b=re.sub(r'<!--REPEAT-->\n(.*?)\n<!--/REPEAT-->',lambda m:'\n'.join([m.group(1)]*8),b,flags=re.S)
 JS_INDEX='''
 (function () {
-  // audience switch
-  var bo = document.getElementById('btn-org'), bs = document.getElementById('btn-student');
-  var po = document.getElementById('panel-org'), ps = document.getElementById('panel-student');
+  var doc = document;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function $(id) { return doc.getElementById(id); }
+  function all(sel, el) { return Array.prototype.slice.call((el || doc).querySelectorAll(sel)); }
+
+  // audience switch (Organisations / Students)
+  var sw = $("switch"), bo = $("btn-org"), bs = $("btn-student"), po = $("panel-org"), ps = $("panel-student");
   function pick(org) {
     po.hidden = !org; ps.hidden = org;
-    bo.setAttribute('aria-pressed', String(org)); bs.setAttribute('aria-pressed', String(!org));
-    bo.style.background = org ? '#17181c' : 'transparent'; bo.style.color = org ? '#ffffff' : '#17181c';
-    bs.style.background = org ? 'transparent' : '#17181c'; bs.style.color = org ? '#17181c' : '#ffffff';
+    bo.setAttribute("aria-pressed", String(org)); bs.setAttribute("aria-pressed", String(!org));
+    sw.classList.toggle("is-student", !org);
+    var panel = org ? po : ps;
+    all(".card", panel).forEach(function (c, i) { c.style.setProperty("--i", i); c.classList.add("in"); });
+    panel.classList.remove("is-swapping"); void panel.offsetWidth; panel.classList.add("is-swapping");
   }
-  bo.addEventListener('click', function () { pick(true); });
-  bs.addEventListener('click', function () { pick(false); });
+  bo.addEventListener("click", function () { pick(true); });
+  bs.addEventListener("click", function () { pick(false); });
+
+  // reveal on scroll: elements with class "rv" fade in once; inside an "rv-group" they follow each other
+  all(".rv-group").forEach(function (g) {
+    all(".rv", g).forEach(function (el, i) { el.style.setProperty("--i", i); });
+  });
+  function countUp(el) {
+    var end = parseInt(el.getAttribute("data-count"), 10), t0 = null;
+    if (reduce || !end) return;
+    function tick(t) {
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / 900);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(tick);
+    }
+    el.textContent = "0"; requestAnimationFrame(tick);
+  }
+  function show(el) {
+    if (el.classList.contains("in")) return;
+    el.classList.add("in");
+    all("[data-count]", el).forEach(countUp);
+  }
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    all(".rv").forEach(function (el) { io.observe(el); });
+  } else { all(".rv").forEach(function (el) { el.classList.add("in"); }); }
+
+  // header state, menu highlight and the ten-weeks timeline: all driven by one scroll handler
+  var hdr = $("hdr"), tl = $("tl"), items = all("li", tl), wk = $("wk-n");
+  var links = all(".nav-link"), secs = links.map(function (a) { return $(a.getAttribute("href").slice(1)); });
+  if (!reduce) items.forEach(function (li) { li.classList.remove("on"); });
+  function frame() {
+    ticking = false;
+    var vh = window.innerHeight;
+    hdr.classList.toggle("is-stuck", window.scrollY > 8);
+    var cur = -1;
+    secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < vh * 0.4) cur = i; });
+    if (cur >= 0 && secs[cur].getBoundingClientRect().bottom < vh * 0.25 && cur === secs.length - 1) cur = -1;
+    links.forEach(function (a, i) { if (i === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    if (reduce) return;
+    var r = tl.getBoundingClientRect(), inset = 12;
+    var len = items[items.length - 1].getBoundingClientRect().top + 17 - r.top - inset;  // the line ends at the last dot
+    tl.style.setProperty("--rail", len + "px");
+    var p = Math.max(0, Math.min(1, (vh * 0.62 - r.top - inset) / len));
+    tl.style.setProperty("--p", p.toFixed(4));
+    var fillY = r.top + inset + p * len, label = items[0].getAttribute("data-wk");
+    items.forEach(function (li) {
+      var on = li.getBoundingClientRect().top + 17 <= fillY + 1;
+      li.classList.toggle("on", on);
+      if (on) label = li.getAttribute("data-wk");
+    });
+    if (wk.textContent !== label) wk.textContent = label;
+  }
+  var ticking = false;
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  frame();
 
   // typewriter headline
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (reduce) return;
   var phrases = ['Real Consultants.', 'Real Answers.', 'Real Progress.', 'Fresh Perspectives.', 'Ten Weeks.'];
-  var el = document.getElementById('typed'), i = 0, deleting = true;
+  var el = $("typed"), i = 0, deleting = true;
   function step() {
     var full = phrases[i], cur = el.textContent, wait = 45;
     if (deleting) {

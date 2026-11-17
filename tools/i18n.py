@@ -8,10 +8,12 @@ import re,json,os
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT=ROOT
 D=json.load(open(os.path.join(ROOT,'tools','nl.json'),encoding='utf-8'))
-NLFLAG='<svg aria-hidden="true" width="30" height="20" viewBox="0 0 9 6" style="display: block; border-radius: 3px; box-shadow: 0 0 0 1.5px #ffffff"><rect width="9" height="2" fill="#AE1C28"></rect><rect y="2" width="9" height="2" fill="#ffffff"></rect><rect y="4" width="9" height="2" fill="#21468B"></rect></svg>'
-UKFLAG='<svg aria-hidden="true" width="30" height="20" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" style="display: block; border-radius: 3px; box-shadow: 0 0 0 1.5px #ffffff"><clipPath id="ukclip"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"></path></clipPath><path d="M0,0 v30 h60 v-30 z" fill="#012169"></path><path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukclip)" stroke="#C8102E" stroke-width="4"></path><path d="M30,0 v30 M0,15 h60" stroke="#ffffff" stroke-width="10"></path><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"></path></svg>'
 def flag(href,code,label,svg):
-    return '<a href="%s" lang="%s" hreflang="%s" aria-label="%s" title="%s" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px">%s</a>'%(href,code,code,label,label,svg)
+    # Language switch as text: the current language in plain text, the other one as a link.
+    cur,other=svg
+    return '<span style="display: inline-flex; align-items: center; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>%s</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="%s" lang="%s" hreflang="%s" aria-label="%s" title="%s" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">%s</a></span>'%(cur,href,code,code,label,label,other)
+NLFLAG=('EN','NL')  # shown on the English pages
+UKFLAG=('NL','EN')  # shown on the Dutch pages
 FLAGMARK='<!--LANGSWITCH-->'
 def sub1(s,a,b):
     assert s.count(a)==1,(a[:70],s.count(a)); return s.replace(a,b)
