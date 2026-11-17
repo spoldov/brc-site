@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BRC website: information for students placeholder</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0}
+a{color:#17181c}a:hover{color:#a80022}
+</style>
+</helmet>
+<div style="font-family: Inter, 'Segoe UI', Arial, sans-serif; color: #17181c; background: #ffffff; font-size: 18px; line-height: 1.55">
+<div style="background: {{accent}}; color: #ffffff">
+<header style="max-width: 1200px; margin: 0 auto; padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center; justify-content: space-between">
+<a href="C-TenWeeks.dc.html" aria-label="BRC, Business Research &amp; Consulting, home" style="text-decoration: none; color: #ffffff; display: flex; align-items: center; gap: 14px">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 3px"><img src="/_blob/7f6c0b293b5ca221ab8dca08d463cfec" alt="" style="display: block; width: 58px; height: auto"><span style="font-family: Archivo, Arial, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 28px; line-height: 0.85; letter-spacing: -0.02em">BRC</span></span>
+<span style="font-size: 14px; line-height: 1.25; font-weight: 500">Business Research &amp; Consulting<br>Faculty of Economics and Business · University of Groningen</span>
+</a>
+<a href="C-TenWeeks.dc.html" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 12px 0">← Back to the homepage</a>
+</header>
+</div>
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 160px; display: flex; flex-direction: column; gap: 20px; align-items: flex-start">
+<h1 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 112%; font-weight: 800; font-size: clamp(32px, 4.4vw, 60px); line-height: 1; letter-spacing: -0.025em">Information for students</h1>
+<p style="margin: 0; max-width: 36em; color: #42464d">Placeholder. This page will cover what the course involves, how to enrol, which programmes accept it as an elective, and what earlier students say about it.</p>
+<a href="https://ocasys.rug.nl/current/catalog/course/EBM151A05" style="font-weight: 600">Course description in Ocasys ↗</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#dc002d","options":["#dc002d","#b5121b","#8f1d2c"]},"$preview":{"width":1440,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+return { accent: this.props.accent ?? '#dc002d' };
+}
+}
+</script>
+</body>
+</html>

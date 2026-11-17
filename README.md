@@ -12,7 +12,9 @@ Mock-up of the website for Business Research & Consulting (BRC), a course of the
 - `students.html`: placeholder for the information-for-students page
 - `nl/`: the same four pages in Dutch. The flag in the header switches language.
 
-Plain HTML with inline styles and a little JavaScript. No build step: open `index.html` in a browser.
+Plain HTML with inline styles and a little JavaScript. Open `index.html` in a browser to view.
+
+The pages are generated from the sources in `tools/`. To change the site, edit there and regenerate; see `tools/README.md`.
 
 ## Assets
 
