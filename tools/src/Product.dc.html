@@ -12,19 +12,33 @@
 <style>
 body{margin:0}
 a{color:#17181c}a:hover{color:#a80022}
+/* header and widths matched to the homepage */
+.shdr{max-width:1344px; margin:0 auto; padding:8px 32px; min-height:64px; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:4px 24px; align-items:center; justify-content:space-between}
+.sbrand{display:flex; align-items:center; gap:14px; text-decoration:none; color:#ffffff}
+.slogo{display:flex; flex-direction:column; align-items:center; gap:3px}
+.slogo img{display:block; width:48px; height:auto}
+.slogo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:23px; line-height:.85; letter-spacing:-0.02em}
+.sname{font-size:15px; font-weight:600; white-space:nowrap}
+.sred{color:#ffffff; background:radial-gradient(70rem 36rem at 105% 115%, rgba(60,0,14,.55), transparent 62%), linear-gradient(120deg, #dc002d 0%, #cf002a 45%, #a8001f 100%)}
+#price{white-space:nowrap}
+h1{overflow-wrap:anywhere}
+@media (max-width:720px){
+  .shdr{padding:8px 20px}
+  .shdr a{font-size:15px !important}
+  .sname{display:none}
+  [style*="max-width: 1280px"]{padding-left:20px !important; padding-right:20px !important}
+  #price{font-size:clamp(30px, 9.4vw, 52px) !important}
+}
 </style>
 </helmet>
-<div style="font-family: Inter, 'Segoe UI', Arial, sans-serif; color: #17181c; background: #ffffff; font-size: 18px; line-height: 1.55">
-<div style="background: {{accent}}; color: #ffffff">
-<header style="max-width: 1200px; margin: 0 auto; padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: center; justify-content: space-between">
-<a href="C-TenWeeks.dc.html" aria-label="BRC, Business Research &amp; Consulting, home" style="text-decoration: none; color: #ffffff; display: flex; align-items: center; gap: 14px">
-<span style="display: flex; flex-direction: column; align-items: center; gap: 3px"><img src="/_blob/7f6c0b293b5ca221ab8dca08d463cfec" alt="" style="display: block; width: 58px; height: auto"><span style="font-family: Archivo, Arial, sans-serif; font-stretch: 115%; font-weight: 800; font-size: 28px; line-height: 0.85; letter-spacing: -0.02em">BRC</span></span>
-<span style="font-size: 14px; line-height: 1.25; font-weight: 500">Business Research &amp; Consulting<br>Faculty of Economics and Business · University of Groningen</span>
-</a>
+<div style="font-family: Inter, 'Segoe UI', Arial, sans-serif; color: #17181c; background: #f7f8f9; font-size: 18px; line-height: 1.55">
+<div class="sred">
+<header class="shdr">
+<a class="sbrand" href="C-TenWeeks.dc.html" aria-label="BRC, Business Research &amp; Consulting, home"><span class="slogo"><img src="/_blob/7f6c0b293b5ca221ab8dca08d463cfec" alt=""><b>BRC</b></span><span class="sname">Business Research &amp; Consulting</span></a>
 <a href="C-TenWeeks.dc.html" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 12px 0">← Back to the homepage</a>
 </header>
 </div>
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 160px; display: flex; flex-direction: column; gap: 20px; align-items: flex-start">
+<div style="max-width: 1280px; margin: 0 auto; padding: 96px 32px 160px; display: flex; flex-direction: column; gap: 20px; align-items: flex-start">
 <h1 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 112%; font-weight: 800; font-size: clamp(32px, 4.4vw, 60px); line-height: 1; letter-spacing: -0.025em">[PRODUCT PAGE]</h1>
 <p style="margin: 0; max-width: 36em; color: #42464d">Placeholder. Each standard product gets its own page here: what the question looks like, what the team delivers, and an example project.</p>
 <a href="Submit.dc.html" style="text-decoration: none; background: {{accent}}; color: #ffffff; font-weight: 600; padding: 14px 26px; border-radius: 999px">Submit an assignment</a>

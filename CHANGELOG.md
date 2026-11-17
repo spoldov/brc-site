@@ -3,6 +3,14 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.2.0 (18 November 2026): phone and tablet versions, alignment fixes
+
+- **Phones and tablets are now designed.** Up to 1180 px wide the menu collapses into a button that opens a panel; up to 720 px everything is one column, the three pictures become a strip to swipe sideways, and the key figures are two by two.
+- "What is in it for you?" cards: content centred; icons are round outlined buttons, the same style as in "Our team".
+- "Our team": the Google Scholar icon comes first, so the homepage and LinkedIn icons are in the same place on every card.
+- Form and placeholder pages: same content width (1280 px), header style and page background as the homepage. They were 80 px narrower before (1200 px).
+- Fixed on phones: long words no longer push cards wider than the screen; the price in the form no longer breaks over two lines.
+
 ## v2.1.0 (18 November 2026): Dutch as default, softer background, illustrations
 
 - **Dutch is the default language.** The Dutch pages are at the site root, the English pages in `en/`.
@@ -23,7 +31,7 @@ To look at an old version on GitHub: open the repository, click the branch butto
 
 ## v2.0.0 (17 November 2026): design update, homepage
 
-Designed for desktop screens of 1920 x 1080 and larger, including ultrawide and 4K. Phones and tablets are not designed yet.
+Designed for desktop screens of 1920 x 1080 and larger, including ultrawide and 4K. Phones and tablets followed in v2.2.0.
 
 - Header: one line (BRC wordmark, name, menu, contact button, EN / NL). It stays at the top while scrolling and turns light after the first scroll. The faculty and university line moved to just above the headline.
 - Language switch: text "EN / NL" instead of flags, on all pages.

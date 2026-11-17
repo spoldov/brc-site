@@ -103,6 +103,13 @@ JS_INDEX='''
     all(".rv").forEach(function (el) { io.observe(el); });
   } else { all(".rv").forEach(function (el) { el.classList.add("in"); }); }
 
+  // menu button (tablets and phones)
+  var mb = $("menu-btn"), hd = $("hdr");
+  function menu(open) { hd.classList.toggle("is-open", open); mb.setAttribute("aria-expanded", String(open)); }
+  mb.addEventListener("click", function () { menu(!hd.classList.contains("is-open")); });
+  all("#nav a").forEach(function (a) { a.addEventListener("click", function () { menu(false); }); });
+  doc.addEventListener("keydown", function (e) { if (e.key === "Escape") menu(false); });
+
   // header state, menu highlight and the ten-weeks timeline: all driven by one scroll handler
   var hdr = $("hdr"), tl = $("tl"), items = all("li", tl), wk = $("wk-n");
   var links = all(".nav-link"), secs = links.map(function (a) { return $(a.getAttribute("href").slice(1)); });

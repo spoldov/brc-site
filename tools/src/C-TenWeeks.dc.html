@@ -133,12 +133,13 @@ p{margin:0}
 .switch button{position:relative; font:inherit; font-weight:600; min-height:3rem; padding:0 1.75rem; border:0; border-radius:999px; cursor:pointer; background:transparent; color:var(--ink); transition:color .3s}
 .switch button[aria-pressed="true"]{color:var(--white)}
 .cards4{display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem}
-.card{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.75rem; display:flex; flex-direction:column; gap:0.625rem; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s}
+.card{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.75rem; display:flex; flex-direction:column; align-items:center; text-align:center; gap:0.625rem; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s}
 .card:hover{transform:translateY(-4px); box-shadow:0 0 0 1px var(--line), 0 24px 44px -26px rgba(23,24,28,.4)}
 .card p{color:var(--muted); font-size:1.0625rem}
-.ico{width:3rem; height:3rem; border-radius:0.875rem; background:#fdecef; color:var(--red); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, color .35s}
-.ico svg{width:1.5rem; height:1.5rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
-.card:hover .ico{background:var(--red); color:var(--white)}
+/* same look as the round icon buttons in "Our team" */
+.ico{width:3rem; height:3rem; border-radius:999px; border:1.5px solid #7d838c; color:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, border-color .35s, color .35s}
+.ico svg{width:1.375rem; height:1.375rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.card:hover .ico{background:var(--red); border-color:var(--red); color:var(--white)}
 @keyframes brc-swap{from{opacity:0; transform:translateY(.75rem)}to{opacity:1; transform:none}}
 .js .is-swapping .card{animation:brc-swap .5s var(--ease) both; animation-delay:calc(var(--i,0) * 60ms)}
 
@@ -231,18 +232,96 @@ p{margin:0}
 .js .rv{opacity:0; transform:translateY(1.5rem); transition:opacity .8s var(--ease), transform .8s var(--ease); transition-delay:calc(var(--i,0) * 70ms)}
 .js .rv.in{opacity:1; transform:none}
 
-/* ---------- narrower windows: keep things usable until the phone/tablet version is designed ---------- */
+/* ---------- menu button: only shown on tablets and phones ---------- */
+.menu-btn{display:none}
+
+/* ---------- tablets and small laptops (up to 1180px wide) ---------- */
 @media (max-width:1180px){
-  .hdr{position:absolute; height:auto; padding:0.625rem 0}
-  .hdr-in,.nav{flex-wrap:wrap; gap:0.5rem 1.5rem}
-  .hero{padding-top:9rem}
-  .hero h1 > span{white-space:normal}
-  .cards4,.stats,.covers{grid-template-columns:repeat(2,1fr); gap:1.25rem}
-  .stat{border-left:0; padding-left:0}
-  .cards3,.team,.photos,.proof{grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr))}
-  .weeks-in{grid-template-columns:1fr; gap:3rem}
+  :root{--hdr:3.75rem}
+  .menu-btn{display:inline-flex; align-items:center; justify-content:center; width:2.75rem; height:2.75rem; margin-right:-0.5rem; border:0; padding:0; background:transparent; color:inherit; cursor:pointer; border-radius:999px}
+  .menu-btn svg{width:1.5rem; height:1.5rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round}
+  .menu-btn .x{display:none}
+  .hdr.is-open .menu-btn .x{display:block}
+  .hdr.is-open .menu-btn .bars{display:none}
+  /* the menu opens as a white panel under the header */
+  .nav{display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:stretch; gap:0; padding:0.25rem 1.25rem 1.5rem; background:var(--white); color:var(--ink); font-size:1.125rem; white-space:normal; border-top:1px solid var(--line); box-shadow:0 26px 40px -22px rgba(23,24,28,.45)}
+  .hdr.is-open .nav{display:flex}
+  .hdr.is-open{background:var(--white); color:var(--ink)}
+  .hdr.is-open .logo b{color:var(--red)}
+  .hdr.is-open .crown-white{display:none}
+  .hdr.is-open .crown-red{display:block}
+  .nav-link{padding:0.95rem 0; border-bottom:1px solid var(--line)}
+  .nav-link::after{display:none}
+  .page .nav a.nav-cta,.page .hdr.is-stuck .nav a.nav-cta{margin-top:1.25rem; height:3rem; justify-content:center; background:var(--red); color:var(--white); font-size:1.0625rem}
+  .nav > span{margin-top:1.25rem; justify-content:center; font-size:1rem !important}
+  .logo img{width:2.625rem}
+  .logo b{font-size:1.25rem}
+  .cards4,.cards3,.team,.covers{grid-template-columns:repeat(2,1fr)}
+  .costs .cards3{grid-template-columns:repeat(3,1fr)}
+  .price{padding:1.5rem}
+  .price-n{font-size:clamp(2rem, 4.6vw, 3.75rem)}
+  .weeks-in{grid-template-columns:1fr; gap:2.5rem}
   .weeks-side{position:static}
-  .tl li{grid-template-columns:1fr; gap:0.5rem}
+  .wk{margin-top:1rem}
+}
+@media (max-width:900px){
+  .stats{grid-template-columns:1fr 1fr; gap:2.25rem 1.5rem}
+  .stat{border-left:0; padding:0; position:relative}
+  .stat-n small{position:absolute; top:-1.25rem; left:0}
+  .proof{grid-template-columns:1fr}
+}
+
+/* ---------- phones (up to 720px wide) ---------- */
+@media (max-width:720px){
+  .page{font-size:1.0625rem}
+  .wrap{width:calc(100% - 2.5rem)}
+  .sec{padding:4rem 0}
+  .sec-head{margin-bottom:1.5rem}
+  h2.disp{font-size:1.875rem}
+  .brand-name{font-size:0.875rem}
+  .hero{padding-top:calc(var(--hdr) + 1.5rem)}
+  .hero-in{gap:1rem}
+  .eyebrow{font-size:0.6875rem; letter-spacing:.07em}
+  .hero h1{font-size:clamp(1.5rem, 8.1vw, 3rem)}
+  .hero-row{flex-direction:column; align-items:stretch; gap:1.25rem; margin-top:0.25rem}
+  .hero-row p{font-size:1.125rem}
+  .hero-cta{flex-direction:column}
+  .btn{justify-content:center}
+  /* the three pictures become a strip you swipe sideways */
+  .photos{display:flex; gap:0.75rem; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; margin:1.5rem -1.25rem -7rem; padding:0 1.25rem 2.5rem}
+  .photos::-webkit-scrollbar{display:none}
+  .photo{flex:0 0 84%; scroll-snap-align:center; box-shadow:0 18px 30px -18px rgba(23,24,28,.5)}
+  .photo:hover{transform:none}
+  .after-hero{padding-top:6.25rem}
+  .stats{margin-top:0}
+  .stat-n{font-size:2.5rem}
+  .stat-l{font-size:0.9375rem}
+  .clients{padding-top:4rem}
+  .client{width:10rem; height:4.25rem}
+  .switch{width:100%}
+  .cards4,.cards3,.costs .cards3,.team,.covers{grid-template-columns:minmax(0,1fr)}
+  .card h3,.pcard h3{overflow-wrap:break-word; hyphens:auto}
+  .covers{gap:1.25rem; margin-top:2rem}
+  .card{padding:1.5rem}
+  .wk-n{font-size:4.5rem}
+  .tl li{grid-template-columns:1fr; gap:0.625rem; padding:0 0 2rem 2.5rem}
+  .tl-tag{justify-self:start; min-width:8.25rem}
+  .price{padding:1.5rem}
+  .price-n{font-size:3rem}
+  .person{padding:0.875rem 1rem 0.875rem 1.25rem; font-size:1rem}
+  .quote{padding:4.25rem 1.5rem 1.5rem}
+  .quote::before{left:1.25rem; top:0.5rem; font-size:5rem}
+  .quote blockquote{font-size:1.25rem}
+  .foot{padding:0 0.5rem 0.5rem}
+  .foot-box{border-radius:1.25rem; padding:3rem 0 1.75rem}
+  .foot-in{gap:2.5rem}
+  .foot h2{font-size:2.25rem}
+  .foot-cta{width:100%}
+  .foot-base{flex-direction:column; align-items:flex-start}
+  .foot-base span{flex:none !important}
+}
+@media (max-width:350px){
+  .brand-name{display:none}
 }
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
@@ -261,13 +340,14 @@ p{margin:0}
 <span class="logo"><img class="crown-white" src="/_blob/7f6c0b293b5ca221ab8dca08d463cfec" alt=""><img class="crown-red" src="/_blob/1897d917baed1cc5e56f1da94adf13a1" alt=""><b>BRC</b></span>
 <span class="brand-name">Business Research &amp; Consulting</span>
 </a>
-<nav class="nav" aria-label="Main">
+<nav class="nav" id="nav" aria-label="Main">
 <a class="nav-link" href="#for-you">For you</a>
 <a class="nav-link" href="#weeks">The ten weeks</a>
 <a class="nav-link" href="#costs">Costs</a>
 <a class="nav-link" href="#people">People</a>
 <a class="nav-cta" href="#contact">Get in touch</a>
 </nav>
+<button type="button" class="menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg class="bars" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><svg class="x" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
 </div>
 </header>
 
@@ -420,11 +500,11 @@ p{margin:0}
 <div class="person rv">
 <div><strong>{{p.name}}</strong><br><span class="muted">{{p.role}}</span></div>
 <div class="person-links">
-<a class="ibtn" href="{{p.home}}" title="Homepage" aria-label="Homepage of {{p.name}}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
-<a class="ibtn" href="{{p.li}}" title="LinkedIn" aria-label="LinkedIn profile of {{p.name}}"><img class="li-b" src="/_blob/f2de1d83775f5bcd829581e15dc62aaf" alt=""><img class="li-w" src="/_blob/6636523929c2148818e6bb9ef0cac18e" alt=""></a>
 <sc-if value="{{p.scholar}}" hint-placeholder-val="{{false}}">
 <a class="ibtn" href="#scholar-link" title="Google Scholar" aria-label="Google Scholar profile of {{p.name}}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11.5V16c2 2 10 2 12 0v-4.5"></path><path d="M22 9v5"></path></svg></a>
 </sc-if>
+<a class="ibtn" href="{{p.home}}" title="Homepage" aria-label="Homepage of {{p.name}}"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="{{p.li}}" title="LinkedIn" aria-label="LinkedIn profile of {{p.name}}"><img class="li-b" src="/_blob/f2de1d83775f5bcd829581e15dc62aaf" alt=""><img class="li-w" src="/_blob/6636523929c2148818e6bb9ef0cac18e" alt=""></a>
 </div>
 </div>
 </sc-for>
