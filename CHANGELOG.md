@@ -3,6 +3,11 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.0.1 (17 November 2026): fixes
+
+- The page no longer grows on wide screens. One size for all desktop screens: the content column is at most 1280 px wide and centred; wider screens get more margin.
+- The ten weeks: all red week labels have the same width, text aligned left.
+
 ## v2.0.0 (17 November 2026): design update, homepage
 
 Designed for desktop screens of 1920 x 1080 and larger, including ultrawide and 4K. Phones and tablets are not designed yet.
@@ -18,7 +23,6 @@ Designed for desktop screens of 1920 x 1080 and larger, including ultrawide and 
 - Costs: grey band with white price cards; no black outline (outline now means "clickable" only).
 - Team: compact rows.
 - Sections fade in once when they enter the screen. All motion is off for visitors who have "reduce motion" set, and the page works without JavaScript.
-- Page width and text size grow with the window above 1920 px.
 - Fixed: "Clients include" heading was 32 px out of line.
 
 ## v1.0.0 (17 November 2026): first version

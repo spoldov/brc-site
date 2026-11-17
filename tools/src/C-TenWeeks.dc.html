@@ -19,15 +19,15 @@
   --ease:cubic-bezier(.2,.7,.2,1);
   --hdr:4rem;
 }
-/* The whole page scales gently with the window: 16px base up to 1920px wide, growing to 22px on ultrawide and 4K screens.
-   All sizes below are in rem, so everything grows together. */
-html{font-size:clamp(16px, 0.42vw + 8px, 22px); scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr) + 1.5rem)}
+/* One size for all desktop screens: text and layout do not grow on wide screens, the page just gets more margin.
+   All sizes below are in rem, so changing this one number scales the whole page. */
+html{font-size:16px; scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr) + 1.5rem)}
 body{margin:0}
 *,*::before,*::after{box-sizing:border-box}
 .page{font-family:Inter,'Segoe UI',Arial,sans-serif; color:var(--ink); background:var(--white); font-size:1.125rem; line-height:1.55; overflow-x:clip}
 .page a{color:var(--ink)}
-/* content column: 1280px at 1920 wide, and about 62% of the window on wider screens */
-.wrap{width:min(100% - 4rem, max(80rem, 62vw)); margin-inline:auto}
+/* content column: at most 1280px wide, centred */
+.wrap{width:min(100% - 4rem, 80rem); margin-inline:auto}
 .disp{font-family:Archivo,Arial,sans-serif; font-stretch:110%; font-weight:700; letter-spacing:-0.02em; line-height:1.02; margin:0}
 h2.disp{font-size:clamp(2rem, 3.4vw, 3.25rem)}
 h3{font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.375rem; line-height:1.15; margin:0}
@@ -170,10 +170,11 @@ p{margin:0}
 .tl{position:relative; margin:0; padding:0; list-style:none}
 .tl::before,.tl::after{content:""; position:absolute; left:0.5rem; top:0.75rem; height:var(--rail, calc(100% - 1.5rem)); width:2px; border-radius:2px; background:#3a3d44}
 .tl::after{background:var(--red); transform-origin:top; transform:scaleY(var(--p,1)); box-shadow:0 0 18px rgba(220,0,45,.9)}
-.tl li{position:relative; padding:0 0 2.75rem 3.25rem; display:grid; grid-template-columns:9.5rem 1fr; gap:1.5rem; align-items:start}
+.tl li{position:relative; padding:0 0 2.75rem 3.25rem; display:grid; grid-template-columns:8.25rem 1fr; gap:1.75rem; align-items:start}
 .tl li:last-child{padding-bottom:0}
 .tl li::before{content:""; position:absolute; z-index:1; left:0; top:0.5rem; width:1.125rem; height:1.125rem; border-radius:999px; background:var(--ink); border:2px solid #7d838c; transition:background-color .4s, border-color .4s, box-shadow .4s}
-.tl-tag{justify-self:start; font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.125rem; white-space:nowrap; padding:0.25rem 0.75rem; border-radius:0.5rem; background:var(--red); transition:background-color .4s, color .4s}
+/* all week labels are the same width (the grid column), text aligned left */
+.tl-tag{justify-self:stretch; text-align:left; font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.125rem; white-space:nowrap; padding:0.25rem 0.75rem; border-radius:0.5rem; background:var(--red); transition:background-color .4s, color .4s}
 .tl-body{color:#d9dce0; transition:opacity .4s}
 .tl-body strong{color:var(--white)}
 .tl li.on::before{background:var(--red); border-color:var(--red); box-shadow:0 0 0 6px rgba(220,0,45,.25)}
