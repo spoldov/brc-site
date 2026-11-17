@@ -10,6 +10,7 @@ Mock-up of the website for Business Research & Consulting (BRC), a course of the
 - `submit.html`: three-step assignment form (mock-up only; nothing is sent)
 - `product.html`: placeholder for the example-assignment pages
 - `students.html`: placeholder for the information-for-students page
+- `nl/`: the same four pages in Dutch. The flag in the header switches language.
 
 Plain HTML with inline styles and a little JavaScript. No build step: open `index.html` in a browser.
 
@@ -23,6 +24,7 @@ Plain HTML with inline styles and a little JavaScript. No build step: open `inde
 ## Open items before going live
 
 - Text in [SQUARE BRACKETS] is a placeholder.
+- The Dutch text is a first translation and needs proofreading.
 - Six client logos are still missing (the carousel shows the name instead).
 - Team links are placeholders except two homepages and one LinkedIn profile.
 - The three homepage photos are placeholders.
