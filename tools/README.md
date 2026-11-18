@@ -46,5 +46,7 @@ Needs Python 3 only; no packages.
 
 ## Checks after regenerating
 
+- `python3 tools/checks/render_check.py` renders all eight pages at phone, tablet and desktop sizes and reports anything wider than the screen, script errors, broken images, links to missing files and headline phrases that do not fit. Add `--shots` to also save full-page screenshots in `tools/checks/out/` (not kept in git). It needs Playwright and Chrome; see the top of the file.
+
 - `i18n.py` prints "untranslated:" followed by English text it found no Dutch for. Names, logos' alt text, "Week 1" and similar are expected there; a full sentence is not.
 - Run `git diff` to see exactly what changed in the generated pages.

@@ -3,6 +3,10 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## Tools (18 November 2026, no change to the site)
+
+- Added `tools/checks/render_check.py`: renders every page at phone, tablet and desktop sizes and checks for overflow, script errors, broken images and dead links. See `tools/README.md`.
+
 ## v2.5.0 (18 November 2026): headline, testimonial section, tab icon, link preview, footers
 
 - Headline: "Real Clients," is now "Real Questions," (Dutch: "Echte Klanten," is now "Echte Vragen,").
