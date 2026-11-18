@@ -34,6 +34,6 @@ The pages are generated from the sources in `tools/`. To change the site, edit t
 - The Dutch text is a first translation and needs proofreading.
 - Six client logos are still missing (the carousel shows the name instead).
 - Team links are placeholders except two homepages and one LinkedIn profile.
-- The three homepage pictures (`assets/photo-*.jpg`) are AI-generated and show people who do not exist; replace with real photos or disclose before launch.
+- The three homepage pictures are temporary illustrations (`assets/illustration-*.svg`); replace with real photos.
 - Fonts load from Google Fonts; consider hosting them locally.
 - Pages carry a `noindex` tag so search engines skip the mock-up. Remove it at launch.

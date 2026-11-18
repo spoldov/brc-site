@@ -3,11 +3,10 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
-## v2.4.0 (18 November 2026): pictures
+## v2.4.1 (18 November 2026): pictures back to the illustrations
 
-- The three homepage pictures are now AI-generated photos supplied by the owner (`assets/photo-*.jpg`, 1215 x 810, about 110 to 125 KB each). **They show people who do not exist. Before the site goes live they must be replaced by real photos or disclosed as AI-generated.**
-- The files were rebuilt from the pixels only: they carry no metadata (no workflow, prompt, model or LoRA names). Never commit the original generator output; it has the full workflow embedded.
-- The illustrations (`assets/illustration-*.svg`) are no longer used on the page but stay in the repo as a fallback.
+- The three homepage pictures are the drawn illustrations again (`assets/illustration-*.svg`).
+- v2.4.0 had replaced them with three AI-generated photos; the owner withdrew those because they looked too obviously AI-generated. The photo files are removed from the current version. They remain only in the history and in branch `archive/v2.4.0` (the files carry no metadata).
 
 ## v2.3.0 (18 November 2026): centred key figures, picture dots, phone alignment
 
