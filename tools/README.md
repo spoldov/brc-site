@@ -6,7 +6,7 @@ The HTML pages (four Dutch at the site root, four English in `en/`, plus four te
 
 - `src/C-TenWeeks.dc.html`: source of the homepage (`index.html`). Since design v2 this file is maintained by hand: all homepage styling is in the `<style>` block at its top, with the colours and sizes as variables in the first lines.
 - `src/Submit.dc.html`: source of the assignment form (`submit.html`)
-- `src/Product.dc.html`, `src/Students.dc.html`: sources of the two placeholder pages
+- `src/Product.dc.html`, `src/Students.dc.html`, `src/Newsletter.dc.html`: sources of the three placeholder pages (`product.html`, `students.html`, `newsletter.html`)
 - `nl.json`: the Dutch translation, as "English text": "Dutch text"
 - `build_site.py`: step 1, builds the English pages from `src/` into `tools/.build/` (an intermediate folder, not kept in git)
 - `i18n.py`: step 2, adds the language switch (EN / NL) and the "Built with Claude Fable 5.2 and Opus 5.5" line, then writes the Dutch pages to the site root and the English pages to `en/`
@@ -40,7 +40,9 @@ Needs Python 3 only; no packages.
 | Footer of the form and placeholder pages | `build_site.py` (search for `SUBFOOT`); its styling is at the end of the `<style>` block in each of the three sub-page sources |
 | The red, other colours, page width, text size | the `:root`, `html` and `.wrap` lines at the top of the `<style>` block in `src/C-TenWeeks.dc.html` |
 | Homepage motion (scroll reveal, timeline, counters, sticky header) | `build_site.py` (search for `JS_INDEX`) |
-| Client logos in the carousel | `src/C-TenWeeks.dc.html`: each row is written once between `<!--REPEAT-->` marks and repeated by `build_site.py` |
+| Client logos in the carousel | `src/C-TenWeeks.dc.html`: each row is written once between `<!--REPEAT-->` marks and repeated by `build_site.py`. Since v2.7.0 the boxes are placeholders ("Approvals" / "Pending"). To show a logo once its client has approved: `<div class="client"><img src="assets/client-….png" alt="Name"></div>`; the four earlier logo files are still in `assets/`. Keep an even number of boxes per row so the pattern stays regular |
+| BRC wordmark | plain text `<span class="logo"><b>BRC</b></span>` in the header of each source (`.slogo` on the sub-pages). The version with the RUG crown above it is kept as a fallback: the files `assets/brc-crown-white.svg` and `brc-crown-red.svg` are still in the repo, and the full header markup and styling are on branch `archive/v2.6.0` |
+| Newsletter link | homepage footer and the newsletter card in "What clients say": `src/C-TenWeeks.dc.html`; footer of the other pages: `SUBFOOT` in `build_site.py`; the page itself: `src/Newsletter.dc.html` |
 | Homepage photos | the three pictures are `<div class="photo has-img"><img src="assets/illustration-….svg" alt="…"></div>` in `src/C-TenWeeks.dc.html`. Put the photo in `assets/`, change `src` and `alt` there, and change the matching `alt` key in `nl.json` (Dutch description) |
 | Images | add the file to `assets/`; images referenced by id in `src/` are mapped in `build_site.py` (`BLOBS`) |
 

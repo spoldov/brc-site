@@ -3,6 +3,18 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.7.0 (18 November 2026): plain BRC wordmark, aligned header, client placeholders, newsletter
+
+- **Header:** the wordmark is plain "BRC" text, without the crown. Every text item in the header (BRC, the name, the menu links, the label of the contact button, NL / EN) now sits on one baseline, on every page and screen size; measured in the browser. Before, the form and placeholder pages had four different baselines. The crown version is kept as a fallback (files in `assets/`, full header on branch `archive/v2.6.0`).
+- **Phones, form and placeholder pages:** the "Back to the homepage" link is hidden (BRC links home), so the header fits on one line instead of two. NL and EN in the language switch are now the same size there (EN was 1 px larger).
+- **Client carousel:** the fade is centred on the content edge (half visible on the line, 3rem out, 3rem in), so the strip looks exactly as wide as the boxes. The logos are replaced by placeholders reading "Approvals" / "Pending" (Dutch: "Goedkeuring" / "In afwachting"), six per row, until each client has renewed permission and the selection is made. The four logo files stay in `assets/`. Animation slowed to 168 s so the speed is unchanged.
+- **Newsletter:**
+  - new placeholder page `newsletter.html` (English `en/newsletter.html`);
+  - footer of every page: "Blijf op de hoogte: meld u aan voor onze nieuwsbrief" / "Stay up to date: sign up for our newsletter";
+  - in "Wat klanten zeggen", the case-description box is replaced by a card "Lees onze nieuwsbrieven voor meer testimonials" with "Laatste nieuws: [PLACEHOLDER]", linking to the newsletter page.
+- Removed with the case box: its style (`.meta`) and four Dutch translations. `tools/checks/render_check.py` now also checks the newsletter pages.
+- Version v2.6.0 is archived as branch `archive/v2.6.0`.
+
 ## v2.6.0 (18 November 2026): client carousel fades at the content edge
 
 - The client carousel ("Onze klanten" / "Clients include") is now masked to the content column: logos are fully invisible at the left and right edge of the content (the same line as the headings and boxes) and fully visible 6rem (96 px) further in; on phones the fade is 3rem. Before, the carousel ran the full screen width and only faded at the screen edges. Based on mock-up A, with the fade moved inside the column at the owner's request.

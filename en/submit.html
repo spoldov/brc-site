@@ -10,19 +10,17 @@
 body{margin:0}
 a{color:#17181c}a:hover{color:#a80022}
 /* header and widths matched to the homepage */
-.shdr{max-width:1344px; margin:0 auto; padding:8px 32px; min-height:64px; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:4px 24px; align-items:center; justify-content:space-between}
-.sbrand{display:flex; align-items:center; gap:14px; text-decoration:none; color:#ffffff}
-.slogo{display:flex; flex-direction:column; align-items:center; gap:3px}
-.slogo img{display:block; width:48px; height:auto}
-.slogo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:23px; line-height:.85; letter-spacing:-0.02em}
+.shdr{max-width:1344px; margin:0 auto; padding:8px 32px; min-height:64px; box-sizing:border-box; display:flex; flex-wrap:wrap; gap:4px 24px; align-items:baseline; align-content:center; justify-content:space-between}
+.sbrand{display:flex; align-items:baseline; gap:12px; text-decoration:none; color:#ffffff}
+.slogo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:23px; line-height:1; letter-spacing:-0.02em}
 .sname{font-size:15px; font-weight:600; white-space:nowrap}
 .sred{color:#ffffff; background:radial-gradient(70rem 36rem at 105% 115%, rgba(60,0,14,.55), transparent 62%), linear-gradient(120deg, #dc002d 0%, #cf002a 45%, #a8001f 100%)}
 #price{white-space:nowrap}
 h1{overflow-wrap:anywhere}
 @media (max-width:720px){
   .shdr{padding:8px 20px}
-  .shdr a{font-size:15px !important}
   .sname{display:none}
+  .shdr > div > a:not([hreflang]){display:none}  /* phones: no back link, BRC links home; header stays on one line */
   [style*="max-width: 1280px"]{padding-left:20px !important; padding-right:20px !important}
   #price{font-size:clamp(30px, 9.4vw, 52px) !important}
 }
@@ -67,8 +65,8 @@ h1{overflow-wrap:anywhere}
 <!-- header -->
 <div class="sred">
 <header class="shdr">
-<a class="sbrand" href="index.html" aria-label="BRC, Business Research &amp; Consulting, home"><span class="slogo"><img src="../assets/brc-crown-white.svg" alt=""><b>BRC</b></span><span class="sname">Business Research &amp; Consulting</span></a>
-<div style="display: flex; align-items: center; gap: 20px"><a href="index.html" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 12px 0">← Back to the homepage</a><span style="display: inline-flex; align-items: center; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>EN</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="../submit.html" lang="nl" hreflang="nl" aria-label="Nederlands" title="Nederlands" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">NL</a></span></div>
+<a class="sbrand" href="index.html" aria-label="BRC, Business Research &amp; Consulting, home"><span class="slogo"><b>BRC</b></span><span class="sname">Business Research &amp; Consulting</span></a>
+<div style="display: flex; align-items: baseline; gap: 20px"><a href="index.html" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 12px 0">← Back to the homepage</a><span style="display: inline-flex; align-items: baseline; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>EN</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="../submit.html" lang="nl" hreflang="nl" aria-label="Nederlands" title="Nederlands" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">NL</a></span></div>
 </header>
 <div style="max-width: 1280px; margin: 0 auto; padding: 20px 32px 36px; display: flex; flex-direction: column; gap: 8px">
 <h1 style="margin: 0; font-family: Archivo, Arial, sans-serif; font-stretch: 112%; font-weight: 800; font-size: clamp(30px, 4vw, 48px); line-height: 1.02; letter-spacing: -0.025em">Submit an assignment</h1>
@@ -182,6 +180,7 @@ h1{overflow-wrap:anywhere}
 <div class="sfoot-box sred">
 <div class="sfoot-in">
 <div class="sfoot-contact">Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
+<div>Stay up to date: <a href="newsletter.html">sign up for our newsletter</a></div>
 <div class="sfoot-base">
 <a class="sfoot-rug" href="https://www.rug.nl"><img src="../assets/rug-logo-en.svg" alt="University of Groningen"></a>
 <span style="flex: 1 1 20rem">BRC is a course of the Faculty of Economics and Business, <a href="https://www.rug.nl">University of Groningen</a>. This website is maintained by the BRC team and is not part of rug.nl.<span style="display: block; margin-top: 6px">Built with Claude Fable 5.2 and Opus 5.5</span></span>

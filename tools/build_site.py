@@ -9,18 +9,20 @@ SRC=os.path.join(ROOT,'tools','src')
 OUT=os.path.join(ROOT,'tools','.build')  # intermediate English pages; i18n.py turns these into the real site
 os.makedirs(OUT,exist_ok=True)
 # The page sources refer to images by an id; this maps each id to its file in assets/.
+# The two crown files are not used since v2.7.0 (plain BRC text); kept as a fallback, see tools/README.md.
 BLOBS={'7f6c0b293b5ca221ab8dca08d463cfec':'brc-crown-white.svg',
 '1897d917baed1cc5e56f1da94adf13a1':'brc-crown-red.svg',
-'fce67d760db1110f8b0e5fa8aeb48b87':'rug-logo-en.svg',
-'0cba844e6d9a8b84517cd7e3c79c796c':'rug-logo-nl.svg',
+# Client logos: not shown since v2.7.0 (placeholders until permission is renewed); files kept.
 'ec716513fb7bc26d25947a6621baf027':'client-gasunie.png',
 '48fdcd637d872b7afcf65b179f206c40':'client-provincie-groningen.png',
 '274f50ed696218f6ca9812fdb565054e':'client-resato.png',
 'b75cef0b87ef141ed31e252d08a8f70f':'client-fc-groningen.png',
+'fce67d760db1110f8b0e5fa8aeb48b87':'rug-logo-en.svg',
+'0cba844e6d9a8b84517cd7e3c79c796c':'rug-logo-nl.svg',
 'f2de1d83775f5bcd829581e15dc62aaf':'linkedin-black.png',
 '6636523929c2148818e6bb9ef0cac18e':'linkedin-white.png'}
 for n in BLOBS.values(): assert os.path.exists(os.path.join(ROOT,'assets',n)),n
-PAGES={'C-TenWeeks.dc.html':'index.html','Submit.dc.html':'submit.html','Product.dc.html':'product.html','Students.dc.html':'students.html'}
+PAGES={'C-TenWeeks.dc.html':'index.html','Submit.dc.html':'submit.html','Product.dc.html':'product.html','Students.dc.html':'students.html','Newsletter.dc.html':'newsletter.html'}
 def sub1(s,a,b,n=1):
     assert s.count(a)==n,(a[:60],s.count(a)); return s.replace(a,b)
 def base(name):
@@ -37,6 +39,7 @@ SUBFOOT='''<footer class="sfoot">
 <div class="sfoot-box sred">
 <div class="sfoot-in">
 <div class="sfoot-contact">Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
+<div>Stay up to date: <a href="newsletter.html">sign up for our newsletter</a></div>
 <div class="sfoot-base">
 <a class="sfoot-rug" href="https://www.rug.nl"><img src="assets/rug-logo-en.svg" alt="University of Groningen"></a>
 <span style="flex: 1 1 20rem">BRC is a course of the Faculty of Economics and Business, <a href="https://www.rug.nl">University of Groningen</a>. This website is maintained by the BRC team and is not part of rug.nl.</span>
@@ -67,7 +70,6 @@ for n,r,sch,home,li in people:
     c=c.replace('{{p.name}}',n).replace('{{p.role}}',r).replace('{{p.home}}',home or '#').replace('{{p.li}}',li or '#').replace('href="#scholar-link"','href="#"')
     out.append(c)
 b=b.replace(m.group(0),'\n'.join(out))
-b=b.replace('href="#case-placeholder"','href="#"')
 # client carousel: each row is written once in the source (between REPEAT marks) and repeated 8x here so the loop is seamless, also on very wide screens
 assert b.count('<!--REPEAT-->')==2
 b=re.sub(r'<!--REPEAT-->\n(.*?)\n<!--/REPEAT-->',lambda m:'\n'.join([m.group(1)]*8),b,flags=re.S)
@@ -229,5 +231,5 @@ JS_SUBMIT='''
 })();
 '''
 open(OUT+'/submit.html','w').write(page('Submit an assignment · BRC',helm,with_footer(b),JS_SUBMIT))
-for src,dst,t in (('Product.dc.html','product.html','Example assignment · BRC'),('Students.dc.html','students.html','Information for students · BRC')):
+for src,dst,t in (('Product.dc.html','product.html','Example assignment · BRC'),('Students.dc.html','students.html','Information for students · BRC'),('Newsletter.dc.html','newsletter.html','Newsletter · BRC')):
     _,helm,b=base(src); open(OUT+'/'+dst,'w').write(page(t,helm,with_footer(b)))

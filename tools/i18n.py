@@ -12,7 +12,7 @@ D=json.load(open(os.path.join(ROOT,'tools','nl.json'),encoding='utf-8'))
 def langswitch(href,code,label,pair):
     # Language switch as text: the current language in plain text, the other one as a link.
     cur,other=pair
-    return '<span style="display: inline-flex; align-items: center; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>%s</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="%s" lang="%s" hreflang="%s" aria-label="%s" title="%s" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">%s</a></span>'%(cur,href,code,code,label,label,other)
+    return '<span style="display: inline-flex; align-items: baseline; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>%s</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="%s" lang="%s" hreflang="%s" aria-label="%s" title="%s" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">%s</a></span>'%(cur,href,code,code,label,label,other)
 SWITCH_ON_EN=('EN','NL')  # shown on the English pages
 SWITCH_ON_NL=('NL','EN')  # shown on the Dutch pages
 SWITCHMARK='<!--LANGSWITCH-->'
@@ -24,7 +24,7 @@ def prep(name,t):
         i=t.index('</nav>'); t=t[:i]+SWITCHMARK+'\n'+t[i:]
     else:
         m=re.search(r'<a href="index\.html" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 12px 0">[^<]*</a>',t)
-        t=t.replace(m.group(0),'<div style="display: flex; align-items: center; gap: 20px">'+m.group(0)+SWITCHMARK+'</div>')
+        t=t.replace(m.group(0),'<div style="display: flex; align-items: baseline; gap: 20px">'+m.group(0)+SWITCHMARK+'</div>')
     # AI-disclosure line in the footer of every page
     t=sub1(t,'is not part of rug.nl.</span>','is not part of rug.nl.<span style="display: block; margin-top: 6px">Built with Claude Fable 5.2 and Opus 5.5</span></span>')
     return t
@@ -67,7 +67,6 @@ def tr_attr(t,miss):
         elif v.startswith('Homepage of '): v='Homepage van '+v[12:]
         elif v.startswith('LinkedIn profile of '): v='LinkedIn-profiel van '+v[20:]
         elif v.startswith('Google Scholar profile of '): v='Google Scholar-profiel van '+v[26:]
-        elif v.startswith('Clients include '): v='Onze klanten zijn onder andere '+v[16:]
         elif re.search(r'[a-z]{3}',v) and v not in ('Nederlands','English'): miss.add('@'+v)
         return '%s="%s"'%(k,v)
     return re.sub(r'\b(aria-label|title|alt)="([^"]*)"',f,t)
@@ -81,7 +80,7 @@ os.makedirs(OUT+'/en',exist_ok=True); os.makedirs(OUT+'/nl',exist_ok=True)
 # TEMPORARY forwarding pages: Dutch used to live in nl/. Delete the nl/ folder (and STUB below) once the site is approved.
 STUB='<!doctype html>\n<!-- TEMPORARY forwarding page. Delete the whole nl/ folder after approval. -->\n<html lang="nl">\n<head>\n<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">\n<title>BRC</title>\n<link rel="canonical" href="../%s">\n<meta http-equiv="refresh" content="0; url=../%s">\n</head>\n<body>\n<p><a href="../%s">Deze pagina is verhuisd. Klik hier als u niet automatisch wordt doorgestuurd.</a></p>\n</body>\n</html>\n'
 miss=set()
-for name in ['index.html','submit.html','product.html','students.html']:
+for name in ['index.html','submit.html','product.html','students.html','newsletter.html']:
     t=prep(name,open(BUILD+'/'+name).read())
     alt='<link rel="alternate" hreflang="nl" href="%s">\n<link rel="alternate" hreflang="en" href="%s">\n<link rel="alternate" hreflang="x-default" href="%s">\n</head>'
     # English: in en/
@@ -103,5 +102,5 @@ for name in ['index.html','submit.html','product.html','students.html']:
     nl=re.sub(r'€(\d),(\d{3})',r'€ \1.\2',nl)
     nl=sub1(nl,'</head>',alt%(name,'en/'+name,name))
     open(OUT+'/'+name,'w').write(nl); open(OUT+'/en/'+name,'w').write(en)
-    open(OUT+'/nl/'+name,'w').write(STUB%(name,name,name))
+    if name!='newsletter.html': open(OUT+'/nl/'+name,'w').write(STUB%(name,name,name))  # newsletter never lived in nl/
 print('untranslated:');[print('  ',m) for m in sorted(miss)]

@@ -51,14 +51,12 @@ p{margin:0}
 
 /* ---------- header (option B: one line, stays at the top) ---------- */
 .hdr{position:fixed; inset:0 0 auto 0; z-index:50; height:var(--hdr); color:var(--white); transition:background-color .3s, box-shadow .3s, color .3s}
-.hdr-in{height:100%; display:flex; align-items:center; justify-content:space-between; gap:2rem}
-.page a.brand{display:flex; align-items:center; gap:0.875rem; text-decoration:none; color:inherit}
-.logo{display:flex; flex-direction:column; align-items:center; gap:3px}
-.logo img{display:block; width:3rem; height:auto}
-.logo .crown-red{display:none}
-.logo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:1.4375rem; line-height:.85; letter-spacing:-0.02em}
+/* header: every text item (BRC, name, menu links, button label, NL / EN) sits on one shared baseline; the row is centred in the bar */
+.hdr-in{height:100%; display:flex; flex-wrap:wrap; align-items:baseline; align-content:center; justify-content:space-between; gap:2rem}
+.page a.brand{display:flex; align-items:baseline; gap:0.75rem; text-decoration:none; color:inherit}
+.logo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:1.4375rem; line-height:1; letter-spacing:-0.02em}
 .brand-name{font-size:0.9375rem; font-weight:600; white-space:nowrap}
-.nav{display:flex; align-items:center; gap:1.875rem; font-weight:600; font-size:0.9375rem; white-space:nowrap}
+.nav{display:flex; align-items:baseline; gap:1.875rem; font-weight:600; font-size:0.9375rem; white-space:nowrap}
 .page .nav a{color:inherit; text-decoration:none}
 .nav-link{position:relative; padding:0.5rem 0}
 .nav-link::after{content:""; position:absolute; left:0; right:0; bottom:0.125rem; height:2px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease)}
@@ -68,8 +66,6 @@ p{margin:0}
 /* after scrolling past the hero: light, slightly see-through bar */
 .hdr.is-stuck{background:rgba(255,255,255,.86); -webkit-backdrop-filter:saturate(1.6) blur(14px); backdrop-filter:saturate(1.6) blur(14px); color:var(--ink); box-shadow:0 1px 0 var(--line), 0 12px 30px -22px rgba(23,24,28,.5)}
 .hdr.is-stuck .logo b{color:var(--red)}
-.hdr.is-stuck .crown-white{display:none}
-.hdr.is-stuck .crown-red{display:block}
 .page .hdr.is-stuck .nav a.nav-cta{background:var(--red); color:var(--white)}
 .hdr.is-stuck .nav-link[aria-current="true"]{color:var(--red)}
 
@@ -115,19 +111,21 @@ p{margin:0}
 
 /* ---------- clients ---------- */
 .clients{padding:6rem 0 0}
-/* the carousel runs the full screen width but is masked to the content column: fully invisible at the
-   content edge (--edge, same line as headings and boxes), fully visible 6rem further in */
+/* the carousel runs the full screen width but is masked to the content column. The fade is centred on the
+   content edge (--edge, same line as headings and boxes): half visible on the line, gone 3rem outside it,
+   fully visible 3rem inside it, so the strip looks exactly as wide as the boxes */
 .brc-car{--edge:max(2rem, (100% - 80rem) / 2); --fade:6rem; overflow:hidden; display:flex; flex-direction:column; gap:0.875rem;
-  -webkit-mask-image:linear-gradient(90deg, transparent var(--edge), #000 calc(var(--edge) + var(--fade)), #000 calc(100% - var(--edge) - var(--fade)), transparent calc(100% - var(--edge)));
-  mask-image:linear-gradient(90deg, transparent var(--edge), #000 calc(var(--edge) + var(--fade)), #000 calc(100% - var(--edge) - var(--fade)), transparent calc(100% - var(--edge)))}
-.brc-marq{display:flex; gap:0.875rem; width:max-content; padding-right:0.875rem; animation:brc-marq 140s linear infinite}
+  -webkit-mask-image:linear-gradient(90deg, transparent calc(var(--edge) - var(--fade) / 2), #000 calc(var(--edge) + var(--fade) / 2), #000 calc(100% - var(--edge) - var(--fade) / 2), transparent calc(100% - var(--edge) + var(--fade) / 2));
+  mask-image:linear-gradient(90deg, transparent calc(var(--edge) - var(--fade) / 2), #000 calc(var(--edge) + var(--fade) / 2), #000 calc(100% - var(--edge) - var(--fade) / 2), transparent calc(100% - var(--edge) + var(--fade) / 2))}
+.brc-marq{display:flex; gap:0.875rem; width:max-content; padding-right:0.875rem; animation:brc-marq 168s linear infinite}
 .brc-rev{animation-direction:reverse}
 .brc-car:hover .brc-marq{animation-play-state:paused}
 @keyframes brc-marq{to{transform:translateX(-50%)}}
 .client{flex:none; width:13rem; height:5.25rem; margin:1px 0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1rem; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.875rem 1.25rem; font-size:0.9375rem; line-height:1.3; transition:background-color .3s, transform .3s var(--ease)}
 .client:hover{transform:translateY(-2px)}
+/* for real client logos, once each client has approved: <div class="client"><img src="../assets/..." alt="Name"></div> */
 .client img{display:block; max-width:100%; max-height:100%; object-fit:contain}
-.client span{font-size:0.75rem; color:var(--muted)}
+.client-ph{color:var(--muted); font-weight:600; letter-spacing:0.01em}
 
 /* ---------- for you ---------- */
 .switch{position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; background:#e9ebee; border-radius:999px}
@@ -156,11 +154,10 @@ p{margin:0}
 .page a.pcard{position:relative; text-decoration:none; color:var(--ink); background:var(--white); border-radius:1.25rem; padding:1.75rem 1.75rem 2rem; display:flex; flex-direction:column; gap:0.625rem; box-shadow:inset 0 0 0 1.5px var(--ink); transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .25s, color .25s}
 .pcard h3{padding-right:3rem}
 .pcard p{color:var(--muted); font-size:1.0625rem; transition:color .25s}
-.pcard .meta{font-size:0.9375rem; color:var(--muted); transition:color .25s}
 .pcard .go{position:absolute; top:1.375rem; right:1.375rem; width:2.25rem; height:2.25rem; border-radius:999px; background:var(--tint); display:flex; align-items:center; justify-content:center; transition:background-color .25s, color .25s, transform .35s var(--ease)}
 .pcard .go svg{width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
 .page a.pcard:hover,.page a.pcard:focus-visible{background:var(--red); color:var(--white); box-shadow:inset 0 0 0 1.5px var(--red), 0 26px 44px -24px rgba(168,0,31,.7); transform:translateY(-4px)}
-.pcard:hover p,.pcard:focus-visible p,.pcard:hover .meta,.pcard:focus-visible .meta{color:var(--white)}
+.pcard:hover p,.pcard:focus-visible p{color:var(--white)}
 .pcard:hover .go,.pcard:focus-visible .go{background:var(--white); color:var(--red); transform:translate(3px,-3px)}
 .page a.pcard-dark{background:var(--ink); color:var(--white)}
 .pcard-dark p{color:#d9dce0}
@@ -246,6 +243,7 @@ p{margin:0}
 /* ---------- tablets and small laptops (up to 1180px wide) ---------- */
 @media (max-width:1180px){
   :root{--hdr:3.75rem}
+  .hdr-in{align-items:center}
   .menu-btn{display:inline-flex; align-items:center; justify-content:center; width:2.75rem; height:2.75rem; margin-right:-0.5rem; border:0; padding:0; background:transparent; color:inherit; cursor:pointer; border-radius:999px}
   .menu-btn svg{width:1.5rem; height:1.5rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round}
   .menu-btn .x{display:none}
@@ -256,13 +254,10 @@ p{margin:0}
   .hdr.is-open .nav{display:flex}
   .hdr.is-open{background:var(--white); color:var(--ink)}
   .hdr.is-open .logo b{color:var(--red)}
-  .hdr.is-open .crown-white{display:none}
-  .hdr.is-open .crown-red{display:block}
   .nav-link{padding:0.95rem 0; border-bottom:1px solid var(--line)}
   .nav-link::after{display:none}
   .page .nav a.nav-cta,.page .hdr.is-stuck .nav a.nav-cta{margin-top:1.25rem; height:3rem; justify-content:center; background:var(--red); color:var(--white); font-size:1.0625rem}
   .nav > span{margin-top:1.25rem; justify-content:center; font-size:1rem !important}
-  .logo img{width:2.625rem}
   .logo b{font-size:1.25rem}
   .cards4,.cards3,.team,.covers{grid-template-columns:repeat(2,1fr)}
   @supports (grid-template-rows:subgrid){ .cards4 .card:nth-child(-n+2){margin-bottom:0.625rem} }
@@ -386,7 +381,7 @@ p{margin:0}
 <header class="hdr" id="hdr">
 <div class="wrap hdr-in">
 <a class="brand" href="#top" aria-label="BRC, Business Research &amp; Consulting, home">
-<span class="logo"><img class="crown-white" src="../assets/brc-crown-white.svg" alt=""><img class="crown-red" src="../assets/brc-crown-red.svg" alt=""><b>BRC</b></span>
+<span class="logo"><b>BRC</b></span>
 <span class="brand-name">Business Research &amp; Consulting</span>
 </a>
 <nav class="nav" id="nav" aria-label="Main">
@@ -395,7 +390,7 @@ p{margin:0}
 <a class="nav-link" href="#costs">Costs</a>
 <a class="nav-link" href="#people">People</a>
 <a class="nav-cta" href="#contact">Get in touch</a>
-<span style="display: inline-flex; align-items: center; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>EN</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="../index.html" lang="nl" hreflang="nl" aria-label="Nederlands" title="Nederlands" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">NL</a></span>
+<span style="display: inline-flex; align-items: baseline; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>EN</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="../index.html" lang="nl" hreflang="nl" aria-label="Nederlands" title="Nederlands" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">NL</a></span>
 </nav>
 <button type="button" class="menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg class="bars" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><svg class="x" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
 </div>
@@ -437,90 +432,107 @@ p{margin:0}
 <!-- clients -->
 <section id="clients" class="clients">
 <div class="wrap"><div class="sec-head rv"><h2 class="disp">Clients include</h2></div></div>
-<div class="brc-car rv" role="img" aria-label="Clients include Gasunie, UMCG, Provincie Groningen, Rabobank, Resato Hydrogen Technology, FC Groningen in de Maatschappij, Zilveren Kruis / Achmea, VNO-NCW MKB Noord, Spanninga, IT Hub Hoogeveen">
+<div class="brc-car rv" role="img" aria-label="Client logos will be shown after approval">
+<!-- client logos are placeholders until each client has formally approved; the alternating boxes read "Approvals pending" -->
 <div class="brc-marq">
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
-<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
-<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
-<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
-<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
-<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
 </div>
 <div class="brc-marq brc-rev">
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
-<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
-<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
-<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
-<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
-<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
+<div class="client client-ph">Pending</div>
+<div class="client client-ph">Approvals</div>
 </div>
 </div>
 </section>
@@ -581,11 +593,9 @@ p{margin:0}
 <blockquote>“It didn’t take the students long to get the feel of our company, the management and our activities.”</blockquote>
 <figcaption>[CLIENT NAME, ROLE, ORGANISATION]</figcaption>
 </figure>
-<a class="pcard rv" href="#"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
-<div class="meta" style="font-weight:600">Case description</div>
-<h3 style="font-size:1.5rem; line-height:1.2">[CASE TITLE: the client's question in one line]</h3>
-<p>[TWO SENTENCES: what the team researched and what the client did with the advice]</p>
-<div class="meta">[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]</div>
+<a class="pcard rv" href="newsletter.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
+<h3>Read our newsletters for more testimonials</h3>
+<p>Latest news: [PLACEHOLDER: title of the most recent newsletter]</p>
 </a>
 </div>
 </div>
@@ -710,6 +720,7 @@ p{margin:0}
 <div class="foot-cta">
 <a class="btn btn-white" href="submit.html" style="color:#17181c">Submit an assignment<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 <div>Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
+<div>Stay up to date: <a href="newsletter.html">sign up for our newsletter</a></div>
 </div>
 </div>
 <div class="foot-base">

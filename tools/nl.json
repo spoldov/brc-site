@@ -75,10 +75,6 @@
 "Guest lecturer": "Gastdocent",
 "“It didn’t take the students long to get the feel of our company, the management and our activities.”": "“De studenten hadden snel gevoel voor ons bedrijf, het management en onze activiteiten.”",
 "[CLIENT NAME, ROLE, ORGANISATION]": "[NAAM KLANT, FUNCTIE, ORGANISATIE]",
-"Case description": "Casusbeschrijving",
-"[CASE TITLE: the client's question in one line]": "[TITEL CASUS: de vraag van de klant in één regel]",
-"[TWO SENTENCES: what the team researched and what the client did with the advice]": "[TWEE ZINNEN: wat het team onderzocht en wat de klant met het advies deed]",
-"[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]": "[SECTOR] · [STANDAARDPRODUCT] · [BLOK EN JAAR]",
 "Clients include": "Onze klanten",
 "Bring us your question.": "Leg ons uw vraag voor.",
 "BRC is a course of the Faculty of Economics and Business,": "BRC is een vak van de Faculteit Economie en Bedrijfskunde,",
@@ -195,5 +191,15 @@
 "Illustration: a student team at an intake with a client": "Illustratie: een studententeam bij een intake bij de klant",
 "Illustration: students at a poster session": "Illustratie: studenten bij een postersessie",
 "Illustration: final presentation to the client": "Illustratie: eindpresentatie voor de klant",
-"Built with Claude Fable 5.2 and Opus 5.5": "Gemaakt met Claude Fable 5.2 en Opus 5.5"
+"Built with Claude Fable 5.2 and Opus 5.5": "Gemaakt met Claude Fable 5.2 en Opus 5.5",
+"Approvals": "Goedkeuring",
+"Pending": "In afwachting",
+"Client logos will be shown after approval": "Klantlogo's volgen na goedkeuring",
+"Read our newsletters for more testimonials": "Lees onze nieuwsbrieven voor meer testimonials",
+"Latest news: [PLACEHOLDER: title of the most recent newsletter]": "Laatste nieuws: [PLACEHOLDER: titel van de laatste nieuwsbrief]",
+"Stay up to date:": "Blijf op de hoogte:",
+"sign up for our newsletter": "meld u aan voor onze nieuwsbrief",
+"Newsletter": "Nieuwsbrief",
+"Newsletter · BRC": "Nieuwsbrief · BRC",
+"Placeholder. Here you will be able to sign up for the BRC newsletter and read earlier issues, with recent cases and what clients say about working with our teams.": "Placeholder. Hier kunt u zich straks aanmelden voor de nieuwsbrief van BRC en eerdere edities lezen, met recente cases en ervaringen van klanten met onze teams."
 }

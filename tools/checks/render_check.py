@@ -21,8 +21,8 @@ from playwright.async_api import async_playwright
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, 'tools', 'checks', 'out')
-PAGES = ['index.html', 'submit.html', 'product.html', 'students.html',
-         'en/index.html', 'en/submit.html', 'en/product.html', 'en/students.html']
+PAGES = ['index.html', 'submit.html', 'product.html', 'students.html', 'newsletter.html',
+         'en/index.html', 'en/submit.html', 'en/product.html', 'en/students.html', 'en/newsletter.html']
 # (name, width, height). Phones and the small tablet are rendered as touch devices.
 SIZES = [('phone-360', 360, 740), ('phone-390', 390, 844), ('phone-430', 430, 932),
          ('tablet-768', 768, 1024), ('tablet-1024', 1024, 768),
