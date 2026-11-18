@@ -139,7 +139,7 @@ p{margin:0}
 .card:hover{transform:translateY(-4px); box-shadow:0 0 0 1px var(--line), 0 24px 44px -26px rgba(23,24,28,.4)}
 .card p{color:var(--muted); font-size:1.0625rem}
 /* same look as the round icon buttons in "Our team" */
-.ico{width:3rem; height:3rem; border-radius:999px; border:1.5px solid #7d838c; color:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, border-color .35s, color .35s}
+.ico{width:3rem; height:3rem; border-radius:999px; border:1.5px solid #7d838c; color:var(--red); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, border-color .35s, color .35s}
 .ico svg{width:1.375rem; height:1.375rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
 .card:hover .ico{background:var(--red); border-color:var(--red); color:var(--white)}
 @keyframes brc-swap{from{opacity:0; transform:translateY(.75rem)}to{opacity:1; transform:none}}
@@ -206,7 +206,7 @@ p{margin:0}
 .ibtn .li-b{display:block}.ibtn .li-w{display:none}
 .ibtn:hover .li-b,.ibtn:focus-visible .li-b{display:none}.ibtn:hover .li-w,.ibtn:focus-visible .li-w{display:block}
 .page a.ibtn:hover,.page a.ibtn:focus-visible{background:var(--red); border-color:var(--red); color:var(--white); transform:translateY(-2px)}
-.proof{display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:1.25rem}
+.proof{display:grid; grid-template-columns:1fr 1fr; gap:1.25rem}
 .quote{position:relative; margin:0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:2.25rem 2.25rem 2rem 5.5rem; display:flex; flex-direction:column; gap:1rem}
 .quote::before{content:"\201C"; position:absolute; left:1.75rem; top:1rem; font-family:Archivo,Arial,sans-serif; font-weight:800; font-size:6rem; line-height:1; color:var(--red)}
 .quote blockquote{margin:0; font-family:Archivo,Arial,sans-serif; font-weight:600; font-size:1.5rem; line-height:1.3}
@@ -314,10 +314,17 @@ p{margin:0}
   .clients{padding-top:4rem}
   .client{width:10rem; height:4.25rem}
   .switch{width:100%}
-  .cards4,.cards3,.costs .cards3,.team,.covers{grid-template-columns:minmax(0,1fr)}
+  .cards3,.costs .cards3,.team,.covers{grid-template-columns:minmax(0,1fr)}
+  .cards4{grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.75rem}
+  .cards4 .card{padding:1.25rem 0.875rem; gap:0.375rem}
+  .cards4 .card h3{font-size:1.0625rem}
+  .cards4 .card p{font-size:0.875rem; line-height:1.45; hyphens:auto; overflow-wrap:break-word}
+  .cards4 .ico{width:2.5rem; height:2.5rem; margin-bottom:0.5rem}
+  .team{gap:0; background:var(--white); border-radius:1.25rem; box-shadow:0 0 0 1px var(--hair); overflow:hidden}
+  .team .person{background:transparent; box-shadow:none; border-radius:0; border-top:1px solid var(--hair)}
+  .team .person:first-child{border-top:0}
   .card h3,.pcard h3{overflow-wrap:break-word; hyphens:auto}
   .covers{gap:1.25rem; margin-top:2rem}
-  .card{padding:1.5rem}
   .wk-n{font-size:4.5rem}
   .tl li{grid-template-columns:1fr; gap:0.625rem; padding:0 0 2rem 2.5rem}
   .tl-tag{justify-self:start; min-width:8.25rem}
@@ -370,7 +377,7 @@ p{margin:0}
 <div class="hero" id="top">
 <div class="wrap hero-in">
 <div class="eyebrow enter" style="--i:0">Faculty of Economics and Business · University of Groningen</div>
-<h1 class="enter" style="--i:1" aria-label="Real Clients, Real Consultants."><span aria-hidden="true">Real Clients,</span> <span aria-hidden="true">{{typed}}<span class="brc-cursor"></span></span></h1>
+<h1 class="enter" style="--i:1" aria-label="Real Questions, Real Consultants."><span aria-hidden="true">Real Questions,</span> <span aria-hidden="true">{{typed}}<span class="brc-cursor"></span></span></h1>
 <div class="hero-row enter" style="--i:2">
 <p>Hire our student consultants for business advice within ten weeks.</p>
 <div class="hero-cta">
@@ -471,6 +478,25 @@ p{margin:0}
 </div>
 </section>
 
+<!-- what clients say -->
+<section id="proof" class="sec" style="padding-top:0">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">What clients say</h2></div>
+<div class="proof rv-group">
+<figure class="quote rv">
+<blockquote>“It didn’t take the students long to get the feel of our company, the management and our activities.”</blockquote>
+<figcaption>[CLIENT NAME, ROLE, ORGANISATION]</figcaption>
+</figure>
+<a class="pcard rv" href="#case-placeholder"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
+<div class="meta" style="font-weight:600">Case description</div>
+<h3 style="font-size:1.5rem; line-height:1.2">[CASE TITLE: the client's question in one line]</h3>
+<p>[TWO SENTENCES: what the team researched and what the client did with the advice]</p>
+<div class="meta">[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]</div>
+</a>
+</div>
+</div>
+</section>
+
 <!-- the ten weeks -->
 <section id="weeks" class="weeks sec">
 <div class="wrap weeks-in">
@@ -524,18 +550,6 @@ p{margin:0}
 </div>
 </div>
 </sc-for>
-</div>
-<div class="proof rv-group">
-<figure class="quote rv">
-<blockquote>“It didn’t take the students long to get the feel of our company, the management and our activities.”</blockquote>
-<figcaption>[CLIENT NAME, ROLE, ORGANISATION]</figcaption>
-</figure>
-<a class="pcard rv" href="#case-placeholder"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
-<div class="meta" style="font-weight:600">Case description</div>
-<h3 style="font-size:1.5rem; line-height:1.2">[CASE TITLE: the client's question in one line]</h3>
-<p>[TWO SENTENCES: what the team researched and what the client did with the advice]</p>
-<div class="meta">[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]</div>
-</a>
 </div>
 </div>
 </section>

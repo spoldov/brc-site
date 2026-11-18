@@ -32,6 +32,21 @@ def base(name):
     for k,n in BLOBS.items(): body=body.replace('/_blob/'+k,'assets/'+n)
     for a,b in PAGES.items(): body=body.replace('href="'+a+'"','href="'+b+'"')
     return title,helm,body
+# Footer added to the form and placeholder pages (the homepage has its own, larger footer in its source).
+SUBFOOT='''<footer class="sfoot">
+<div class="sfoot-box sred">
+<div class="sfoot-in">
+<div class="sfoot-contact">Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
+<div class="sfoot-base">
+<a class="sfoot-rug" href="https://www.rug.nl"><img src="assets/rug-logo-en.svg" alt="University of Groningen"></a>
+<span style="flex: 1 1 20rem">BRC is a course of the Faculty of Economics and Business, <a href="https://www.rug.nl">University of Groningen</a>. This website is maintained by the BRC team and is not part of rug.nl.</span>
+<span>Nettelbosje 2, 9747 AE Groningen</span>
+</div>
+</div>
+</div>
+</footer>'''
+def with_footer(body):
+    i=body.rindex('</div>'); return body[:i]+SUBFOOT+'\n'+body[i:]
 def page(title,helm,body,js=''):
     return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">\n<title>%s</title>\n%s\n</head>\n<body>\n%s\n%s</body>\n</html>\n'%(title,helm,body,('<script>\n'+js.strip()+'\n</script>\n') if js else '')
 
@@ -213,6 +228,6 @@ JS_SUBMIT='''
   render();
 })();
 '''
-open(OUT+'/submit.html','w').write(page('Submit an assignment · BRC',helm,b,JS_SUBMIT))
+open(OUT+'/submit.html','w').write(page('Submit an assignment · BRC',helm,with_footer(b),JS_SUBMIT))
 for src,dst,t in (('Product.dc.html','product.html','Example assignment · BRC'),('Students.dc.html','students.html','Information for students · BRC')):
-    _,helm,b=base(src); open(OUT+'/'+dst,'w').write(page(t,helm,b))
+    _,helm,b=base(src); open(OUT+'/'+dst,'w').write(page(t,helm,with_footer(b)))

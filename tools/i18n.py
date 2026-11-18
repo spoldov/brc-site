@@ -5,7 +5,7 @@ Run from the repository root, after tools/build_site.py:  python3 tools/i18n.py
 Dutch wording lives in tools/nl.json (English text -> Dutch text).
 Any English text without a translation is printed under "untranslated".
 """
-import re,json,os
+import re,json,os,html
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT=ROOT
 D=json.load(open(os.path.join(ROOT,'tools','nl.json'),encoding='utf-8'))
@@ -22,11 +22,34 @@ def prep(name,t):
     # language switch slot
     if name=='index.html':
         i=t.index('</nav>'); t=t[:i]+FLAGMARK+'\n'+t[i:]
-        t=sub1(t,'is not part of rug.nl.</span>','is not part of rug.nl.<span style="display: block; margin-top: 6px">Built with Claude Fable 5.2</span></span>')
     else:
         m=re.search(r'<a href="index\.html" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 12px 0">[^<]*</a>',t)
         t=t.replace(m.group(0),'<div style="display: flex; align-items: center; gap: 20px">'+m.group(0)+FLAGMARK+'</div>')
+    # AI-disclosure line in the footer of every page
+    t=sub1(t,'is not part of rug.nl.</span>','is not part of rug.nl.<span style="display: block; margin-top: 6px">Built with Claude Fable 5.2</span></span>')
     return t
+# ---- browser-tab icon and link preview (what LinkedIn, WhatsApp, Teams show when the link is shared)
+# Link previews need a full web address. CHANGE THIS when the site moves to its final address.
+SITE_URL='https://spoldov.github.io/brc-site/'
+DESC={'en':'Hire our student consultants for business advice within ten weeks. A course of the Faculty of Economics and Business, University of Groningen.',
+      'nl':'Bedrijfsadvies van begeleide studentconsultants in tien weken. Een vak van de Faculteit Economie en Bedrijfskunde, Rijksuniversiteit Groningen.'}
+def head_tags(page_html,lang,path):
+    title=html.escape(html.unescape(re.search(r'<title>(.*?)</title>',page_html,re.S).group(1)),quote=True)
+    d=html.escape(DESC[lang],quote=True); url=SITE_URL+('' if path.endswith('index.html') and '/' not in path else path)
+    if path=='en/index.html': url=SITE_URL+'en/'
+    return '\n'.join(['<meta name="description" content="%s">'%d,
+      '<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">',
+      '<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">',
+      '<link rel="apple-touch-icon" href="assets/favicon-180.png">',
+      '<meta property="og:type" content="website">',
+      '<meta property="og:site_name" content="BRC · Business Research &amp; Consulting">',
+      '<meta property="og:title" content="%s">'%title,
+      '<meta property="og:description" content="%s">'%d,
+      '<meta property="og:url" content="%s">'%url,
+      '<meta property="og:image" content="%sassets/share-%s.jpg">'%(SITE_URL,lang),
+      '<meta property="og:image:width" content="1200">','<meta property="og:image:height" content="630">',
+      '<meta property="og:locale" content="%s">'%('nl_NL' if lang=='nl' else 'en_GB'),
+      '<meta name="twitter:card" content="summary_large_image">'])+'\n</head>'
 def tr_text(t,miss):
     def f(m):
         raw=m.group(1);s=raw.strip()
@@ -63,6 +86,7 @@ for name in ['index.html','submit.html','product.html','students.html']:
     alt='<link rel="alternate" hreflang="nl" href="%s">\n<link rel="alternate" hreflang="en" href="%s">\n<link rel="alternate" hreflang="x-default" href="%s">\n</head>'
     # English: in en/
     en=t.replace(FLAGMARK,flag('../'+name,'nl','Nederlands',NLFLAG))
+    en=sub1(en,'</head>',head_tags(en,'en','en/'+name))
     en=en.replace('"assets/','"../assets/')
     en=sub1(en,'</head>',alt%('../'+name,name,'../'+name))
     # Dutch: the default, at the site root
@@ -75,6 +99,7 @@ for name in ['index.html','submit.html','product.html','students.html']:
     nl=nl.replace(FLAGMARK,flag('en/'+name,'en','English',UKFLAG))
     nl=sub1(nl,'<html lang="en">','<html lang="nl">')
     nl=nl.replace('rug-logo-en.svg','rug-logo-nl.svg')
+    nl=sub1(nl,'</head>',head_tags(nl,'nl',name))
     nl=re.sub(r'€(\d),(\d{3})',r'€ \1.\2',nl)
     nl=sub1(nl,'</head>',alt%(name,'en/'+name,name))
     open(OUT+'/'+name,'w').write(nl); open(OUT+'/en/'+name,'w').write(en)

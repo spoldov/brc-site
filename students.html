@@ -26,7 +26,37 @@ h1{overflow-wrap:anywhere}
   [style*="max-width: 1280px"]{padding-left:20px !important; padding-right:20px !important}
   #price{font-size:clamp(30px, 9.4vw, 52px) !important}
 }
+/* footer (same content as the homepage footer, slimmer) */
+.sfoot{padding:0 16px 16px; margin-top:64px}
+.sfoot-box{border-radius:28px}
+.sfoot-in{max-width:1280px; margin:0 auto; padding:36px 32px 30px; display:flex; flex-direction:column; gap:24px; font-size:15px; line-height:1.55}
+.sfoot a{color:#ffffff}
+.sfoot-contact{font-size:17px}
+.sfoot-base{border-top:1px solid rgba(255,255,255,.5); padding-top:24px; display:flex; flex-wrap:wrap; gap:16px 32px; align-items:center; justify-content:space-between}
+.sfoot-rug{flex:none; background:#ffffff; border-radius:10px; padding:14px 18px; display:block}
+.sfoot-rug img{display:block; width:220px; height:auto}
+@media (max-width:720px){
+  .sfoot{padding:0 8px 8px}
+  .sfoot-box{border-radius:20px}
+  .sfoot-in{padding:28px 20px 24px}
+  .sfoot-base{flex-direction:column; align-items:flex-start}
+  .sfoot-base span{flex:none !important}
+}
 </style>
+<meta name="description" content="Bedrijfsadvies van begeleide studentconsultants in tien weken. Een vak van de Faculteit Economie en Bedrijfskunde, Rijksuniversiteit Groningen.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BRC · Business Research &amp; Consulting">
+<meta property="og:title" content="Informatie voor studenten · BRC">
+<meta property="og:description" content="Bedrijfsadvies van begeleide studentconsultants in tien weken. Een vak van de Faculteit Economie en Bedrijfskunde, Rijksuniversiteit Groningen.">
+<meta property="og:url" content="https://spoldov.github.io/brc-site/students.html">
+<meta property="og:image" content="https://spoldov.github.io/brc-site/assets/share-nl.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="nl" href="students.html">
 <link rel="alternate" hreflang="en" href="en/students.html">
 <link rel="alternate" hreflang="x-default" href="students.html">
@@ -44,6 +74,18 @@ h1{overflow-wrap:anywhere}
 <p style="margin: 0; max-width: 36em; color: #42464d">Placeholder. Deze pagina gaat over wat het vak inhoudt, hoe je je inschrijft, welke opleidingen het als keuzevak accepteren, en wat eerdere studenten ervan vinden.</p>
 <a href="https://ocasys.rug.nl/current/catalog/course/EBM151A05" style="font-weight: 600">Vakbeschrijving in Ocasys ↗</a>
 </div>
+<footer class="sfoot">
+<div class="sfoot-box sred">
+<div class="sfoot-in">
+<div class="sfoot-contact">Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
+<div class="sfoot-base">
+<a class="sfoot-rug" href="https://www.rug.nl"><img src="assets/rug-logo-nl.svg" alt="Rijksuniversiteit Groningen"></a>
+<span style="flex: 1 1 20rem">BRC is een vak van de Faculteit Economie en Bedrijfskunde, <a href="https://www.rug.nl">Rijksuniversiteit Groningen</a>. Deze website wordt beheerd door het BRC-team en is geen onderdeel van rug.nl.<span style="display: block; margin-top: 6px">Gemaakt met Claude Fable 5.2</span></span>
+<span>Nettelbosje 2, 9747 AE Groningen</span>
+</div>
+</div>
+</div>
+</footer>
 </div>
 </body>
 </html>

@@ -29,6 +29,22 @@ h1{overflow-wrap:anywhere}
   [style*="max-width: 1280px"]{padding-left:20px !important; padding-right:20px !important}
   #price{font-size:clamp(30px, 9.4vw, 52px) !important}
 }
+/* footer (same content as the homepage footer, slimmer) */
+.sfoot{padding:0 16px 16px; margin-top:64px}
+.sfoot-box{border-radius:28px}
+.sfoot-in{max-width:1280px; margin:0 auto; padding:36px 32px 30px; display:flex; flex-direction:column; gap:24px; font-size:15px; line-height:1.55}
+.sfoot a{color:#ffffff}
+.sfoot-contact{font-size:17px}
+.sfoot-base{border-top:1px solid rgba(255,255,255,.5); padding-top:24px; display:flex; flex-wrap:wrap; gap:16px 32px; align-items:center; justify-content:space-between}
+.sfoot-rug{flex:none; background:#ffffff; border-radius:10px; padding:14px 18px; display:block}
+.sfoot-rug img{display:block; width:220px; height:auto}
+@media (max-width:720px){
+  .sfoot{padding:0 8px 8px}
+  .sfoot-box{border-radius:20px}
+  .sfoot-in{padding:28px 20px 24px}
+  .sfoot-base{flex-direction:column; align-items:flex-start}
+  .sfoot-base span{flex:none !important}
+}
 </style>
 </helmet>
 <div style="font-family: Inter, 'Segoe UI', Arial, sans-serif; color: #17181c; background: #f7f8f9; font-size: 17px; line-height: 1.5">

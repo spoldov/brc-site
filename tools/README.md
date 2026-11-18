@@ -11,6 +11,7 @@ The HTML pages (four Dutch at the site root, four English in `en/`, plus four te
 - `build_site.py`: step 1, builds the English pages from `src/` into `tools/.build/` (an intermediate folder, not kept in git)
 - `i18n.py`: step 2, adds the language switch (EN / NL) and the "Built with Claude Fable 5.2" line, then writes the Dutch pages to the site root and the English pages to `en/`
 - `make_illustrations.py`: draws the three temporary homepage illustrations into `assets/` (only needed when they change)
+- `make_share_images.py`: makes the browser-tab icons and the link-preview pictures in `assets/` (only needed when the headline, the red or the wordmark changes; needs Playwright and Chrome, see the top of the file)
 
 The sources started as exports from the design canvas; the homepage source no longer matches the canvas. They contain a few template marks (`{{...}}`, `<sc-if>`, `<sc-for>`) that `build_site.py` turns into plain HTML and JavaScript.
 
@@ -35,6 +36,8 @@ Needs Python 3 only; no packages.
 | Team members and their links | `build_site.py` (search for `people=`) |
 | Price notes and button labels in the form | `build_site.py` (search for `JS_SUBMIT`), and `nl.json` for Dutch |
 | Language switch, AI-disclosure line | `i18n.py` |
+| Web address used in link previews, preview description text | `i18n.py` (`SITE_URL`, `DESC`). **Change `SITE_URL` when the site moves to its final address.** |
+| Footer of the form and placeholder pages | `build_site.py` (search for `SUBFOOT`); its styling is at the end of the `<style>` block in each of the three sub-page sources |
 | The red, other colours, page width, text size | the `:root`, `html` and `.wrap` lines at the top of the `<style>` block in `src/C-TenWeeks.dc.html` |
 | Homepage motion (scroll reveal, timeline, counters, sticky header) | `build_site.py` (search for `JS_INDEX`) |
 | Client logos in the carousel | `src/C-TenWeeks.dc.html`: each row is written once between `<!--REPEAT-->` marks and repeated by `build_site.py` |

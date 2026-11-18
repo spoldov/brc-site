@@ -3,6 +3,16 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.5.0 (18 November 2026): headline, testimonial section, tab icon, link preview, footers
+
+- Headline: "Real Clients," is now "Real Questions," (Dutch: "Echte Klanten," is now "Echte Vragen,").
+- The testimonial and the case box moved out of "Our team" into their own section "What clients say" / "Wat klanten zeggen", directly after the example assignments.
+- "What is in it for you?": the icons are red inside the round outline.
+- New browser-tab icon (`assets/favicon-*.png`) and link preview (title, description and picture `assets/share-nl.jpg` / `share-en.jpg`) on every page. Both use the letters BRC without the crown. Made by `tools/make_share_images.py`.
+- **The link preview contains the full web address of the site** (`SITE_URL` in `tools/i18n.py`, now the GitHub preview address). Change it when the site moves, and run `tools/make_share_images.py` again if the headline changes, because the headline is in the picture.
+- The form and placeholder pages have a footer: contact line, RUG logo, the "not part of rug.nl" text, the AI-disclosure line and the address.
+- Phones only: the four "What is in it for you?" cards are two by two, and the team is one plain list instead of nine cards.
+
 ## v2.4.1 (18 November 2026): pictures back to the illustrations
 
 - The three homepage pictures are the drawn illustrations again (`assets/illustration-*.svg`).
