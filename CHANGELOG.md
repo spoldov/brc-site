@@ -3,6 +3,19 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.8.0 (19 November 2026): bold never level with plain text; carousel ends at the content edge
+
+- **Rule applied across the homepage:** bold text is never level with plain text in a neighbouring box. Measured at 11 widths (390 to 3440 px) in Dutch and English: 0 cases (v2.7.0 had 26). Done with shared rows (CSS subgrid), in one block at the end of the homepage `<style>`:
+  - "Wat klanten zeggen": quote and newsletter card share rows; the card heading now has the quote's type (Archivo 24 px, semi-bold);
+  - example assignments: heading, text and link rows; in the dark card "Opdracht indienen →" is on its own row instead of inside the paragraph;
+  - price cards: tier label, price and description rows;
+  - team: name and role rows; on tablets (721 to 1180 px) the icons sit under the role so names do not wrap;
+  - cost notes: each bold label on its own line above its text.
+- **Client carousel:** back to fully invisible at the content edge, fading in over 6rem inside the column (as v2.6.0). The centred fade of v2.7.0 showed logos up to 3rem outside the column. Pixel check: nothing is drawn outside the column.
+- **Example assignments:** the intro sentence ("Onze opdrachten eindigen met …") is removed; the heading uses the same heading block as the other sections. Unused styles `.lead`, `.sec-intro` and the old link style removed.
+- The alignment mock-up (`mockups/`, `tools/make_align_mockup.py`) is removed.
+- Version v2.7.0 is archived as branch `archive/v2.7.0`.
+
 ## Mock-up (19 November 2026, no change to the site)
 
 - **Temporary:** `mockups/align.html` (Dutch) and `mockups/align-en.html` (English) show alignment fixes so that bold text is never level with plain text in a neighbouring box: shared rows (CSS subgrid) for the quote and newsletter card, the example assignments (the "Opdracht indienen" link on its own row), the price cards and the team (icons under the role on tablets); cost-note labels on their own line. Made by `tools/make_align_mockup.py` from the homepages. Delete both once the fixes are accepted or rejected.
