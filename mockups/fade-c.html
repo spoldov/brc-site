@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Business Research &amp; Consulting · Rijksuniversiteit Groningen</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Inter:wght@400;500;600&display=swap">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+/* ---------- BRC homepage, design v2 ----------
+   Colours and sizes are set once here. To change the red, change --red and --red-deep. */
+:root{
+  --red:#dc002d; --red-deep:#a8001f;
+  --ink:#17181c; --muted:#42464d; --line:#d9dce0; --tint:#f4f5f6; --white:#ffffff;
+  --page:#f7f8f9;   /* page background: a soft grey instead of pure white; cards on it are white */
+  --hair:#e6e8eb;   /* hairline around white cards */
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --hdr:4rem;
+}
+/* One size for all desktop screens: text and layout do not grow on wide screens, the page just gets more margin.
+   All sizes below are in rem, so changing this one number scales the whole page. */
+html{font-size:16px; scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr) + 1.5rem)}
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+.page{font-family:Inter,'Segoe UI',Arial,sans-serif; color:var(--ink); background:var(--page); font-size:1.125rem; line-height:1.55; overflow-x:clip}
+.page a{color:var(--ink)}
+/* content column: at most 1280px wide, centred */
+.wrap{width:min(100% - 4rem, 80rem); margin-inline:auto}
+.disp{font-family:Archivo,Arial,sans-serif; font-stretch:110%; font-weight:700; letter-spacing:-0.02em; line-height:1.02; margin:0}
+h2.disp{font-size:clamp(2rem, 3.4vw, 3.25rem)}
+h3{font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.375rem; line-height:1.15; margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.sec{padding:6.5rem 0}
+.sec-head{display:flex; flex-wrap:wrap; gap:1.25rem 2.5rem; align-items:flex-end; justify-content:space-between; margin-bottom:2.25rem}
+.lead{max-width:44rem; margin-top:0.875rem}
+:focus-visible{outline:3px solid var(--ink); outline-offset:3px; border-radius:4px}
+.hero :focus-visible,.foot :focus-visible,.weeks :focus-visible{outline-color:var(--white)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex; align-items:center; gap:0.5rem; height:3.25rem; padding:0 1.625rem; border-radius:999px; font-weight:600; font-size:1.0625rem; text-decoration:none; border:2px solid transparent; transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .2s, color .2s, border-color .2s}
+.btn svg{width:1.1em; height:1.1em; transition:transform .25s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn:hover svg{transform:translateX(4px)}
+.page a.btn-white{background:var(--white); color:var(--ink); box-shadow:0 10px 30px -12px rgba(60,0,12,.55)}
+.page a.btn-white:hover{box-shadow:0 16px 34px -12px rgba(60,0,12,.7)}
+.page a.btn-ghost{color:var(--white); border-color:rgba(255,255,255,.75)}
+.page a.btn-ghost:hover{background:var(--white); color:var(--ink); border-color:var(--white)}
+
+/* ---------- header (option B: one line, stays at the top) ---------- */
+.hdr{position:fixed; inset:0 0 auto 0; z-index:50; height:var(--hdr); color:var(--white); transition:background-color .3s, box-shadow .3s, color .3s}
+.hdr-in{height:100%; display:flex; align-items:center; justify-content:space-between; gap:2rem}
+.page a.brand{display:flex; align-items:center; gap:0.875rem; text-decoration:none; color:inherit}
+.logo{display:flex; flex-direction:column; align-items:center; gap:3px}
+.logo img{display:block; width:3rem; height:auto}
+.logo .crown-red{display:none}
+.logo b{font-family:Archivo,Arial,sans-serif; font-stretch:115%; font-weight:800; font-size:1.4375rem; line-height:.85; letter-spacing:-0.02em}
+.brand-name{font-size:0.9375rem; font-weight:600; white-space:nowrap}
+.nav{display:flex; align-items:center; gap:1.875rem; font-weight:600; font-size:0.9375rem; white-space:nowrap}
+.page .nav a{color:inherit; text-decoration:none}
+.nav-link{position:relative; padding:0.5rem 0}
+.nav-link::after{content:""; position:absolute; left:0; right:0; bottom:0.125rem; height:2px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease)}
+.nav-link:hover::after,.nav-link[aria-current="true"]::after{transform:scaleX(1)}
+.page .nav a.nav-cta{display:inline-flex; align-items:center; height:2.5rem; padding:0 1.25rem; border-radius:999px; background:var(--white); color:var(--ink); transition:background-color .3s, color .3s, transform .25s var(--ease)}
+.nav-cta:hover{transform:translateY(-1px)}
+/* after scrolling past the hero: light, slightly see-through bar */
+.hdr.is-stuck{background:rgba(255,255,255,.86); -webkit-backdrop-filter:saturate(1.6) blur(14px); backdrop-filter:saturate(1.6) blur(14px); color:var(--ink); box-shadow:0 1px 0 var(--line), 0 12px 30px -22px rgba(23,24,28,.5)}
+.hdr.is-stuck .logo b{color:var(--red)}
+.hdr.is-stuck .crown-white{display:none}
+.hdr.is-stuck .crown-red{display:block}
+.page .hdr.is-stuck .nav a.nav-cta{background:var(--red); color:var(--white)}
+.hdr.is-stuck .nav-link[aria-current="true"]{color:var(--red)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; color:var(--white); padding:calc(var(--hdr) + 2.75rem) 0 0;
+  background:
+    radial-gradient(70rem 36rem at 105% 115%, rgba(60,0,14,.55), transparent 62%),
+    radial-gradient(50rem 30rem at -10% -30%, rgba(125,0,23,.5), transparent 60%),
+    linear-gradient(120deg, var(--red) 0%, #cf002a 45%, var(--red-deep) 100%)}
+.hero::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(rgba(255,255,255,.2) 1.1px, transparent 1.6px) 0 0/1.75rem 1.75rem;
+  -webkit-mask-image:linear-gradient(100deg, transparent 38%, #000 100%); mask-image:linear-gradient(100deg, transparent 38%, #000 100%)}
+.hero-in{position:relative; display:flex; flex-direction:column; gap:1.25rem}
+.eyebrow{font-size:0.8125rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase}
+.hero h1{margin:0; font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(3rem, 5.6vw, 6rem); line-height:.98; letter-spacing:-0.03em}
+.hero h1 > span{display:block; white-space:nowrap; min-height:1em}
+.brc-cursor{display:inline-block; width:.07em; height:.8em; margin-left:.08em; background:var(--white); vertical-align:baseline; animation:brc-blink 1s steps(1) infinite}
+@keyframes brc-blink{50%{opacity:0}}
+.hero-row{display:flex; flex-wrap:wrap; gap:1.25rem 4rem; align-items:center; justify-content:space-between; margin-top:0.5rem}
+.hero-row p{font-size:1.3125rem; max-width:36em}
+.hero-cta{display:flex; flex-wrap:wrap; gap:0.75rem}
+.photos{position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:2.25rem; margin-bottom:-9rem}
+.photo{aspect-ratio:3/2; border-radius:1.25rem; overflow:hidden; background:#eceef0; border:1px dashed #7d838c; display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem; font-size:0.9375rem; color:var(--muted); box-shadow:0 30px 60px -30px rgba(23,24,28,.55); transition:transform .5s var(--ease), box-shadow .5s var(--ease)}
+.photo:hover{transform:translateY(-6px); box-shadow:0 40px 70px -30px rgba(23,24,28,.6)}
+/* when real photos are added: <div class="photo has-img"><img src="../assets/..." alt="..."></div> */
+.photo.has-img{border:0; padding:0; background:var(--white)}
+.photo img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s var(--ease)}
+.photo:hover img{transform:scale(1.05)}
+.after-hero{padding-top:9rem}
+.dots{display:none}
+/* entrance, once, on page load */
+@keyframes brc-up{from{opacity:0; transform:translateY(1.25rem)}to{opacity:1; transform:none}}
+.js .enter{animation:brc-up .8s var(--ease) both; animation-delay:calc(var(--i,0) * 90ms + 80ms)}
+
+/* ---------- key figures ---------- */
+.stats{display:grid; grid-template-columns:1fr 1fr 1fr 1.5fr; margin-top:3.25rem}
+/* number and label are centred inside each box */
+.stat{padding:0.25rem 1.5rem; border-left:1px solid var(--line); text-align:center}
+.stat:first-child{border-left:0}
+.stat-n{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(2.75rem, 4.2vw, 4.25rem); line-height:1; letter-spacing:-0.03em; display:flex; align-items:baseline; justify-content:center; gap:.2em; white-space:nowrap}
+.stat-n small{font-family:Inter,Arial,sans-serif; font-stretch:100%; font-size:1rem; font-weight:600; letter-spacing:0; color:var(--red)}
+.stat-l{margin:0.5rem auto 0; color:var(--muted); font-size:1rem; max-width:15em}
+
+/* ---------- clients ---------- */
+.clients{padding:6rem 0 0}
+.brc-car{overflow:hidden; display:flex; flex-direction:column; gap:0.875rem;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent)}
+.brc-marq{display:flex; gap:0.875rem; width:max-content; padding-right:0.875rem; animation:brc-marq 140s linear infinite}
+.brc-rev{animation-direction:reverse}
+.brc-car:hover .brc-marq{animation-play-state:paused}
+@keyframes brc-marq{to{transform:translateX(-50%)}}
+.client{flex:none; width:13rem; height:5.25rem; margin:1px 0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1rem; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0.875rem 1.25rem; font-size:0.9375rem; line-height:1.3; transition:background-color .3s, transform .3s var(--ease)}
+.client:hover{transform:translateY(-2px)}
+.client img{display:block; max-width:100%; max-height:100%; object-fit:contain}
+.client span{font-size:0.75rem; color:var(--muted)}
+
+/* ---------- for you ---------- */
+.switch{position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; background:#e9ebee; border-radius:999px}
+.switch::before{content:""; position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); border-radius:999px; background:var(--ink); transition:transform .4s var(--ease)}
+.switch.is-student::before{transform:translateX(100%)}
+.switch button{position:relative; font:inherit; font-weight:600; min-height:3rem; padding:0 1.75rem; border:0; border-radius:999px; cursor:pointer; background:transparent; color:var(--ink); transition:color .3s}
+.switch button[aria-pressed="true"]{color:var(--white)}
+.cards4{display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem}
+.card{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.75rem; display:flex; flex-direction:column; align-items:center; text-align:center; gap:0.625rem; transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s}
+.card:hover{transform:translateY(-4px); box-shadow:0 0 0 1px var(--line), 0 24px 44px -26px rgba(23,24,28,.4)}
+.card p{color:var(--muted); font-size:1.0625rem}
+/* same look as the round icon buttons in "Our team" */
+.ico{width:3rem; height:3rem; border-radius:999px; border:1.5px solid #7d838c; color:var(--red); display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; transition:background-color .35s, border-color .35s, color .35s}
+.ico svg{width:1.375rem; height:1.375rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.card:hover .ico{background:var(--red); border-color:var(--red); color:var(--white)}
+/* "What is in it for you?": icon, heading and text sit on shared rows, so headings and texts line up across cards */
+@supports (grid-template-rows:subgrid){
+  .cards4{row-gap:0.625rem}
+  .cards4 .card{display:grid; grid-row:span 3; grid-template-rows:subgrid; justify-items:center; align-items:start; align-content:start}
+}
+@keyframes brc-swap{from{opacity:0; transform:translateY(.75rem)}to{opacity:1; transform:none}}
+.js .is-swapping .card{animation:brc-swap .5s var(--ease) both; animation-delay:calc(var(--i,0) * 60ms)}
+
+/* ---------- example assignments (clickable cards) ---------- */
+.cards3{display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem}
+.page a.pcard{position:relative; text-decoration:none; color:var(--ink); background:var(--white); border-radius:1.25rem; padding:1.75rem 1.75rem 2rem; display:flex; flex-direction:column; gap:0.625rem; box-shadow:inset 0 0 0 1.5px var(--ink); transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .25s, color .25s}
+.pcard h3{padding-right:3rem}
+.pcard p{color:var(--muted); font-size:1.0625rem; transition:color .25s}
+.pcard .meta{font-size:0.9375rem; color:var(--muted); transition:color .25s}
+.pcard .go{position:absolute; top:1.375rem; right:1.375rem; width:2.25rem; height:2.25rem; border-radius:999px; background:var(--tint); display:flex; align-items:center; justify-content:center; transition:background-color .25s, color .25s, transform .35s var(--ease)}
+.pcard .go svg{width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.page a.pcard:hover,.page a.pcard:focus-visible{background:var(--red); color:var(--white); box-shadow:inset 0 0 0 1.5px var(--red), 0 26px 44px -24px rgba(168,0,31,.7); transform:translateY(-4px)}
+.pcard:hover p,.pcard:focus-visible p,.pcard:hover .meta,.pcard:focus-visible .meta{color:var(--white)}
+.pcard:hover .go,.pcard:focus-visible .go{background:var(--white); color:var(--red); transform:translate(3px,-3px)}
+.page a.pcard-dark{background:var(--ink); color:var(--white)}
+.pcard-dark p{color:#d9dce0}
+.pcard-dark .go{background:#2d2f35}
+.pcard u{font-weight:600; text-underline-offset:3px}
+
+/* ---------- the ten weeks ---------- */
+.weeks{background:var(--ink); color:var(--white); position:relative; overflow:hidden}
+.weeks::before{content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(46rem 30rem at 12% 100%, rgba(220,0,45,.28), transparent 65%)}
+.weeks-in{position:relative; display:grid; grid-template-columns:5fr 6fr; gap:5rem; align-items:start}
+.weeks-side{position:sticky; top:calc(var(--hdr) + 3rem); display:flex; flex-direction:column; gap:1.25rem}
+.weeks-side p{color:#d9dce0; max-width:30em}
+.wk{display:flex; flex-direction:column; gap:0.75rem; margin-top:2.25rem; font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; letter-spacing:-0.04em; line-height:.9}
+.wk-l{font-size:1.125rem; letter-spacing:.09em; text-transform:uppercase; font-stretch:100%; font-weight:600; font-family:Inter,Arial,sans-serif; color:#ff5c7a}
+.wk-n{font-size:clamp(5rem, 8vw, 8.5rem); white-space:nowrap; font-variant-numeric:tabular-nums}
+.tl{position:relative; margin:0; padding:0; list-style:none}
+.tl::before,.tl::after{content:""; position:absolute; left:0.5rem; top:0.75rem; height:var(--rail, calc(100% - 1.5rem)); width:2px; border-radius:2px; background:#3a3d44}
+.tl::after{background:var(--red); transform-origin:top; transform:scaleY(var(--p,1)); box-shadow:0 0 18px rgba(220,0,45,.9)}
+.tl li{position:relative; padding:0 0 2.75rem 3.25rem; display:grid; grid-template-columns:8.25rem 1fr; gap:1.75rem; align-items:start}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:""; position:absolute; z-index:1; left:0; top:0.5rem; width:1.125rem; height:1.125rem; border-radius:999px; background:var(--ink); border:2px solid #7d838c; transition:background-color .4s, border-color .4s, box-shadow .4s}
+/* all week labels are the same width (the grid column), text aligned left */
+.tl-tag{justify-self:stretch; text-align:left; font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.125rem; white-space:nowrap; padding:0.25rem 0.75rem; border-radius:0.5rem; background:var(--red); transition:background-color .4s, color .4s}
+.tl-body{color:#d9dce0; transition:opacity .4s}
+.tl-body strong{color:var(--white)}
+.tl li.on::before{background:var(--red); border-color:var(--red); box-shadow:0 0 0 6px rgba(220,0,45,.25)}
+.js .tl li:not(.on) .tl-tag{background:#2d2f35; color:#a9aeb6}
+.js .tl li:not(.on) .tl-body{opacity:.45}
+
+/* ---------- costs ---------- */
+.costs{background:#eef0f2}
+.price{background:var(--white); border-radius:1.25rem; padding:2rem; display:flex; flex-direction:column; gap:0.5rem; box-shadow:0 1px 0 var(--line), 0 22px 40px -30px rgba(23,24,28,.35); transition:transform .35s var(--ease), box-shadow .35s var(--ease)}
+.price:hover{transform:translateY(-4px); box-shadow:0 1px 0 var(--line), 0 30px 50px -28px rgba(23,24,28,.45)}
+.price-for{font-weight:600}
+.price-n{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:3.75rem; letter-spacing:-0.03em; line-height:1.05}
+.price-n::after{content:""; display:block; width:2.5rem; height:4px; border-radius:4px; background:var(--red); margin:0.75rem 0 0.375rem}
+.price-d{color:var(--muted); font-size:1rem}
+.covers{display:grid; grid-template-columns:repeat(4,1fr); gap:2.5rem; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--line)}
+.covers span{color:var(--muted)}
+
+/* ---------- team ---------- */
+.team{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem}
+.person{background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:1.125rem 1.25rem 1.125rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; font-size:1.0625rem; line-height:1.35; transition:background-color .3s}
+.person:hover{background:#fbfbfc}
+.person-links{display:flex; gap:0.375rem; flex:none}
+.page a.ibtn{width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center; border-radius:999px; border:1.5px solid #7d838c; color:var(--ink); transition:background-color .2s, border-color .2s, color .2s, transform .25s var(--ease)}
+.ibtn svg{width:1.125rem; height:1.125rem}
+.ibtn img{width:1.0625rem; height:auto}
+.ibtn .li-b{display:block}.ibtn .li-w{display:none}
+.ibtn:hover .li-b,.ibtn:focus-visible .li-b{display:none}.ibtn:hover .li-w,.ibtn:focus-visible .li-w{display:block}
+.page a.ibtn:hover,.page a.ibtn:focus-visible{background:var(--red); border-color:var(--red); color:var(--white); transform:translateY(-2px)}
+.proof{display:grid; grid-template-columns:1fr 1fr; gap:1.25rem}
+.quote{position:relative; margin:0; background:var(--white); box-shadow:0 0 0 1px var(--hair); border-radius:1.25rem; padding:2.25rem 2.25rem 2rem 5.5rem; display:flex; flex-direction:column; gap:1rem}
+.quote::before{content:"\201C"; position:absolute; left:1.75rem; top:1rem; font-family:Archivo,Arial,sans-serif; font-weight:800; font-size:6rem; line-height:1; color:var(--red)}
+.quote blockquote{margin:0; font-family:Archivo,Arial,sans-serif; font-weight:600; font-size:1.5rem; line-height:1.3}
+.quote figcaption{color:var(--muted); font-size:1rem}
+
+/* ---------- footer ---------- */
+.foot{padding:0 1rem 1rem}
+.foot-box{position:relative; overflow:hidden; color:var(--white); border-radius:1.75rem; padding:5rem 0 2.25rem;
+  background:
+    radial-gradient(60rem 30rem at 100% 120%, rgba(60,0,14,.55), transparent 62%),
+    linear-gradient(120deg, var(--red) 0%, #cf002a 45%, var(--red-deep) 100%)}
+.foot-box::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(rgba(255,255,255,.2) 1.1px, transparent 1.6px) 0 0/1.75rem 1.75rem;
+  -webkit-mask-image:linear-gradient(100deg, transparent 45%, #000 100%); mask-image:linear-gradient(100deg, transparent 45%, #000 100%)}
+.foot-in{position:relative; display:flex; flex-direction:column; gap:3.5rem}
+.foot-top{display:flex; flex-wrap:wrap; gap:2rem 4rem; align-items:flex-end; justify-content:space-between}
+.foot h2{font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; font-size:clamp(2.5rem, 5vw, 5.25rem); letter-spacing:-0.03em; line-height:.98; margin:0}
+.foot-cta{display:flex; flex-direction:column; gap:1rem; align-items:flex-start}
+.page .foot a{color:var(--white)}
+.foot-base{border-top:1px solid rgba(255,255,255,.5); padding-top:1.5rem; display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:center; justify-content:space-between; font-size:0.9375rem}
+.rug{flex:none; background:var(--white); border-radius:0.625rem; padding:0.875rem 1.125rem; display:block}
+.rug img{display:block; width:13.75rem; height:auto}
+
+/* ---------- reveal on scroll (only when JavaScript runs) ---------- */
+.js .rv{opacity:0; transform:translateY(1.5rem); transition:opacity .8s var(--ease), transform .8s var(--ease); transition-delay:calc(var(--i,0) * 70ms)}
+.js .rv.in{opacity:1; transform:none}
+
+/* ---------- menu button: only shown on tablets and phones ---------- */
+.menu-btn{display:none}
+
+/* ---------- tablets and small laptops (up to 1180px wide) ---------- */
+@media (max-width:1180px){
+  :root{--hdr:3.75rem}
+  .menu-btn{display:inline-flex; align-items:center; justify-content:center; width:2.75rem; height:2.75rem; margin-right:-0.5rem; border:0; padding:0; background:transparent; color:inherit; cursor:pointer; border-radius:999px}
+  .menu-btn svg{width:1.5rem; height:1.5rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round}
+  .menu-btn .x{display:none}
+  .hdr.is-open .menu-btn .x{display:block}
+  .hdr.is-open .menu-btn .bars{display:none}
+  /* the menu opens as a white panel under the header */
+  .nav{display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:stretch; gap:0; padding:0.25rem 1.25rem 1.5rem; background:var(--white); color:var(--ink); font-size:1.125rem; white-space:normal; border-top:1px solid var(--line); box-shadow:0 26px 40px -22px rgba(23,24,28,.45)}
+  .hdr.is-open .nav{display:flex}
+  .hdr.is-open{background:var(--white); color:var(--ink)}
+  .hdr.is-open .logo b{color:var(--red)}
+  .hdr.is-open .crown-white{display:none}
+  .hdr.is-open .crown-red{display:block}
+  .nav-link{padding:0.95rem 0; border-bottom:1px solid var(--line)}
+  .nav-link::after{display:none}
+  .page .nav a.nav-cta,.page .hdr.is-stuck .nav a.nav-cta{margin-top:1.25rem; height:3rem; justify-content:center; background:var(--red); color:var(--white); font-size:1.0625rem}
+  .nav > span{margin-top:1.25rem; justify-content:center; font-size:1rem !important}
+  .logo img{width:2.625rem}
+  .logo b{font-size:1.25rem}
+  .cards4,.cards3,.team,.covers{grid-template-columns:repeat(2,1fr)}
+  @supports (grid-template-rows:subgrid){ .cards4 .card:nth-child(-n+2){margin-bottom:0.625rem} }
+  .costs .cards3{grid-template-columns:repeat(3,1fr)}
+  .price{padding:1.5rem}
+  .price-n{font-size:clamp(2rem, 4.6vw, 3.75rem)}
+  .weeks-in{grid-template-columns:1fr; gap:2.5rem}
+  .weeks-side{position:static}
+  .wk{margin-top:1rem}
+}
+@media (max-width:900px){
+  .stats{grid-template-columns:1fr 1fr; gap:2.25rem 1.5rem}
+  .stat{border-left:0; padding:0; position:relative}
+  .stat-n small{position:absolute; top:-1.25rem; left:0; right:0; text-align:center}
+  .proof{grid-template-columns:1fr}
+}
+
+/* ---------- phones (up to 720px wide) ---------- */
+@media (max-width:720px){
+  .page{font-size:1.0625rem}
+  .wrap{width:calc(100% - 2.5rem)}
+  .sec{padding:4rem 0}
+  .sec-head{margin-bottom:1.5rem}
+  h2.disp{font-size:1.875rem}
+  .brand-name{font-size:0.875rem}
+  .hero{padding-top:calc(var(--hdr) + 1.5rem)}
+  .hero-in{gap:1rem}
+  .eyebrow{font-size:0.6875rem; letter-spacing:.07em}
+  .hero h1{font-size:clamp(1.5rem, 8.1vw, 3rem)}
+  .hero-row{flex-direction:column; align-items:stretch; gap:1.25rem; margin-top:0.25rem}
+  .hero-row p{font-size:1.125rem}
+  .hero-cta{flex-direction:column}
+  .btn{justify-content:center}
+  /* the three pictures become a strip you swipe sideways */
+  .photos{display:flex; gap:1rem; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; margin:1.5rem 0 -7rem; padding:0 0 1.5rem}
+  .photos::-webkit-scrollbar{display:none}
+  .photo{flex:0 0 100%; scroll-snap-align:center; box-shadow:0 16px 24px -16px rgba(23,24,28,.5)}
+  .photo:hover{transform:none}
+  .after-hero{padding-top:5.75rem}
+  .dots{position:relative; z-index:2; display:flex; justify-content:center; gap:0.125rem; margin:0 0 1.75rem}
+  .dots button{width:1.75rem; height:1.75rem; padding:0; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center}
+  .dots button::before{content:""; width:0.5rem; height:0.5rem; border-radius:999px; background:#c3c8ce; transition:width .3s var(--ease), background-color .3s}
+  .dots button[aria-current="true"]::before{width:1.5rem; background:var(--red)}
+  /* short stand-alone blocks are centred on phones; lists and longer text stay left-aligned */
+  .hero-in{text-align:center}
+  .sec-head{justify-content:center; text-align:center}
+  .sec-intro,.weeks-side h2{text-align:center}
+  .wk{align-items:center}
+  .price{align-items:center; text-align:center}
+  .price-n::after{margin-left:auto; margin-right:auto}
+  .foot-top{justify-content:center; text-align:center}
+  .foot-cta{align-items:center}
+  .stats{margin-top:0}
+  .stat-n{font-size:2.5rem}
+  .stat-l{font-size:0.9375rem}
+  .clients{padding-top:4rem}
+  .client{width:10rem; height:4.25rem}
+  .switch{width:100%}
+  .cards3,.costs .cards3,.team,.covers{grid-template-columns:minmax(0,1fr)}
+  .cards4{grid-template-columns:repeat(2,minmax(0,1fr)); gap:0.75rem}
+  .cards4 .card{padding:1.25rem 0.875rem; gap:0.375rem}
+  .cards4 .card h3{font-size:1.0625rem}
+  .cards4 .card p{font-size:0.875rem; line-height:1.45; hyphens:auto; overflow-wrap:break-word}
+  .cards4 .ico{width:2.5rem; height:2.5rem; margin-bottom:0.5rem}
+  @supports (grid-template-rows:subgrid){ .cards4{row-gap:0.375rem} .cards4 .card:nth-child(-n+2){margin-bottom:0.375rem} }
+  .team{gap:0; background:var(--white); border-radius:1.25rem; box-shadow:0 0 0 1px var(--hair); overflow:hidden}
+  .team .person{background:transparent; box-shadow:none; border-radius:0; border-top:1px solid var(--hair)}
+  .team .person:first-child{border-top:0}
+  .card h3,.pcard h3{overflow-wrap:break-word; hyphens:auto}
+  .covers{gap:1.25rem; margin-top:2rem}
+  .wk-n{font-size:4.5rem}
+  .tl li{grid-template-columns:1fr; gap:0.625rem; padding:0 0 2rem 2.5rem}
+  .tl-tag{justify-self:start; min-width:8.25rem}
+  .price{padding:1.5rem}
+  .price-n{font-size:3rem}
+  .person{padding:0.875rem 1rem 0.875rem 1.25rem; font-size:1rem}
+  .quote{padding:4.25rem 1.5rem 1.5rem}
+  .quote::before{left:1.25rem; top:0.5rem; font-size:5rem}
+  .quote blockquote{font-size:1.25rem}
+  .foot{padding:0 0.5rem 0.5rem}
+  .foot-box{border-radius:1.25rem; padding:3rem 0 1.75rem}
+  .foot-in{gap:2.5rem}
+  .foot h2{font-size:2.25rem}
+  .foot-cta{width:100%}
+  .foot-base{flex-direction:column; align-items:flex-start}
+  .foot-base span{flex:none !important}
+}
+@media (max-width:350px){
+  .brand-name{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .brc-cursor,.brc-marq,.js .enter,.js .is-swapping .card{animation:none}
+  .js .rv{opacity:1; transform:none; transition:none}
+  .btn,.card,.pcard,.price,.photo,.photo img,.ibtn,.client{transition:none}
+}
+</style>
+<meta name="description" content="Bedrijfsadvies van begeleide studentconsultants in tien weken. Een vak van de Faculteit Economie en Bedrijfskunde, Rijksuniversiteit Groningen.">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BRC · Business Research &amp; Consulting">
+<meta property="og:title" content="Business Research &amp; Consulting · Rijksuniversiteit Groningen">
+<meta property="og:description" content="Bedrijfsadvies van begeleide studentconsultants in tien weken. Een vak van de Faculteit Economie en Bedrijfskunde, Rijksuniversiteit Groningen.">
+<meta property="og:url" content="https://spoldov.github.io/brc-site/">
+<meta property="og:image" content="https://spoldov.github.io/brc-site/assets/share-nl.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="nl" href="../index.html">
+<link rel="alternate" hreflang="en" href="../en/index.html">
+<link rel="alternate" hreflang="x-default" href="../index.html">
+<style>
+/* mock-up: carousel fade */
+.brc-car{--edge:max(2rem, (100% - 80rem) / 2)}
+@media (max-width:720px){.brc-car{--edge:1.25rem}}
+.brc-car{-webkit-mask-image:linear-gradient(90deg, transparent calc(var(--edge) - 14rem), rgba(0,0,0,.1) calc(var(--edge) - 14rem * .75), rgba(0,0,0,.35) calc(var(--edge) - 14rem * .5), rgba(0,0,0,.75) calc(var(--edge) - 14rem * .25), #000 var(--edge), #000 calc(100% - var(--edge)), rgba(0,0,0,.75) calc(100% - var(--edge) + 14rem * .25), rgba(0,0,0,.35) calc(100% - var(--edge) + 14rem * .5), rgba(0,0,0,.1) calc(100% - var(--edge) + 14rem * .75), transparent calc(100% - var(--edge) + 14rem)); mask-image:linear-gradient(90deg, transparent calc(var(--edge) - 14rem), rgba(0,0,0,.1) calc(var(--edge) - 14rem * .75), rgba(0,0,0,.35) calc(var(--edge) - 14rem * .5), rgba(0,0,0,.75) calc(var(--edge) - 14rem * .25), #000 var(--edge), #000 calc(100% - var(--edge)), rgba(0,0,0,.75) calc(100% - var(--edge) + 14rem * .25), rgba(0,0,0,.35) calc(100% - var(--edge) + 14rem * .5), rgba(0,0,0,.1) calc(100% - var(--edge) + 14rem * .75), transparent calc(100% - var(--edge) + 14rem))}
+.mock-badge{position:fixed; left:1rem; bottom:1rem; z-index:99; max-width:calc(100% - 2rem); background:#17181c; color:#fff; font:500 0.8125rem/1.5 Inter,system-ui,sans-serif; padding:0.625rem 0.875rem; border-radius:0.75rem; box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
+.mock-badge a{color:#fff; text-decoration:underline; text-underline-offset:2px}
+.mock-badge a[aria-current]{color:#ff8fa5; font-weight:700}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- header -->
+<header class="hdr" id="hdr">
+<div class="wrap hdr-in">
+<a class="brand" href="#top" aria-label="BRC, Business Research &amp; Consulting, startpagina">
+<span class="logo"><img class="crown-white" src="../assets/brc-crown-white.svg" alt=""><img class="crown-red" src="../assets/brc-crown-red.svg" alt=""><b>BRC</b></span>
+<span class="brand-name">Business Research &amp; Consulting</span>
+</a>
+<nav class="nav" id="nav" aria-label="Hoofdmenu">
+<a class="nav-link" href="#for-you">Voor u</a>
+<a class="nav-link" href="#weeks">De tien weken</a>
+<a class="nav-link" href="#costs">Kosten</a>
+<a class="nav-link" href="#people">Team</a>
+<a class="nav-cta" href="#contact">Neem contact op</a>
+<span style="display: inline-flex; align-items: center; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>NL</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="../en/index.html" lang="en" hreflang="en" aria-label="English" title="English" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">EN</a></span>
+</nav>
+<button type="button" class="menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg class="bars" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><svg class="x" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</header>
+
+<!-- hero -->
+<div class="hero" id="top">
+<div class="wrap hero-in">
+<div class="eyebrow enter" style="--i:0">Faculteit Economie en Bedrijfskunde · Rijksuniversiteit Groningen</div>
+<h1 class="enter" style="--i:1" aria-label="Echte Vragen, Echte Consultants."><span aria-hidden="true">Echte Vragen,</span> <span aria-hidden="true"><span id="typed">Echte Consultants.</span><span class="brc-cursor"></span></span></h1>
+<div class="hero-row enter" style="--i:2">
+<p>Bedrijfsadvies van begeleide studentconsultants in tien weken.</p>
+<div class="hero-cta">
+<a class="btn btn-white" href="../submit.html">Opdracht indienen<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a class="btn btn-ghost" href="../students.html">Informatie voor studenten</a>
+</div>
+</div>
+<div class="photos enter" id="photos" style="--i:3">
+<div class="photo has-img"><img src="../assets/illustration-intake.svg" alt="Illustratie: een studententeam bij een intake bij de klant"></div>
+<div class="photo has-img"><img src="../assets/illustration-posters.svg" alt="Illustratie: studenten bij een postersessie"></div>
+<div class="photo has-img"><img src="../assets/illustration-presentation.svg" alt="Illustratie: eindpresentatie voor de klant"></div>
+</div>
+</div>
+</div>
+
+<!-- key figures -->
+<div class="after-hero">
+<div class="wrap">
+<div class="dots" id="dots"><button type="button" aria-label="Afbeelding 1 van 3" aria-current="true"></button><button type="button" aria-label="Afbeelding 2 van 3"></button><button type="button" aria-label="Afbeelding 3 van 3"></button></div>
+<div class="stats rv-group">
+<div class="stat rv"><div class="stat-n"><span data-count="4">4</span></div><div class="stat-l">studenten per team</div></div>
+<div class="stat rv"><div class="stat-n"><span data-count="10">10</span></div><div class="stat-l">weken van start opdracht tot eindadvies</div></div>
+<div class="stat rv"><div class="stat-n"><span data-count="4">4</span></div><div class="stat-l">startmomenten per jaar</div></div>
+<div class="stat rv"><div class="stat-n"><small>vanaf</small><span>€ 2.000</span></div><div class="stat-l">afhankelijk van de grootte van uw organisatie</div></div>
+</div>
+</div>
+</div>
+
+<!-- clients -->
+<section id="clients" class="clients">
+<div class="wrap"><div class="sec-head rv"><h2 class="disp">Onze klanten</h2></div></div>
+<div class="brc-car rv" role="img" aria-label="Onze klanten zijn onder andere Gasunie, UMCG, Provincie Groningen, Rabobank, Resato Hydrogen Technology, FC Groningen in de Maatschappij, Zilveren Kruis / Achmea, VNO-NCW MKB Noord, Spanninga, IT Hub Hoogeveen">
+<div class="brc-marq">
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+<div class="client"><img src="../assets/client-gasunie.png" alt="Gasunie"></div>
+<div class="client"><span>[LOGO]</span><strong>UMCG</strong></div>
+<div class="client"><img src="../assets/client-provincie-groningen.png" alt="Provincie Groningen"></div>
+<div class="client"><span>[LOGO]</span><strong>Rabobank</strong></div>
+<div class="client"><img src="../assets/client-resato.png" alt="Resato Hydrogen Technology"></div>
+</div>
+<div class="brc-marq brc-rev">
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+<div class="client"><img src="../assets/client-fc-groningen.png" alt="FC Groningen in de Maatschappij"></div>
+<div class="client"><span>[LOGO]</span><strong>Zilveren Kruis / Achmea</strong></div>
+<div class="client"><span>[LOGO]</span><strong>VNO-NCW MKB Noord</strong></div>
+<div class="client"><span>[LOGO]</span><strong>Spanninga</strong></div>
+<div class="client"><span>[LOGO]</span><strong>IT Hub Hoogeveen</strong></div>
+</div>
+</div>
+</section>
+
+<!-- for you: audience switch -->
+<section id="for-you" class="sec">
+<div class="wrap">
+<div class="sec-head rv" style="align-items:center">
+<h2 class="disp">Wat levert het op?</h2>
+<div class="switch" id="switch" role="group" aria-label="Kies uw doelgroep">
+<button type="button" id="btn-org" aria-pressed="true">Organisaties</button>
+<button type="button" id="btn-student" aria-pressed="false">Studenten</button>
+</div>
+</div>
+<div id="panel-org">
+<div class="cards4 rv-group">
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="3.5"></circle><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"></path></svg></div><h3>Advies voor uw specifieke vraag</h3><p>Praktische aanbevelingen met implementatiestappen, in één rapport.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></div><h3>Een frisse blik van buiten</h3><p>Vier studenten, opgeleid in actuele theorie en onderzoeksmethoden.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg></div><h3>Professionele begeleiding</h3><p>Elk team wordt begeleid door een docent met consultancy ervaring.</p></div>
+<div class="card rv"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.7 6.3.9-4.55 4.45 1.07 6.25L12 17.15l-5.62 2.95 1.07-6.25L2.9 9.4l6.3-.9z"></path></svg></div><h3>Excellente studenten</h3><p>Nederlandse én internationale studenten worden zorgvuldig geselecteerd.</p></div>
+</div>
+</div>
+<div id="panel-student" hidden>
+<div class="cards4">
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"></rect><path d="M8.5 7V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V7M2.5 13h19"></path></svg></div><h3>Een echte klant, geen casus</h3><p>Je leidt zelf de intake, het onderzoek en de eindpresentatie.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.5"></circle><circle cx="19" cy="6" r="2.5"></circle><circle cx="12" cy="18" r="2.5"></circle><path d="M7.5 6h9M6.3 8.2l4.4 7.6M17.7 8.2l-4.4 7.6"></path></svg></div><h3>Vaardigheden en een netwerk</h3><p>In workshops oefen je praktische adviesvaardigheden, en je leert bedrijven, consultants en medestudenten kennen.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5"></rect><path d="M3 10h18M8 2.5v4M16 2.5v4M8.5 15.5l2.5 2.5 4.5-5"></path></svg></div><h3>Wekelijkse begeleiding</h3><p>Een ervaren begeleider spreekt je team elke week.</p></div>
+<div class="card"><div class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M1.5 9L12 4l10.5 5L12 14z"></path><path d="M6 11.5V16c2 2.2 10 2.2 12 0v-4.5M22.5 9v5.5"></path></svg></div><h3>Keuzevak van 5 EC</h3><p>EBM151A05, een keuzevak in veel masteropleidingen van FEB. <a href="https://ocasys.rug.nl/current/catalog/course/EBM151A05">Ocasys ↗</a></p></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- example assignments -->
+<section id="products" class="sec" style="padding-top:0">
+<div class="wrap">
+<div class="rv sec-intro" style="margin-bottom:2.25rem">
+<h2 class="disp">Voorbeeld opdrachten</h2>
+<p class="muted lead">Onze opdrachten eindigen met een adviesrapport, een presentatie en meer. Klik op de voorbeeldopdrachten voor meer informatie.</p>
+</div>
+<div class="cards3 rv-group">
+<a class="pcard rv" href="../product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Draagvlakonderzoek</h3><p>Is er genoeg draagvlak onder klanten, medewerkers of bewoners voor een geplande actie, product of dienst?</p></a>
+<a class="pcard rv" href="../product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Marktverkenning</h3><p>Hoe groot is een nieuwe markt, een nieuwe regio of een nieuw land, wie is er al actief, en hoe kunt u toetreden?</p></a>
+<a class="pcard rv" href="../product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Klant- en medewerkersonderzoek</h3><p>Een enquête of interviewonderzoek naar tevredenheid, behoeften of gedrag, met conclusies waar u iets mee kunt.</p></a>
+<a class="pcard rv" href="../product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Groei- en positioneringsadvies</h3><p>Waar kan uw organisatie groeien, en hoe onderscheidt zij zich van concurrenten?</p></a>
+<a class="pcard rv" href="../product.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Proces- en digitaliseringsscan</h3><p>Een proces of keten in kaart gebracht, met de plekken waar het eenvoudiger of digitaal kan.</p></a>
+<a class="pcard pcard-dark rv" href="../submit.html"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span><h3>Iets anders?</h3><p>Beschrijf uw vraag in het formulier. Wij laten weten of die past in een project van tien weken. <u>Opdracht indienen</u></p></a>
+</div>
+</div>
+</section>
+
+<!-- what clients say -->
+<section id="proof" class="sec" style="padding-top:0">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">Wat klanten zeggen</h2></div>
+<div class="proof rv-group">
+<figure class="quote rv">
+<blockquote>“De studenten hadden snel gevoel voor ons bedrijf, het management en onze activiteiten.”</blockquote>
+<figcaption>[NAAM KLANT, FUNCTIE, ORGANISATIE]</figcaption>
+</figure>
+<a class="pcard rv" href="#"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span>
+<div class="meta" style="font-weight:600">Casusbeschrijving</div>
+<h3 style="font-size:1.5rem; line-height:1.2">[TITEL CASUS: de vraag van de klant in één regel]</h3>
+<p>[TWEE ZINNEN: wat het team onderzocht en wat de klant met het advies deed]</p>
+<div class="meta">[SECTOR] · [STANDAARDPRODUCT] · [BLOK EN JAAR]</div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- the ten weeks -->
+<section id="weeks" class="weeks sec">
+<div class="wrap weeks-in">
+<div class="weeks-side rv">
+<h2 class="disp">De tien weken</h2>
+<p>Voor de start van het blok bespreken we uw vraag en spreken we een startdatum af. Projecten starten vier keer per jaar. Tijdens het project heeft het team elke week contact met u.</p>
+<div class="wk" aria-hidden="true"><span class="wk-l">Week</span><span class="wk-n" id="wk-n">1–10</span></div>
+</div>
+<ol class="tl rv" id="tl">
+<li class="on" data-wk="1"><span class="tl-tag">Week 1</span><div class="tl-body"><strong>Intake bij uw organisatie.</strong> <span>Het team komt met de begeleider langs om het probleem te begrijpen.</span></div></li>
+<li class="on" data-wk="3"><span class="tl-tag">Week 3</span><div class="tl-body"><strong>Plan van aanpak.</strong> <span>Onderzoeksvraag, aanpak en planning, ter goedkeuring.</span></div></li>
+<li class="on" data-wk="4–7"><span class="tl-tag">Week 4–7</span><div class="tl-body">Deskresearch, dataverzameling en analyse.</div></li>
+<li class="on" data-wk="8"><span class="tl-tag">Week 8</span><div class="tl-body"><strong>Voorlopig advies.</strong> <span>Eerste resultaten, en uw feedback voordat het team afrondt.</span></div></li>
+<li class="on" data-wk="9–10"><span class="tl-tag">Week 9–10</span><div class="tl-body"><strong>Rapport en presentatie.</strong> <span>Het definitieve adviesrapport, gepresenteerd aan uw beslissers.</span></div></li>
+</ol>
+</div>
+</section>
+
+<!-- costs -->
+<section id="costs" class="costs sec">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">Wat het kost, en waarom</h2></div>
+<div class="cards3 rv-group">
+<div class="price rv"><div class="price-for">Start-ups en zeer kleine bedrijven</div><div class="price-n">€ 2.000</div><div class="price-d">Start-ups, zzp'ers en bedrijven met minder dan 10 medewerkers</div></div>
+<div class="price rv"><div class="price-for">Partnertarief</div><div class="price-n">€ 3.000</div><div class="price-d">Voor terugkerende klanten en organisaties uit ons netwerk</div></div>
+<div class="price rv"><div class="price-for">Standaard en grote organisaties</div><div class="price-n">€ 4.000</div><div class="price-d">Bedrijven met 10 of meer medewerkers, overheden en instellingen</div></div>
+</div>
+<div class="covers rv-group">
+<div class="rv"><strong>Begeleiding.</strong> <span>Onze ervaren consultants begeleiden ieder team.</span></div>
+<div class="rv"><strong>Workshops.</strong> <span>Docenten trainen de studenten elke week in adviseren en onderzoek.</span></div>
+<div class="rv"><strong>Reiskosten.</strong> <span>Studenten kunnen reiskosten declareren voor klantbezoeken en veldonderzoek.</span></div>
+<div class="rv"><strong>Subsidies.</strong> <span>Mogelijk komt u hiervoor in aanmerking, bijvoorbeeld voor de mkb-subsidie. Vraag ernaar.</span></div>
+</div>
+</div>
+</section>
+
+<!-- people -->
+<section id="people" class="sec">
+<div class="wrap">
+<div class="sec-head rv"><h2 class="disp">Ons team</h2></div>
+<div class="team rv-group">
+<div class="person rv">
+<div><strong>Drs. Gert Haanstra</strong><br><span class="muted">Vakcoördinator</span></div>
+<div class="person-links">
+<a class="ibtn" href="https://www.rug.nl/staff/g.f.haanstra/" title="Homepage" aria-label="Homepage van Drs. Gert Haanstra"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="https://nl.linkedin.com/in/gerthaanstra" title="LinkedIn" aria-label="LinkedIn-profiel van Drs. Gert Haanstra"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Dr. Daniël Speldekamp</strong><br><span class="muted">Externe relaties</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Google Scholar" aria-label="Google Scholar-profiel van Dr. Daniël Speldekamp"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11.5V16c2 2 10 2 12 0v-4.5"></path><path d="M22 9v5"></path></svg></a>
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage van Dr. Daniël Speldekamp"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Dr. Daniël Speldekamp"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Alieda Reijinga</strong><br><span class="muted">Backoffice</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage van Alieda Reijinga"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Alieda Reijinga"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Drs. Bas Baalmans</strong><br><span class="muted">Docent, begeleider</span></div>
+<div class="person-links">
+<a class="ibtn" href="https://www.rug.nl/staff/b.s.baalmans/" title="Homepage" aria-label="Homepage van Drs. Bas Baalmans"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Drs. Bas Baalmans"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Drs. Mariette Zweers</strong><br><span class="muted">Docent, begeleider</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage van Drs. Mariette Zweers"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Drs. Mariette Zweers"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Ivan Palko, MSc</strong><br><span class="muted">Docent, begeleider</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage van Ivan Palko, MSc"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Ivan Palko, MSc"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Dr. Teye Marra</strong><br><span class="muted">Docent, begeleider</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Google Scholar" aria-label="Google Scholar-profiel van Dr. Teye Marra"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11.5V16c2 2 10 2 12 0v-4.5"></path><path d="M22 9v5"></path></svg></a>
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage van Dr. Teye Marra"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Dr. Teye Marra"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Evelien Wolthuis, MSc</strong><br><span class="muted">Gastdocent</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage van Evelien Wolthuis, MSc"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Evelien Wolthuis, MSc"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+<div class="person rv">
+<div><strong>Drs. Roel Stolvoort</strong><br><span class="muted">Gastdocent</span></div>
+<div class="person-links">
+<a class="ibtn" href="#" title="Homepage" aria-label="Homepage van Drs. Roel Stolvoort"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg></a>
+<a class="ibtn" href="#" title="LinkedIn" aria-label="LinkedIn-profiel van Drs. Roel Stolvoort"><img class="li-b" src="../assets/linkedin-black.png" alt=""><img class="li-w" src="../assets/linkedin-white.png" alt=""></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- contact -->
+<footer id="contact" class="foot">
+<div class="foot-box">
+<div class="wrap foot-in">
+<div class="foot-top rv">
+<h2>Leg ons uw vraag voor.</h2>
+<div class="foot-cta">
+<a class="btn btn-white" href="../submit.html" style="color:#17181c">Opdracht indienen<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<div>Alieda Reijinga · <a href="mailto:febforbusiness@rug.nl">febforbusiness@rug.nl</a> · 050 363 5529</div>
+</div>
+</div>
+<div class="foot-base">
+<a class="rug" href="https://www.rug.nl"><img src="../assets/rug-logo-nl.svg" alt="Rijksuniversiteit Groningen"></a>
+<span style="flex: 1 1 20rem">BRC is een vak van de Faculteit Economie en Bedrijfskunde, <a href="https://www.rug.nl">Rijksuniversiteit Groningen</a>. Deze website wordt beheerd door het BRC-team en is geen onderdeel van rug.nl.<span style="display: block; margin-top: 6px">Gemaakt met Claude Fable 5.2 en Opus 5.5</span></span>
+<span>Nettelbosje 2, 9747 AE Groningen</span>
+</div>
+</div>
+</div>
+</footer>
+
+</div>
+<script>
+(function () {
+  var doc = document;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function $(id) { return doc.getElementById(id); }
+  function all(sel, el) { return Array.prototype.slice.call((el || doc).querySelectorAll(sel)); }
+
+  // audience switch (Organisations / Students)
+  var sw = $("switch"), bo = $("btn-org"), bs = $("btn-student"), po = $("panel-org"), ps = $("panel-student");
+  function pick(org) {
+    po.hidden = !org; ps.hidden = org;
+    bo.setAttribute("aria-pressed", String(org)); bs.setAttribute("aria-pressed", String(!org));
+    sw.classList.toggle("is-student", !org);
+    var panel = org ? po : ps;
+    all(".card", panel).forEach(function (c, i) { c.style.setProperty("--i", i); c.classList.add("in"); });
+    panel.classList.remove("is-swapping"); void panel.offsetWidth; panel.classList.add("is-swapping");
+  }
+  bo.addEventListener("click", function () { pick(true); });
+  bs.addEventListener("click", function () { pick(false); });
+
+  // reveal on scroll: elements with class "rv" fade in once; inside an "rv-group" they follow each other
+  all(".rv-group").forEach(function (g) {
+    all(".rv", g).forEach(function (el, i) { el.style.setProperty("--i", i); });
+  });
+  function countUp(el) {
+    var end = parseInt(el.getAttribute("data-count"), 10), t0 = null;
+    if (reduce || !end) return;
+    function tick(t) {
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / 900);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(tick);
+    }
+    el.textContent = "0"; requestAnimationFrame(tick);
+  }
+  function show(el) {
+    if (el.classList.contains("in")) return;
+    el.classList.add("in");
+    all("[data-count]", el).forEach(countUp);
+  }
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    all(".rv").forEach(function (el) { io.observe(el); });
+  } else { all(".rv").forEach(function (el) { el.classList.add("in"); }); }
+
+  // menu button (tablets and phones)
+  var mb = $("menu-btn"), hd = $("hdr");
+  function menu(open) { hd.classList.toggle("is-open", open); mb.setAttribute("aria-expanded", String(open)); }
+  mb.addEventListener("click", function () { menu(!hd.classList.contains("is-open")); });
+  all("#nav a").forEach(function (a) { a.addEventListener("click", function () { menu(false); }); });
+  doc.addEventListener("keydown", function (e) { if (e.key === "Escape") menu(false); });
+
+  // dots under the picture strip (phones): show which picture is in view; a tap on a dot scrolls to it
+  var strip = $("photos"), dots = all("#dots button");
+  function slideWidth() { return strip.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(strip).columnGap || 0); }
+  strip.addEventListener("scroll", function () {
+    var n = Math.round(strip.scrollLeft / slideWidth());
+    dots.forEach(function (d, i) { if (i === n) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+  }, { passive: true });
+  dots.forEach(function (d, i) { d.addEventListener("click", function () { strip.scrollTo({ left: i * slideWidth(), behavior: reduce ? "auto" : "smooth" }); }); });
+
+  // header state, menu highlight and the ten-weeks timeline: all driven by one scroll handler
+  var hdr = $("hdr"), tl = $("tl"), items = all("li", tl), wk = $("wk-n");
+  var links = all(".nav-link"), secs = links.map(function (a) { return $(a.getAttribute("href").slice(1)); });
+  if (!reduce) items.forEach(function (li) { li.classList.remove("on"); });
+  function frame() {
+    ticking = false;
+    var vh = window.innerHeight;
+    hdr.classList.toggle("is-stuck", window.scrollY > 8);
+    var cur = -1;
+    secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < vh * 0.4) cur = i; });
+    if (cur >= 0 && secs[cur].getBoundingClientRect().bottom < vh * 0.25 && cur === secs.length - 1) cur = -1;
+    links.forEach(function (a, i) { if (i === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    if (reduce) return;
+    var r = tl.getBoundingClientRect(), inset = 12;
+    var len = items[items.length - 1].getBoundingClientRect().top + 17 - r.top - inset;  // the line ends at the last dot
+    tl.style.setProperty("--rail", len + "px");
+    var p = Math.max(0, Math.min(1, (vh * 0.62 - r.top - inset) / len));
+    tl.style.setProperty("--p", p.toFixed(4));
+    var fillY = r.top + inset + p * len, label = items[0].getAttribute("data-wk");
+    items.forEach(function (li) {
+      var on = li.getBoundingClientRect().top + 17 <= fillY + 1;
+      li.classList.toggle("on", on);
+      if (on) label = li.getAttribute("data-wk");
+    });
+    if (wk.textContent !== label) wk.textContent = label;
+  }
+  var ticking = false;
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  frame();
+
+  // typewriter headline
+  if (reduce) return;
+  var phrases = ['Echte Consultants.', 'Echte Antwoorden.', 'Echte Vooruitgang.', 'Frisse Blik.', 'Tien Weken.'];
+  var el = $("typed"), i = 0, deleting = true;
+  function step() {
+    var full = phrases[i], cur = el.textContent, wait = 45;
+    if (deleting) {
+      if (cur.length > 0) { el.textContent = cur.slice(0, -1); wait = 28; }
+      else { deleting = false; i = (i + 1) % phrases.length; wait = 250; }
+    } else if (cur.length < full.length) { el.textContent = full.slice(0, cur.length + 1); wait = 60; }
+    else { deleting = true; wait = 2200; }
+    setTimeout(step, wait);
+  }
+  setTimeout(step, 2200);
+})();
+</script>
+<div class="mock-badge"><b>Mock-up</b> C · long and gentle: eased fade over 14rem (224 px)<br><a href="fade-a.html">A</a> · <a href="fade-b.html">B</a> · <a href="fade-c.html" aria-current="page">C</a> · <a href="../index.html">current site</a></div>
+</body>
+</html>

@@ -3,6 +3,18 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.5.2 (18 November 2026): footer line, clean-up, carousel fade mock-ups
+
+- AI-disclosure line in every footer: "Built with Claude Fable 5.2 and Opus 5.5" (Dutch: "Gemaakt met Claude Fable 5.2 en Opus 5.5").
+- Clean-up of leftovers from earlier versions; the pages look exactly the same (checked by comparing the generated pages before and after):
+  - removed the unused colour variable `--red-ink` from the homepage styling;
+  - removed four Dutch translations of text that is no longer on the site (the three `[PHOTO: …]` placeholders replaced by the illustrations, and "Read the case");
+  - `tools/i18n.py`: the language-switch code still used names from when the switch was a flag (`flag`, `NLFLAG`, `UKFLAG`, `FLAGMARK`); renamed, output unchanged;
+  - `tools/README.md`: the instructions for inserting a homepage photo described the old placeholder markup; updated.
+  - Checked and kept: all 18 files in `assets/`, every CSS class, id and animation (all in use), and the placeholders (`[LOGO]` client boxes, empty profile links, case box, form privacy link).
+- **Temporary:** three mock-ups of the client carousel fading out where it leaves the content width, in `mockups/fade-a.html`, `fade-b.html` and `fade-c.html` (made by `tools/make_fade_mockups.py` from the Dutch homepage; the real homepage is unchanged). Delete the folder and the script once a variant is chosen or rejected.
+- Version v2.5.1 is archived as branch `archive/v2.5.1`.
+
 ## v2.5.1 (18 November 2026): "What is in it for you?" cards
 
 - The cards now line up line by line: in every row of cards, all headings start at the same height and all texts start at the same height, on every screen size, in both languages and for both Organisations and Students. Made with CSS subgrid (in `.cards4`); browsers without subgrid show the previous layout.

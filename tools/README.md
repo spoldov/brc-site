@@ -9,7 +9,7 @@ The HTML pages (four Dutch at the site root, four English in `en/`, plus four te
 - `src/Product.dc.html`, `src/Students.dc.html`: sources of the two placeholder pages
 - `nl.json`: the Dutch translation, as "English text": "Dutch text"
 - `build_site.py`: step 1, builds the English pages from `src/` into `tools/.build/` (an intermediate folder, not kept in git)
-- `i18n.py`: step 2, adds the language switch (EN / NL) and the "Built with Claude Fable 5.2" line, then writes the Dutch pages to the site root and the English pages to `en/`
+- `i18n.py`: step 2, adds the language switch (EN / NL) and the "Built with Claude Fable 5.2 and Opus 5.5" line, then writes the Dutch pages to the site root and the English pages to `en/`
 - `make_illustrations.py`: draws the three temporary homepage illustrations into `assets/` (only needed when they change)
 - `make_share_images.py`: makes the browser-tab icons and the link-preview pictures in `assets/` (only needed when the headline, the red or the wordmark changes; needs Playwright and Chrome, see the top of the file)
 
@@ -41,7 +41,7 @@ Needs Python 3 only; no packages.
 | The red, other colours, page width, text size | the `:root`, `html` and `.wrap` lines at the top of the `<style>` block in `src/C-TenWeeks.dc.html` |
 | Homepage motion (scroll reveal, timeline, counters, sticky header) | `build_site.py` (search for `JS_INDEX`) |
 | Client logos in the carousel | `src/C-TenWeeks.dc.html`: each row is written once between `<!--REPEAT-->` marks and repeated by `build_site.py` |
-| Homepage photos | replace a `<div class="photo">[PHOTO: ...]</div>` in `src/C-TenWeeks.dc.html` with `<div class="photo has-img"><img src="assets/your-file.jpg" alt="description"></div>` |
+| Homepage photos | the three pictures are `<div class="photo has-img"><img src="assets/illustration-….svg" alt="…"></div>` in `src/C-TenWeeks.dc.html`. Put the photo in `assets/`, change `src` and `alt` there, and change the matching `alt` key in `nl.json` (Dutch description) |
 | Images | add the file to `assets/`; images referenced by id in `src/` are mapped in `build_site.py` (`BLOBS`) |
 
 ## Checks after regenerating

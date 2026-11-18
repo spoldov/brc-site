@@ -9,24 +9,24 @@ import re,json,os,html
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT=ROOT
 D=json.load(open(os.path.join(ROOT,'tools','nl.json'),encoding='utf-8'))
-def flag(href,code,label,svg):
+def langswitch(href,code,label,pair):
     # Language switch as text: the current language in plain text, the other one as a link.
-    cur,other=svg
+    cur,other=pair
     return '<span style="display: inline-flex; align-items: center; gap: 0.4em; font-size: 14px; font-weight: 600; letter-spacing: 0.04em"><span>%s</span><span aria-hidden="true" style="opacity: 0.5">/</span><a href="%s" lang="%s" hreflang="%s" aria-label="%s" title="%s" style="color: inherit; opacity: 0.8; text-decoration: underline; text-underline-offset: 3px; padding: 10px 0">%s</a></span>'%(cur,href,code,code,label,label,other)
-NLFLAG=('EN','NL')  # shown on the English pages
-UKFLAG=('NL','EN')  # shown on the Dutch pages
-FLAGMARK='<!--LANGSWITCH-->'
+SWITCH_ON_EN=('EN','NL')  # shown on the English pages
+SWITCH_ON_NL=('NL','EN')  # shown on the Dutch pages
+SWITCHMARK='<!--LANGSWITCH-->'
 def sub1(s,a,b):
     assert s.count(a)==1,(a[:70],s.count(a)); return s.replace(a,b)
 def prep(name,t):
     # language switch slot
     if name=='index.html':
-        i=t.index('</nav>'); t=t[:i]+FLAGMARK+'\n'+t[i:]
+        i=t.index('</nav>'); t=t[:i]+SWITCHMARK+'\n'+t[i:]
     else:
         m=re.search(r'<a href="index\.html" style="color: #ffffff; font-weight: 600; font-size: 16px; padding: 12px 0">[^<]*</a>',t)
-        t=t.replace(m.group(0),'<div style="display: flex; align-items: center; gap: 20px">'+m.group(0)+FLAGMARK+'</div>')
+        t=t.replace(m.group(0),'<div style="display: flex; align-items: center; gap: 20px">'+m.group(0)+SWITCHMARK+'</div>')
     # AI-disclosure line in the footer of every page
-    t=sub1(t,'is not part of rug.nl.</span>','is not part of rug.nl.<span style="display: block; margin-top: 6px">Built with Claude Fable 5.2</span></span>')
+    t=sub1(t,'is not part of rug.nl.</span>','is not part of rug.nl.<span style="display: block; margin-top: 6px">Built with Claude Fable 5.2 and Opus 5.5</span></span>')
     return t
 # ---- browser-tab icon and link preview (what LinkedIn, WhatsApp, Teams show when the link is shared)
 # Link previews need a full web address. CHANGE THIS when the site moves to its final address.
@@ -85,7 +85,7 @@ for name in ['index.html','submit.html','product.html','students.html']:
     t=prep(name,open(BUILD+'/'+name).read())
     alt='<link rel="alternate" hreflang="nl" href="%s">\n<link rel="alternate" hreflang="en" href="%s">\n<link rel="alternate" hreflang="x-default" href="%s">\n</head>'
     # English: in en/
-    en=t.replace(FLAGMARK,flag('../'+name,'nl','Nederlands',NLFLAG))
+    en=t.replace(SWITCHMARK,langswitch('../'+name,'nl','Nederlands',SWITCH_ON_EN))
     en=sub1(en,'</head>',head_tags(en,'en','en/'+name))
     en=en.replace('"assets/','"../assets/')
     en=sub1(en,'</head>',alt%('../'+name,name,'../'+name))
@@ -96,7 +96,7 @@ for name in ['index.html','submit.html','product.html','students.html']:
         elif p.startswith('<style>'): pass
         else: parts[i]=tr_attr(tr_text(p,miss),miss)
     nl=''.join(parts)
-    nl=nl.replace(FLAGMARK,flag('en/'+name,'en','English',UKFLAG))
+    nl=nl.replace(SWITCHMARK,langswitch('en/'+name,'en','English',SWITCH_ON_NL))
     nl=sub1(nl,'<html lang="en">','<html lang="nl">')
     nl=nl.replace('rug-logo-en.svg','rug-logo-nl.svg')
     nl=sub1(nl,'</head>',head_tags(nl,'nl',name))

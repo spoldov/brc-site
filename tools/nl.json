@@ -9,9 +9,6 @@
 "Hire our student consultants for business advice within ten weeks.": "Bedrijfsadvies van begeleide studentconsultants in tien weken.",
 "Submit an assignment": "Opdracht indienen",
 "Information for students": "Informatie voor studenten",
-"[PHOTO: team at a client intake]": "[FOTO: team bij een intake bij de klant]",
-"[PHOTO: poster session]": "[FOTO: postersessie]",
-"[PHOTO: final presentation]": "[FOTO: eindpresentatie]",
 "What is in it for you?": "Wat levert het op?",
 "Organisations": "Organisaties",
 "Students": "Studenten",
@@ -82,13 +79,11 @@
 "[CASE TITLE: the client's question in one line]": "[TITEL CASUS: de vraag van de klant in één regel]",
 "[TWO SENTENCES: what the team researched and what the client did with the advice]": "[TWEE ZINNEN: wat het team onderzocht en wat de klant met het advies deed]",
 "[SECTOR] · [STANDARD PRODUCT] · [BLOCK AND YEAR]": "[SECTOR] · [STANDAARDPRODUCT] · [BLOK EN JAAR]",
-"Read the case": "Lees de casus",
 "Clients include": "Onze klanten",
 "Bring us your question.": "Leg ons uw vraag voor.",
 "BRC is a course of the Faculty of Economics and Business,": "BRC is een vak van de Faculteit Economie en Bedrijfskunde,",
 "University of Groningen": "Rijksuniversiteit Groningen",
 ". This website is maintained by the BRC team and is not part of rug.nl.": ". Deze website wordt beheerd door het BRC-team en is geen onderdeel van rug.nl.",
-"Built with Claude Fable 5.2": "Gemaakt met Claude Fable 5.2",
 "BRC, Business Research &amp; Consulting, home": "BRC, Business Research &amp; Consulting, startpagina",
 "Main": "Hoofdmenu",
 "Choose your audience": "Kies uw doelgroep",
@@ -199,5 +194,6 @@
 "Picture 3 of 3": "Afbeelding 3 van 3",
 "Illustration: a student team at an intake with a client": "Illustratie: een studententeam bij een intake bij de klant",
 "Illustration: students at a poster session": "Illustratie: studenten bij een postersessie",
-"Illustration: final presentation to the client": "Illustratie: eindpresentatie voor de klant"
+"Illustration: final presentation to the client": "Illustratie: eindpresentatie voor de klant",
+"Built with Claude Fable 5.2 and Opus 5.5": "Gemaakt met Claude Fable 5.2 en Opus 5.5"
 }
