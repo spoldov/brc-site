@@ -3,6 +3,10 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## Mock-up (19 November 2026, no change to the site)
+
+- **Temporary:** `mockups/align.html` (Dutch) and `mockups/align-en.html` (English) show alignment fixes so that bold text is never level with plain text in a neighbouring box: shared rows (CSS subgrid) for the quote and newsletter card, the example assignments (the "Opdracht indienen" link on its own row), the price cards and the team (icons under the role on tablets); cost-note labels on their own line. Made by `tools/make_align_mockup.py` from the homepages. Delete both once the fixes are accepted or rejected.
+
 ## v2.7.0 (18 November 2026): plain BRC wordmark, aligned header, client placeholders, newsletter
 
 - **Header:** the wordmark is plain "BRC" text, without the crown. Every text item in the header (BRC, the name, the menu links, the label of the contact button, NL / EN) now sits on one baseline, on every page and screen size; measured in the browser. Before, the form and placeholder pages had four different baselines. The crown version is kept as a fallback (files in `assets/`, full header on branch `archive/v2.6.0`).
