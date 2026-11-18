@@ -3,6 +3,13 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.5.1 (18 November 2026): "What is in it for you?" cards
+
+- The cards now line up line by line: in every row of cards, all headings start at the same height and all texts start at the same height, on every screen size, in both languages and for both Organisations and Students. Made with CSS subgrid (in `.cards4`); browsers without subgrid show the previous layout.
+- Organisations, fourth card: "International reach" is now "Excellent students" with the text "Both Dutch and international students are carefully selected." (Dutch: "Excellente studenten" / "Nederlandse én internationale studenten worden zorgvuldig geselecteerd."). The globe icon is replaced by a star.
+- Dutch, "Professionele begeleiding": "advieservaring" is now "consultancy ervaring", at the owner's request (standard spelling would be "consultancy-ervaring").
+- Version v2.5.0 is archived as branch `archive/v2.5.0`.
+
 ## Tools (18 November 2026, no change to the site)
 
 - Added `tools/checks/render_check.py`: renders every page at phone, tablet and desktop sizes and checks for overflow, script errors, broken images and dead links. See `tools/README.md`.
