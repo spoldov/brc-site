@@ -3,6 +3,13 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.9.0 (19 November 2026): larger BRC logo, centred on the header text
+
+- BRC in the header is larger (26 px, was 23; phones and tablets 22 px, was 20) and centred on the header text: the middle of its capitals is level with the middle of the name's capitals (within the 0.5 px the browser can place it). The rest of the header still shares one baseline. Set by `--logo-drop` on `.logo b` / `.slogo b`, measured from rendered pixels.
+- Phones: the header never wraps. Below 381 px only BRC and the menu button are shown (the name was hidden below 351 px before). **Correction:** at 360 px the header already wrapped onto two lines since v2.7.0, hiding BRC above the bar; this was missed because that width was not in the header check.
+- New check script `tools/checks/design_check.py` for the owner's layout rules (see `tools/README.md`).
+- Version v2.8.0 is archived as branch `archive/v2.8.0`.
+
 ## v2.8.0 (19 November 2026): bold never level with plain text; carousel ends at the content edge
 
 - **Rule applied across the homepage:** bold text is never level with plain text in a neighbouring box. Measured at 11 widths (390 to 3440 px) in Dutch and English: 0 cases (v2.7.0 had 26). Done with shared rows (CSS subgrid), in one block at the end of the homepage `<style>`:

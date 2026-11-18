@@ -41,13 +41,14 @@ Needs Python 3 only; no packages.
 | The red, other colours, page width, text size | the `:root`, `html` and `.wrap` lines at the top of the `<style>` block in `src/C-TenWeeks.dc.html` |
 | Homepage motion (scroll reveal, timeline, counters, sticky header) | `build_site.py` (search for `JS_INDEX`) |
 | Client logos in the carousel | `src/C-TenWeeks.dc.html`: each row is written once between `<!--REPEAT-->` marks and repeated by `build_site.py`. Since v2.7.0 the boxes are placeholders ("Approvals" / "Pending"). To show a logo once its client has approved: `<div class="client"><img src="assets/client-….png" alt="Name"></div>`; the four earlier logo files are still in `assets/`. Keep an even number of boxes per row so the pattern stays regular |
-| BRC wordmark | plain text `<span class="logo"><b>BRC</b></span>` in the header of each source (`.slogo` on the sub-pages). The version with the RUG crown above it is kept as a fallback: the files `assets/brc-crown-white.svg` and `brc-crown-red.svg` are still in the repo, and the full header markup and styling are on branch `archive/v2.6.0` |
+| BRC wordmark | plain text `<span class="logo"><b>BRC</b></span>` in the header of each source (`.slogo` on the sub-pages), 26 px (22 px on phones and tablets), centred on the header text by `--logo-drop` (measured; re-measure with `design_check.py` if the size changes). The version with the RUG crown above it is kept as a fallback: the files `assets/brc-crown-white.svg` and `brc-crown-red.svg` are still in the repo, and the full header markup and styling are on branch `archive/v2.6.0` |
 | Newsletter link | homepage footer and the newsletter card in "What clients say": `src/C-TenWeeks.dc.html`; footer of the other pages: `SUBFOOT` in `build_site.py`; the page itself: `src/Newsletter.dc.html` |
 | Homepage photos | the three pictures are `<div class="photo has-img"><img src="assets/illustration-….svg" alt="…"></div>` in `src/C-TenWeeks.dc.html`. Put the photo in `assets/`, change `src` and `alt` there, and change the matching `alt` key in `nl.json` (Dutch description) |
 | Images | add the file to `assets/`; images referenced by id in `src/` are mapped in `build_site.py` (`BLOBS`) |
 
 ## Checks after regenerating
 
+- `python3 tools/checks/design_check.py` checks the owner's layout rules in the browser: bold text never level with plain text in a neighbouring box, all header text on one baseline, BRC centred on the header text, and the header on one line on phones. About 3 minutes. Same requirements as `render_check.py`.
 - `python3 tools/checks/render_check.py` renders all eight pages at phone, tablet and desktop sizes and reports anything wider than the screen, script errors, broken images, links to missing files and headline phrases that do not fit. Add `--shots` to also save full-page screenshots in `tools/checks/out/` (not kept in git). It needs Playwright and Chrome; see the top of the file.
 
 - `i18n.py` prints "untranslated:" followed by English text it found no Dutch for. Names, logos' alt text, "Week 1" and similar are expected there; a full sentence is not.
