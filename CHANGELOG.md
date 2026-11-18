@@ -3,6 +3,14 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.6.0 (18 November 2026): client carousel fades at the content edge
+
+- The client carousel ("Onze klanten" / "Clients include") is now masked to the content column: logos are fully invisible at the left and right edge of the content (the same line as the headings and boxes) and fully visible 6rem (96 px) further in; on phones the fade is 3rem. Before, the carousel ran the full screen width and only faded at the screen edges. Based on mock-up A, with the fade moved inside the column at the owner's request.
+- Settings: `--edge` and `--fade` on `.brc-car` in `tools/src/C-TenWeeks.dc.html` (phone values in the 720 px block).
+- The temporary mock-ups (`mockups/`, `tools/make_fade_mockups.py`) are removed.
+- To go back to the full-width carousel: restore the `.brc-car` rule from branch `archive/v2.5.2`.
+- Version v2.5.2 is archived as branch `archive/v2.5.2`.
+
 ## v2.5.2 (18 November 2026): footer line, clean-up, carousel fade mock-ups
 
 - AI-disclosure line in every footer: "Built with Claude Fable 5.2 and Opus 5.5" (Dutch: "Gemaakt met Claude Fable 5.2 en Opus 5.5").

@@ -115,8 +115,11 @@ p{margin:0}
 
 /* ---------- clients ---------- */
 .clients{padding:6rem 0 0}
-.brc-car{overflow:hidden; display:flex; flex-direction:column; gap:0.875rem;
-  -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent)}
+/* the carousel runs the full screen width but is masked to the content column: fully invisible at the
+   content edge (--edge, same line as headings and boxes), fully visible 6rem further in */
+.brc-car{--edge:max(2rem, (100% - 80rem) / 2); --fade:6rem; overflow:hidden; display:flex; flex-direction:column; gap:0.875rem;
+  -webkit-mask-image:linear-gradient(90deg, transparent var(--edge), #000 calc(var(--edge) + var(--fade)), #000 calc(100% - var(--edge) - var(--fade)), transparent calc(100% - var(--edge)));
+  mask-image:linear-gradient(90deg, transparent var(--edge), #000 calc(var(--edge) + var(--fade)), #000 calc(100% - var(--edge) - var(--fade)), transparent calc(100% - var(--edge)))}
 .brc-marq{display:flex; gap:0.875rem; width:max-content; padding-right:0.875rem; animation:brc-marq 140s linear infinite}
 .brc-rev{animation-direction:reverse}
 .brc-car:hover .brc-marq{animation-play-state:paused}
@@ -316,6 +319,7 @@ p{margin:0}
   .stat-n{font-size:2.5rem}
   .stat-l{font-size:0.9375rem}
   .clients{padding-top:4rem}
+  .brc-car{--edge:1.25rem; --fade:3rem}
   .client{width:10rem; height:4.25rem}
   .switch{width:100%}
   .cards3,.costs .cards3,.team,.covers{grid-template-columns:minmax(0,1fr)}
