@@ -176,16 +176,17 @@ p{margin:0}
 .wk{display:flex; flex-direction:column; gap:0.75rem; margin-top:2.25rem; font-family:Archivo,Arial,sans-serif; font-stretch:112%; font-weight:800; letter-spacing:-0.04em; line-height:.9}
 .wk-l{font-size:1.125rem; letter-spacing:.09em; text-transform:uppercase; font-stretch:100%; font-weight:600; font-family:Inter,Arial,sans-serif; color:#ff5c7a}
 .wk-n{font-size:clamp(5rem, 8vw, 8.5rem); white-space:nowrap; font-variant-numeric:tabular-nums}
-.tl{position:relative; margin:0; padding:0; list-style:none}
+.tl{position:relative; margin:0; padding:0; list-style:none; display:grid; grid-template-columns:max-content 1fr; column-gap:1.75rem}
 .tl::before,.tl::after{content:""; position:absolute; left:0.5rem; top:0.75rem; height:var(--rail, calc(100% - 1.5rem)); width:2px; border-radius:2px; background:#3a3d44}
 .tl::after{background:var(--red); transform-origin:top; transform:scaleY(var(--p,1)); box-shadow:0 0 18px rgba(220,0,45,.9)}
-/* the label box fits its label (equal space left and right; left edges, and so "Week", stay aligned); the text shares the
-   label's baseline, which puts its first line in the middle of the box and level with the dot */
-.tl li{position:relative; padding:0 0 2.75rem 3.25rem; display:grid; grid-template-columns:8.25rem 1fr; gap:1.75rem; align-items:baseline}
+/* all label boxes share one width: the widest label plus 12 px each side (rows share the list's columns), so left and right
+   edges line up and "Week" stays aligned; shorter labels get more space on the right. The text shares the label's baseline,
+   which puts its first line in the middle of the box and level with the dot. First two column lines: fallback without subgrid */
+.tl li{position:relative; padding:0 0 2.75rem 3.25rem; display:grid; grid-column:1 / -1; grid-template-columns:8.25rem 1fr; grid-template-columns:subgrid; gap:1.75rem; align-items:baseline}
 .tl li:last-child{padding-bottom:0}
 .tl li::before{content:""; position:absolute; z-index:1; left:0; top:calc(0.5rem + 1px); width:1.125rem; height:1.125rem; border-radius:999px; background:var(--ink); border:2px solid #7d838c; transition:background-color .4s, border-color .4s, box-shadow .4s}
 /* all week labels are the same width (the grid column), text aligned left */
-.tl-tag{justify-self:start; font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.125rem; white-space:nowrap; padding:calc(0.25rem + 1.5px) 0.75rem calc(0.25rem - 1.5px); border-radius:0.5rem; background:var(--red); transition:background-color .4s, color .4s}
+.tl-tag{justify-self:stretch; font-family:Archivo,Arial,sans-serif; font-weight:700; font-size:1.125rem; white-space:nowrap; padding:calc(0.25rem + 1.5px) 0.75rem calc(0.25rem - 1.5px); border-radius:0.5rem; background:var(--red); transition:background-color .4s, color .4s}
 .tl-body{color:#d9dce0; transition:opacity .4s}
 .tl-body strong{color:var(--white)}
 .tl li.on::before{background:var(--red); border-color:var(--red); box-shadow:0 0 0 6px rgba(220,0,45,.25)}
@@ -336,7 +337,8 @@ p{margin:0}
   .card h3,.pcard h3{overflow-wrap:break-word; hyphens:auto}
   .covers{gap:1.25rem; margin-top:2rem}
   .wk-n{font-size:4.5rem}
-  .tl li{grid-template-columns:1fr; gap:0.625rem; padding:0 0 2rem 2.5rem}
+  .tl li{grid-template-columns:1fr; grid-template-columns:subgrid; row-gap:0.625rem; padding:0 0 2rem 2.5rem}
+  .tl-body{grid-column:1 / -1}
   .price{padding:1.5rem}
   .price-n{font-size:3rem}
   .person{padding:0.875rem 1rem 0.875rem 1.25rem; font-size:1rem}

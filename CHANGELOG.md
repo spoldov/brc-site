@@ -3,6 +3,12 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.11.0 (19 November 2026): timeline boxes share one width
+
+- "De tien weken": all label boxes share one width (the widest label plus 12 px each side), so their left and right edges line up on the same pixel at every screen width; "Week" stays left-aligned, and shorter labels get more space on the right. Vertical centring, baselines and dots unchanged. Done by letting the rows share the list's columns (CSS subgrid), with the old fixed width as fallback.
+- `CLAUDE.md`: the rule on equal space inside boxes now names this exception.
+- Version v2.10.0 is archived as branch `archive/v2.10.0`.
+
 ## Docs (19 November 2026, no change to the site)
 
 - Added `CLAUDE.md` in the repository root: the owner's alignment rule and the way of working, loaded automatically by Claude when it opens the repository. Details stay in the handover document in the claude.ai Project.
