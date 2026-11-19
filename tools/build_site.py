@@ -150,13 +150,13 @@ JS_INDEX='''
     links.forEach(function (a, i) { if (i === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
     if (reduce) return;
     var r = tl.getBoundingClientRect(), inset = 12;
-    var len = items[items.length - 1].getBoundingClientRect().top + 17 - r.top - inset;  // the line ends at the last dot
+    var len = items[items.length - 1].getBoundingClientRect().top + 18 - r.top - inset;  // the line ends at the last dot (dot centre 18 px below the row top)
     tl.style.setProperty("--rail", len + "px");
     var p = Math.max(0, Math.min(1, (vh * 0.62 - r.top - inset) / len));
     tl.style.setProperty("--p", p.toFixed(4));
     var fillY = r.top + inset + p * len, label = items[0].getAttribute("data-wk");
     items.forEach(function (li) {
-      var on = li.getBoundingClientRect().top + 17 <= fillY + 1;
+      var on = li.getBoundingClientRect().top + 18 <= fillY + 1;
       li.classList.toggle("on", on);
       if (on) label = li.getAttribute("data-wk");
     });

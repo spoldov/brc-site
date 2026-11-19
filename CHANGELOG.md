@@ -3,6 +3,12 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## v2.10.0 (19 November 2026): timeline and quote row aligned
+
+- "De tien weken": each label box fits its label, with 12 px left and right (was 12 px left and up to 58 px right); the left edges, and so "Week", stay aligned. "Week" is centred in its box. The text shares the label's baseline, so its first line sits in the middle of the box (within 0.5 px; was 5 px high). The dots moved down 1 px to the box centres; the fill animation uses the new dot position (18 px below the row top, in `build_site.py`).
+- "Wat klanten zeggen": "Laatste nieuws" is now the same size as the quote's caption (16 px, was 17), so the two share a baseline exactly (was about 1 px apart).
+- Version v2.9.0 is archived as branch `archive/v2.9.0`.
+
 ## v2.9.0 (19 November 2026): larger BRC logo, centred on the header text
 
 - BRC in the header is larger (26 px, was 23; phones and tablets 22 px, was 20) and centred on the header text: the middle of its capitals is level with the middle of the name's capitals (within the 0.5 px the browser can place it). The rest of the header still shares one baseline. Set by `--logo-drop` on `.logo b` / `.slogo b`, measured from rendered pixels.
