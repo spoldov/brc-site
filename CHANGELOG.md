@@ -3,6 +3,10 @@
 Each finished version is kept as a branch named `archive/vX.Y.Z`. Archive branches are never changed afterwards.
 To look at an old version on GitHub: open the repository, click the branch button (top left, above the file list) and choose the archive branch.
 
+## Docs (19 November 2026, no change to the site)
+
+- Added `CLAUDE.md` in the repository root: the owner's alignment rule and the way of working, loaded automatically by Claude when it opens the repository. Details stay in the handover document in the claude.ai Project.
+
 ## v2.10.0 (19 November 2026): timeline and quote row aligned
 
 - "De tien weken": each label box fits its label, with 12 px left and right (was 12 px left and up to 58 px right); the left edges, and so "Week", stay aligned. "Week" is centred in its box. The text shares the label's baseline, so its first line sits in the middle of the box (within 0.5 px; was 5 px high). The dots moved down 1 px to the box centres; the fill animation uses the new dot position (18 px below the row top, in `build_site.py`).
